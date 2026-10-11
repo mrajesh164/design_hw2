@@ -11,7 +11,7 @@ export const metadata = {
 /* Risograph paper grain, drawn with SVG turbulence and inlined as a data URI
    so the page still makes no external requests. */
 const GRAIN =
-  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E\")";
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.28'/%3E%3C/svg%3E\")";
 
 const SECTIONS = [
   { num: "I", id: "nightfall", name: "Nightfall", blurb: "Blue hour, and the city going dark.", count: 6 },
@@ -37,8 +37,8 @@ function SectionHead({ num, id, name, blurb, count }) {
           </span>
           <span className="relative">{name}</span>
         </h2>
-        <p className="font-encre-body text-xs text-encre-bone/60">{blurb}</p>
-        <span className="ml-auto font-encre-mono text-[10px] uppercase tracking-[0.15em] text-encre-bone/35">
+        <p className="font-encre-body text-xs text-encre-bone/80">{blurb}</p>
+        <span className="ml-auto font-encre-mono text-[11px] uppercase tracking-[0.15em] text-encre-bone/70">
           {count} artifacts
         </span>
       </div>
@@ -56,10 +56,10 @@ function Tile({ children, label, index, span = "col-span-6", ink = "ember", flus
   return (
     <figure className={`${span} ${shadow} flex flex-col border border-encre-bone/30 bg-encre-deep`}>
       <div className="flex items-baseline gap-2 border-b border-encre-bone/15 px-3 py-1.5">
-        <span className="font-encre-mono text-[10px] tabular-nums text-encre-bone/35">
+        <span className="font-encre-mono text-[11px] tabular-nums text-encre-bone/70">
           {String(index).padStart(2, "0")}
         </span>
-        <figcaption className="font-encre-mono text-[10px] uppercase leading-tight tracking-[0.08em] text-encre-bone/55">
+        <figcaption className="font-encre-mono text-[11px] uppercase leading-tight tracking-[0.08em] text-encre-bone/80">
           {label}
         </figcaption>
       </div>
@@ -102,7 +102,7 @@ export default function MoodboardC() {
           <div className="mx-auto w-full max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
             <Link
               href="/"
-              className="font-encre-mono text-xs uppercase tracking-[0.18em] text-encre-bone/55 underline-offset-4 hover:text-encre-ember hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre-ember"
+              className="font-encre-mono text-xs uppercase tracking-[0.18em] text-encre-bone/80 underline-offset-4 hover:text-encre-ember hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre-ember"
             >
               ← Back to hub
             </Link>
@@ -122,7 +122,7 @@ export default function MoodboardC() {
                 lamplight amber over navy, ember where the inks overlap. Loud
                 in texture, quiet in colour: two inks and nothing else.
               </p>
-              <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 font-encre-mono text-[11px] uppercase tracking-[0.15em] text-encre-bone/50">
+              <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 font-encre-mono text-[11px] uppercase tracking-[0.15em] text-encre-bone/75">
                 <li>Two-ink</li>
                 <li>·</li>
                 <li>Overprint</li>
@@ -138,7 +138,7 @@ export default function MoodboardC() {
                 <a
                   key={s.id}
                   href={`#${s.id}`}
-                  className="font-encre-mono text-[11px] uppercase tracking-[0.12em] text-encre-bone/50 underline-offset-4 hover:text-encre-ember hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre-ember"
+                  className="font-encre-mono text-[11px] uppercase tracking-[0.12em] text-encre-bone/75 underline-offset-4 hover:text-encre-ember hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre-ember"
                 >
                   {s.num}. {s.name}
                 </a>
@@ -190,12 +190,12 @@ export default function MoodboardC() {
                           style={{ background: hex }}
                           aria-hidden="true"
                         />
-                        <span className="font-encre-mono text-[9px] leading-tight">
+                        <span className="font-encre-mono text-[10px] leading-tight">
                           {name}
                           <br />
-                          <span className="text-encre-bone/40">{hex}</span>
+                          <span className="text-encre-bone/70">{hex}</span>
                           <br />
-                          <span className="text-encre-bone/40">{role}</span>
+                          <span className="text-encre-bone/70">{role}</span>
                         </span>
                       </div>
                     ))}
@@ -204,7 +204,7 @@ export default function MoodboardC() {
                 <Photo id="p07" index={13} span="col-span-6 sm:col-span-4" h="h-56" />
                 <Photo id="p09" index={14} span="col-span-6 sm:col-span-3" ink="brass" h="h-56" />
                 <Tile index={15} label="Colour roles, fixed" span="col-span-12 sm:col-span-6">
-                  <dl className="w-full font-encre-mono text-[10px] leading-relaxed">
+                  <dl className="w-full font-encre-mono text-[11px] leading-relaxed">
                     {[
                       ["ground", "ink"],
                       ["surface", "deep"],
@@ -214,7 +214,7 @@ export default function MoodboardC() {
                       ["overprint only", "plum"],
                     ].map(([k, v]) => (
                       <div key={k} className="flex justify-between gap-3 border-b border-encre-bone/10 py-0.5">
-                        <dt className="text-encre-bone/45">{k}</dt>
+                        <dt className="text-encre-bone/70">{k}</dt>
                         <dd className="text-encre-bone">{v}</dd>
                       </div>
                     ))}
@@ -223,7 +223,7 @@ export default function MoodboardC() {
                 <Tile index={16} label="Contrast on the ink ground" span="col-span-12 sm:col-span-6" ink="brass">
                   <div className="w-full font-encre-body text-[11px] font-semibold">
                     <p className="bg-encre-ink px-2 py-1 text-encre-bone">Bone on ink · 14.8:1 ✓</p>
-                    <p className="mt-1 bg-encre-ember px-2 py-1 text-encre-ink">Ink on ember · 7.9:1 ✓</p>
+                    <p className="mt-1 bg-encre-ember px-2 py-1 text-encre-ink">Ink on ember · 5.8:1 ✓</p>
                     <p className="mt-1 bg-encre-ink px-2 py-1 text-encre-amber">Amber on ink · 9.4:1 ✓</p>
                     <p className="mt-1 bg-encre-ink px-2 py-1 text-encre-bone/30">Disabled · not meant to be read</p>
                   </div>
@@ -279,7 +279,7 @@ export default function MoodboardC() {
                   </div>
                 </Tile>
                 <Tile index={27} label="Type scale" span="col-span-6 sm:col-span-3" ink="brass">
-                  <div className="w-full font-encre-mono text-[10px] tabular-nums text-encre-bone/40">
+                  <div className="w-full font-encre-mono text-[11px] tabular-nums text-encre-bone/70">
                     {[
                       ["56", "font-encre-display text-2xl uppercase"],
                       ["32", "font-encre-display text-lg uppercase"],
@@ -296,13 +296,13 @@ export default function MoodboardC() {
                 </Tile>
                 <Tile index={28} label="Stop card, after dark" span="col-span-12 sm:col-span-6">
                   <article className="w-full border-l-2 border-encre-ember bg-encre-ink/60 p-3">
-                    <p className="font-encre-mono text-[9px] uppercase tracking-[0.15em] text-encre-amber">
+                    <p className="font-encre-mono text-[10px] uppercase tracking-[0.15em] text-encre-amber">
                       Jour 5 · 20:30
                     </p>
                     <h3 className="mt-1 font-encre-display text-base uppercase leading-tight">
                       Pont Alexandre III
                     </h3>
-                    <p className="mt-1 font-encre-body text-[11px] leading-snug text-encre-bone/65">
+                    <p className="mt-1 font-encre-body text-[11px] leading-snug text-encre-bone/80">
                       Lamps come on at dusk. Walk it east to west.
                     </p>
                   </article>
@@ -321,14 +321,14 @@ export default function MoodboardC() {
                   </div>
                 </Tile>
                 <Tile index={30} label="Chips · brass outline, never filled" span="col-span-12 sm:col-span-5">
-                  <div className="flex flex-wrap gap-1.5 font-encre-mono text-[10px] uppercase tracking-[0.1em]">
+                  <div className="flex flex-wrap gap-1.5 font-encre-mono text-[11px] uppercase tracking-[0.1em]">
                     {["Dîner", "Bar", "Musée", "Tard"].map((t, i) => (
                       <span
                         key={t}
                         className={`rounded-[3px] px-2 py-1 ${
                           i === 0
                             ? "bg-encre-bone text-encre-ink"
-                            : "border border-encre-brass/70 text-encre-bone/75"
+                            : "border border-encre-brass/70 text-encre-bone/85"
                         }`}
                       >
                         {t}
@@ -344,7 +344,7 @@ export default function MoodboardC() {
               <h2 id="credits" className="font-encre-display text-xl uppercase tracking-tight">
                 Image credits
               </h2>
-              <p className="mt-2 max-w-2xl font-encre-body text-xs leading-relaxed text-encre-bone/60">
+              <p className="mt-2 max-w-2xl font-encre-body text-xs leading-relaxed text-encre-bone/80">
                 Twenty collected photographs, stored with the site so the page
                 makes no external requests. Ten further artifacts are
                 specimens drawn in CSS. Unsplash and Pexels images are free to
@@ -356,7 +356,7 @@ export default function MoodboardC() {
                   const p = PHOTOS[id];
                   return (
                     <li key={id} className="flex gap-2">
-                      <span className="shrink-0 tabular-nums text-encre-bone/35">{id}</span>
+                      <span className="shrink-0 tabular-nums text-encre-bone/70">{id}</span>
                       <span>
                         <a
                           href={p.url}
@@ -366,7 +366,7 @@ export default function MoodboardC() {
                         >
                           {p.by}
                         </a>
-                        <span className="text-encre-bone/40">
+                        <span className="text-encre-bone/70">
                           {" "}
                           · {p.src} · {p.lic}
                         </span>
@@ -377,7 +377,7 @@ export default function MoodboardC() {
               </ol>
             </section>
 
-            <footer className="mt-8 flex flex-wrap items-center justify-between gap-2 border-t border-encre-bone/25 pt-5 font-encre-mono text-[10px] uppercase tracking-[0.15em] text-encre-bone/45">
+            <footer className="mt-8 flex flex-wrap items-center justify-between gap-2 border-t border-encre-bone/25 pt-5 font-encre-mono text-[11px] uppercase tracking-[0.15em] text-encre-bone/70">
               <span>6 sections · 30 artifacts</span>
               <span>20 photographs · 10 CSS specimens</span>
             </footer>

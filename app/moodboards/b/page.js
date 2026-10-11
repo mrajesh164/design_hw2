@@ -316,8 +316,8 @@ export default function MoodboardB() {
             </Spec>
             <Spec index={16} label="Contrast · checked, not assumed">
               <div className="w-full font-metro-sans text-[10px] font-semibold">
-                <p className="bg-metro-blue px-2 py-1 text-white">White on blue · 5.9:1 ✓</p>
-                <p className="mt-1 bg-metro-yellow px-2 py-1 text-metro-navy">Navy on yellow · 12.1:1 ✓</p>
+                <p className="bg-metro-blue px-2 py-1 text-white">White on blue · 5.1:1 ✓</p>
+                <p className="mt-1 bg-metro-yellow px-2 py-1 text-metro-navy">Navy on yellow · 11.4:1 ✓</p>
                 <p className="mt-1 border border-metro-line px-2 py-1 text-metro-navy/35">Disabled · not meant to be read</p>
               </div>
             </Spec>
