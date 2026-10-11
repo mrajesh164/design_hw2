@@ -30,11 +30,11 @@ function SectionHead({ num, id, name, blurb, count }) {
         <h2 id={id} className="font-cafe-display text-3xl leading-none tracking-tight">
           {name}
         </h2>
-        <span className="ml-auto font-cafe-body text-[10px] uppercase tracking-[0.18em] text-cafe-ink/45">
+        <span className="ml-auto font-cafe-body text-[10px] uppercase tracking-[0.18em] text-cafe-ink/70">
           {count} artifacts
         </span>
       </div>
-      <p className="mt-1.5 font-cafe-body text-xs italic text-cafe-ink/65">{blurb}</p>
+      <p className="mt-1.5 font-cafe-body text-xs italic text-cafe-ink/70">{blurb}</p>
     </header>
   );
 }
@@ -43,8 +43,8 @@ function SectionHead({ num, id, name, blurb, count }) {
 
 function Caption({ index, text }) {
   return (
-    <figcaption className="mt-2 flex gap-2 font-cafe-body text-[11px] leading-snug text-cafe-ink/60">
-      <span className="shrink-0 tabular-nums text-cafe-ink/35">
+    <figcaption className="mt-2 flex gap-2 font-cafe-body text-[11px] leading-snug text-cafe-ink/70">
+      <span className="shrink-0 tabular-nums text-cafe-ink/70">
         {String(index).padStart(2, "0")}
       </span>
       <span>{text}</span>
@@ -113,8 +113,8 @@ function Swatch({ hex, name, from }) {
       <span className="font-cafe-body text-[11px] leading-tight text-cafe-ink">
         {name}
         <br />
-        <span className="tabular-nums text-cafe-ink/45">{hex}</span>
-        <span className="text-cafe-ink/45"> · {from}</span>
+        <span className="tabular-nums text-cafe-ink/70">{hex}</span>
+        <span className="text-cafe-ink/70"> · {from}</span>
       </span>
     </div>
   );
@@ -137,7 +137,7 @@ export default function MoodboardA() {
         <div className="mx-auto w-full max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
           <Link
             href="/"
-            className="font-cafe-body text-xs uppercase tracking-[0.2em] text-cafe-ink/60 underline-offset-4 hover:text-cafe-tomato hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+            className="font-cafe-body text-xs uppercase tracking-[0.2em] text-cafe-ink/70 underline-offset-4 hover:text-cafe-tomato hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
           >
             ← Back to hub
           </Link>
@@ -154,7 +154,7 @@ export default function MoodboardA() {
               awning overhead. The itinerary should read like a prix-fixe
               menu — unhurried, printed, a little worn at the corners.
             </p>
-            <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 font-cafe-body text-[11px] uppercase tracking-[0.18em] text-cafe-ink/60">
+            <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 font-cafe-body text-[11px] uppercase tracking-[0.18em] text-cafe-ink/70">
               <li>Parchment</li>
               <li>·</li>
               <li>Letterpress</li>
@@ -170,7 +170,7 @@ export default function MoodboardA() {
               <a
                 key={s.id}
                 href={`#${s.id}`}
-                className="font-cafe-body text-[11px] uppercase tracking-[0.16em] text-cafe-ink/55 underline-offset-4 hover:text-cafe-tomato hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                className="font-cafe-body text-[11px] uppercase tracking-[0.16em] text-cafe-ink/70 underline-offset-4 hover:text-cafe-tomato hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
               >
                 {s.num}. {s.name}
               </a>
@@ -205,7 +205,7 @@ export default function MoodboardA() {
                   <Swatch hex="#F6EFE3" name="Cream" from="marble" />
                   <Swatch hex="#E8DCC5" name="Paper" from="parchment" />
                   <Swatch hex="#2B1D16" name="Espresso" from="shopfront" />
-                  <Swatch hex="#C8412B" name="Tomato" from="awning" />
+                  <Swatch hex="#AE3220" name="Tomato" from="awning" />
                   <Swatch hex="#6B6B3A" name="Olive" from="book boxes" />
                   <Swatch hex="#B9795A" name="Clay" from="cobbles" />
                 </div>
@@ -284,7 +284,7 @@ export default function MoodboardA() {
                     <span key={s} className="w-3 bg-cafe-ink/70" style={{ height: `${s}px` }} />
                   ))}
                 </div>
-                <p className="mt-2 font-cafe-body text-[10px] tabular-nums text-cafe-ink/55">
+                <p className="mt-2 font-cafe-body text-[10px] tabular-nums text-cafe-ink/70">
                   4 · 8 · 12 · 16 · 24 · 32 · 48
                 </p>
               </Spec>
@@ -335,7 +335,7 @@ export default function MoodboardA() {
                   <li>Unhurried, not slow</li>
                   <li>Specific, not clever</li>
                   <li>Warm, not cute</li>
-                  <li className="text-cafe-ink/40 line-through">Exclamation marks</li>
+                  <li className="text-cafe-ink/70 line-through">Exclamation marks</li>
                 </ul>
               </Spec>
             </div>
@@ -346,7 +346,7 @@ export default function MoodboardA() {
             <h2 id="credits" className="font-cafe-display text-xl tracking-tight">
               Image credits
             </h2>
-            <p className="mt-1 max-w-2xl font-cafe-body text-xs leading-relaxed text-cafe-ink/60">
+            <p className="mt-1 max-w-2xl font-cafe-body text-xs leading-relaxed text-cafe-ink/70">
               Twenty collected photographs, stored with the site so the page
               makes no external requests. Ten remaining artifacts are
               specimens drawn in CSS. Unsplash and Pexels images are free to
@@ -358,7 +358,7 @@ export default function MoodboardA() {
                 const p = PHOTOS[id];
                 return (
                   <li key={id} className="flex gap-2">
-                    <span className="shrink-0 tabular-nums text-cafe-ink/35">{id}</span>
+                    <span className="shrink-0 tabular-nums text-cafe-ink/70">{id}</span>
                     <span>
                       <a
                         href={p.url}
@@ -368,7 +368,7 @@ export default function MoodboardA() {
                       >
                         {p.by}
                       </a>
-                      <span className="text-cafe-ink/45">
+                      <span className="text-cafe-ink/70">
                         {" "}
                         · {p.src} · {p.lic}
                       </span>
@@ -379,7 +379,7 @@ export default function MoodboardA() {
             </ol>
           </section>
 
-          <footer className="mt-8 border-t border-cafe-ink/30 pt-5 font-cafe-body text-[11px] uppercase tracking-[0.18em] text-cafe-ink/50">
+          <footer className="mt-8 border-t border-cafe-ink/30 pt-5 font-cafe-body text-[11px] uppercase tracking-[0.18em] text-cafe-ink/70">
             5 sections · 30 artifacts · 20 photographs, 10 CSS specimens
           </footer>
         </div>

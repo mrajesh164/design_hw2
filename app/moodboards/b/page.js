@@ -24,8 +24,8 @@ function SectionHead({ num, id, name, blurb, count }) {
       <h2 id={id} className="font-metro-sans text-3xl font-bold leading-none tracking-tight">
         {name}
       </h2>
-      <p className="font-metro-sans text-xs text-metro-navy/60">{blurb}</p>
-      <span className="ml-auto font-metro-mono text-[10px] uppercase tracking-[0.15em] text-metro-navy/40">
+      <p className="font-metro-sans text-xs text-metro-navy/70">{blurb}</p>
+      <span className="ml-auto font-metro-mono text-[10px] uppercase tracking-[0.15em] text-metro-navy/70">
         {count} artifacts
       </span>
     </header>
@@ -40,10 +40,10 @@ function SectionHead({ num, id, name, blurb, count }) {
 function Head({ index, label }) {
   return (
     <div className="flex items-center gap-2 border-b border-metro-line px-3 py-1.5">
-      <span className="font-metro-mono text-[10px] tabular-nums text-metro-navy/45">
+      <span className="font-metro-mono text-[10px] tabular-nums text-metro-navy/70">
         {String(index).padStart(2, "0")}
       </span>
-      <span className="font-metro-sans text-[10px] font-medium uppercase leading-tight tracking-[0.08em] text-metro-navy/60">
+      <span className="font-metro-sans text-[10px] font-medium uppercase leading-tight tracking-[0.08em] text-metro-navy/70">
         {label}
       </span>
     </div>
@@ -135,13 +135,13 @@ export default function MoodboardB() {
       <div className="mx-auto w-full max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 font-metro-sans text-xs font-medium uppercase tracking-[0.12em] text-metro-navy/60 hover:text-metro-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-metro-blue"
+          className="inline-flex items-center gap-1.5 font-metro-sans text-xs font-medium uppercase tracking-[0.12em] text-metro-navy/70 hover:text-metro-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-metro-blue"
         >
           ← Back to hub
         </Link>
 
         <header className="mt-6 bg-metro-navy p-7 sm:p-10">
-          <p className="font-metro-mono text-[11px] uppercase tracking-[0.3em] text-white/55">
+          <p className="font-metro-mono text-[11px] uppercase tracking-[0.3em] text-white/70">
             Mood board B
           </p>
           <h1 className="mt-3 font-metro-sans text-6xl font-bold leading-[0.88] tracking-tight text-white sm:text-8xl">
@@ -157,9 +157,9 @@ export default function MoodboardB() {
             lines, activities are stops, and the interface does what signage
             does: says where you are and what comes next — then stops talking.
           </p>
-          <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-1 font-metro-mono text-[11px] uppercase tracking-[0.12em] text-white/45">
+          <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-1 font-metro-mono text-[11px] uppercase tracking-[0.12em] text-white/70">
             <div className="flex gap-2"><dt>Grid</dt><dd className="text-white">8px</dd></div>
-            <div className="flex gap-2"><dt>Accent</dt><dd className="text-[#6FA4FF]">#0B5FFF</dd></div>
+            <div className="flex gap-2"><dt>Accent</dt><dd className="text-[#6FA4FF]">#0A52E0</dd></div>
             <div className="flex gap-2"><dt>Drawn</dt><dd className="text-white">20</dd></div>
             <div className="flex gap-2"><dt>Photographed</dt><dd className="text-white">10</dd></div>
           </dl>
@@ -170,14 +170,14 @@ export default function MoodboardB() {
             <a
               key={s.id}
               href={`#${s.id}`}
-              className="font-metro-mono text-[11px] uppercase tracking-[0.12em] text-metro-navy/55 hover:text-metro-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-metro-blue"
+              className="font-metro-mono text-[11px] uppercase tracking-[0.12em] text-metro-navy/70 hover:text-metro-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-metro-blue"
             >
               {s.num} {s.name}
             </a>
           ))}
         </nav>
 
-        <p className="mt-6 max-w-2xl font-metro-sans text-sm leading-relaxed text-metro-navy/65">
+        <p className="mt-6 max-w-2xl font-metro-sans text-sm leading-relaxed text-metro-navy/70">
           Most of this board is{" "}
           <strong className="font-semibold text-metro-navy">drawn, not photographed</strong>.
           The Métro's identity is a vector system — enamel, diagram, disc — so
@@ -267,7 +267,7 @@ export default function MoodboardB() {
             <Photo id="b12" index={9} span="col-span-2" h="h-56" />
             <Spec index={10} label="Route line · stops and terminus">
               <svg viewBox="0 0 70 130" className="h-32" aria-hidden="true">
-                <line x1="14" y1="12" x2="14" y2="118" stroke="#0B5FFF" strokeWidth="7" strokeLinecap="round" />
+                <line x1="14" y1="12" x2="14" y2="118" stroke="#0A52E0" strokeWidth="7" strokeLinecap="round" />
                 {[16, 44, 72, 100].map((y) => (
                   <circle key={y} cx="14" cy={y} r="5.5" fill="#fff" stroke="#0B1B3A" strokeWidth="2.5" />
                 ))}
@@ -294,7 +294,7 @@ export default function MoodboardB() {
                 {[["#FFFFFF", "White"], ["#EEF0F3", "Gray"], ["#C9CED6", "Line"], ["#0B1B3A", "Navy"]].map(([hex, n]) => (
                   <div key={hex} className="flex flex-col gap-1">
                     <span className="block h-10 border border-metro-line" style={{ background: hex }} />
-                    <span className="font-metro-mono text-[8px] text-metro-navy/55">{n}</span>
+                    <span className="font-metro-mono text-[8px] text-metro-navy/70">{n}</span>
                   </div>
                 ))}
               </div>
@@ -302,8 +302,8 @@ export default function MoodboardB() {
             <Spec index={14} label="Accent · one blue, one job">
               <div className="w-full">
                 <span className="block h-14 w-full bg-metro-blue" />
-                <p className="mt-2 font-metro-mono text-[10px] tabular-nums text-metro-navy/60">
-                  #0B5FFF · primary action only
+                <p className="mt-2 font-metro-mono text-[10px] tabular-nums text-metro-navy/70">
+                  #0A52E0 · primary action only
                 </p>
               </div>
             </Spec>
@@ -316,7 +316,7 @@ export default function MoodboardB() {
             </Spec>
             <Spec index={16} label="Contrast · checked, not assumed">
               <div className="w-full font-metro-sans text-[10px] font-semibold">
-                <p className="bg-metro-blue px-2 py-1 text-white">White on blue · 5.1:1 ✓</p>
+                <p className="bg-metro-blue px-2 py-1 text-white">White on blue · 6.4:1 ✓</p>
                 <p className="mt-1 bg-metro-yellow px-2 py-1 text-metro-navy">Navy on yellow · 11.4:1 ✓</p>
                 <p className="mt-1 border border-metro-line px-2 py-1 text-metro-navy/35">Disabled · not meant to be read</p>
               </div>
@@ -344,7 +344,7 @@ export default function MoodboardB() {
               </p>
             </Spec>
             <Spec index={19} label="Type scale" span="col-span-2 sm:col-span-1">
-              <div className="w-full font-metro-mono text-[10px] tabular-nums text-metro-navy/45">
+              <div className="w-full font-metro-mono text-[10px] tabular-nums text-metro-navy/70">
                 {[
                   ["48", "font-metro-sans text-3xl font-bold"],
                   ["32", "font-metro-sans text-2xl font-bold"],
@@ -417,8 +417,8 @@ export default function MoodboardB() {
             </Spec>
             <Spec index={29} label="Empty state">
               <div className="w-full border border-dashed border-metro-line py-5 text-center">
-                <p className="font-metro-sans text-xs font-medium text-metro-navy/55">No stops match</p>
-                <p className="mt-0.5 font-metro-mono text-[10px] text-metro-navy/40">Clear filters</p>
+                <p className="font-metro-sans text-xs font-medium text-metro-navy/70">No stops match</p>
+                <p className="mt-0.5 font-metro-mono text-[10px] text-metro-navy/70">Clear filters</p>
               </div>
             </Spec>
             <Spec index={30} label="Rules of the system">
@@ -426,7 +426,7 @@ export default function MoodboardB() {
                 <li>Time first, then place</li>
                 <li>Line colour labels, blue acts</li>
                 <li>Never two accents on screen</li>
-                <li className="text-metro-navy/35 line-through">Soft shadows</li>
+                <li className="text-metro-navy/70 line-through">Soft shadows</li>
               </ul>
             </Spec>
           </Grid>
@@ -437,7 +437,7 @@ export default function MoodboardB() {
           <h2 id="credits" className="font-metro-sans text-xl font-bold tracking-tight">
             Image credits
           </h2>
-          <p className="mt-1 max-w-2xl font-metro-sans text-xs leading-relaxed text-metro-navy/60">
+          <p className="mt-1 max-w-2xl font-metro-sans text-xs leading-relaxed text-metro-navy/70">
             The photographs below are stored with the site, so the page makes
             no external requests. Everything else on this board is drawn in CSS
             and SVG. Unsplash, Pexels and CC0 images need no credit; the CC
@@ -449,7 +449,7 @@ export default function MoodboardB() {
               const p = PHOTOS[id];
               return (
                 <li key={id} className="flex gap-2">
-                  <span className="shrink-0 tabular-nums text-metro-navy/40">{id}</span>
+                  <span className="shrink-0 tabular-nums text-metro-navy/70">{id}</span>
                   <span>
                     <a
                       href={p.url}
@@ -459,7 +459,7 @@ export default function MoodboardB() {
                     >
                       {p.by}
                     </a>
-                    <span className="text-metro-navy/45">
+                    <span className="text-metro-navy/70">
                       {" "}
                       · {p.src} · {p.lic}
                     </span>
@@ -470,7 +470,7 @@ export default function MoodboardB() {
           </ol>
         </section>
 
-        <footer className="mt-8 flex items-center justify-between border-t border-metro-line pt-5 font-metro-mono text-[10px] uppercase tracking-[0.15em] text-metro-navy/50">
+        <footer className="mt-8 flex items-center justify-between border-t border-metro-line pt-5 font-metro-mono text-[10px] uppercase tracking-[0.15em] text-metro-navy/70">
           <span>6 sections · 30 artifacts</span>
           <span>drawn in CSS + SVG, except where credited</span>
         </footer>
