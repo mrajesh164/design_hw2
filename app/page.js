@@ -292,7 +292,7 @@ export default function Home() {
           num="02"
           id="design-systems"
           title="Design Systems"
-          blurb="One UI library per mood board: colour roles, type roles, spacing, shape, components and every state."
+          blurb="One UI library per mood board: color roles, type roles, spacing, shape, components and every state."
         >
           <div className="grid gap-3 sm:grid-cols-3">
             {STYLES.map((s) => (

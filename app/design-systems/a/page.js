@@ -3,7 +3,7 @@ import Link from "next/link";
 export const metadata = {
   title: "Design system A · Café Terrace",
   description:
-    "A UI library in the Café Terrace style: colour and type roles, spacing and shape, components, control states and UI states.",
+    "A UI library in the Café Terrace style: color and type roles, spacing and shape, components, control states and UI states.",
 };
 
 /* ------------------------------------------------------------------ *
@@ -12,7 +12,7 @@ export const metadata = {
  * ------------------------------------------------------------------ */
 
 const SECTIONS = [
-  { num: "I", id: "colour", name: "Colour roles" },
+  { num: "I", id: "color", name: "Color roles" },
   { num: "II", id: "type", name: "Type roles" },
   { num: "III", id: "shape", name: "Spacing & shape" },
   { num: "IV", id: "components", name: "Components" },
@@ -360,10 +360,10 @@ export default function DesignSystemA() {
           </nav>
 
           {/* ============ I · COLOUR ============ */}
-          <section aria-labelledby="colour" className="mt-12">
+          <section aria-labelledby="color" className="mt-12">
             <SectionHead
               {...SECTIONS[0]}
-              blurb="Six roles, plus three semantic colours. Ratios are against the surface the colour is used on."
+              blurb="Six roles, plus three semantic colors. Ratios are against the surface the color is used on."
             />
             <div className="grid grid-cols-2 gap-px bg-cafe-border sm:grid-cols-12">
               {ROLES.map((r) => (
@@ -475,7 +475,7 @@ export default function DesignSystemA() {
               </Plate>
 
               {/* all four roles at once, so the hierarchy is visible rather than described */}
-              <Plate className="sm:col-span-5" title="All four at once" note="Hierarchy comes from size and face, not colour">
+              <Plate className="sm:col-span-5" title="All four at once" note="Hierarchy comes from size and face, not color">
                 <article className="border border-cafe-borderstrong p-3">
                   <p className="font-cafe-body text-[12px] font-semibold uppercase leading-4 tracking-[0.14em] text-cafe-muted">
                     Day 2 · 10:30
@@ -1013,7 +1013,7 @@ export default function DesignSystemA() {
           </section>
 
           <footer className="mt-14 border-t-2 border-cafe-ink/80 pt-5 font-cafe-body text-[11px] uppercase tracking-[0.18em] text-cafe-muted">
-            6 sections · 12 colour roles · 4 type roles · 13 components · 9 controls × 6 states
+            6 sections · 12 color roles · 4 type roles · 13 components · 9 controls × 6 states
           </footer>
         </div>
       </div>

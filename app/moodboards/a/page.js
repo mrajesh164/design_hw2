@@ -9,12 +9,12 @@ export const metadata = {
 };
 
 /* ---------- sections ----------
-   Each section gets its own layout: a collage, a colour strip, a scrapbook
+   Each section gets its own layout: a collage, a color strip, a scrapbook
    column flow, wide material bands. Same board, different pacing.        */
 
 const SECTIONS = [
   { num: "I", id: "atmosphere", name: "Atmosphere", blurb: "The table, the street, the hour.", count: 8 },
-  { num: "II", id: "palette", name: "Palette", blurb: "Every colour sampled from a photograph.", count: 6 },
+  { num: "II", id: "palette", name: "Palette", blurb: "Every color sampled from a photograph.", count: 6 },
   { num: "III", id: "type", name: "Type", blurb: "Printed, hand-lettered, painted on glass.", count: 7 },
   { num: "IV", id: "surface", name: "Surface", blurb: "Paper, marble, iron — and the marks they make.", count: 6 },
   { num: "V", id: "interface", name: "Interface", blurb: "What the system does with all of it.", count: 3 },

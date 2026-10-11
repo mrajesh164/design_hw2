@@ -11,7 +11,7 @@ export const metadata = {
 const SECTIONS = [
   { num: "01", id: "signage", name: "Signage", blurb: "The enamel system: disc, destination, arrow.", count: 7 },
   { num: "02", id: "network", name: "Network", blurb: "Days are lines. Activities are stops.", count: 5 },
-  { num: "03", id: "colour", name: "Colour", blurb: "Line colour labels. One blue acts.", count: 4 },
+  { num: "03", id: "color", name: "Color", blurb: "Line color labels. One blue acts.", count: 4 },
   { num: "04", id: "type", name: "Type", blurb: "Grotesque, tight, tabular where it counts.", count: 3 },
   { num: "05", id: "structure", name: "Structure", blurb: "Repetition, symmetry, the 8px grid.", count: 7 },
   { num: "06", id: "interface", name: "Interface", blurb: "Controls, states, and what not to do.", count: 4 },
@@ -286,7 +286,7 @@ export default function MoodboardB() {
         </section>
 
         {/* 03 — COLOUR */}
-        <section aria-labelledby="colour" className="mt-12">
+        <section aria-labelledby="color" className="mt-12">
           <SectionHead {...SECTIONS[2]} />
           <Grid>
             <Spec index={13} label="Palette · neutrals do the work">
@@ -424,7 +424,7 @@ export default function MoodboardB() {
             <Spec index={30} label="Rules of the system">
               <ul className="w-full font-metro-sans text-[11px] leading-relaxed text-metro-navy/80">
                 <li>Time first, then place</li>
-                <li>Line colour labels, blue acts</li>
+                <li>Line color labels, blue acts</li>
                 <li>Never two accents on screen</li>
                 <li className="text-metro-navy/70 line-through">Soft shadows</li>
               </ul>

@@ -21,7 +21,7 @@ export const PHOTOS = {
     w: 1000,
     h: 563,
     alt: "The Pont Alexandre III at blue hour, its row of ornate cast-iron lamp posts glowing gold above the dark Seine, with the lit dome of Les Invalides behind.",
-    note: "Blue hour: the ground colour of this whole board",
+    note: "Blue hour: the ground color of this whole board",
     by: "Ali Aziz",
     src: "Unsplash",
     url: "https://unsplash.com/photos/pont-alexandre-iii-bridge-in-paris-4SkU1WAzQRE",

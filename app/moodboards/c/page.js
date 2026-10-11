@@ -120,7 +120,7 @@ export default function MoodboardC() {
               <p className="mt-5 max-w-xl font-encre-body text-base leading-relaxed text-encre-bone/80">
                 Night ink. The city printed in two passes on dark stock —
                 lamplight amber over navy, ember where the inks overlap. Loud
-                in texture, quiet in colour: two inks and nothing else.
+                in texture, quiet in color: two inks and nothing else.
               </p>
               <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 font-encre-mono text-[11px] uppercase tracking-[0.15em] text-encre-bone/75">
                 <li>Two-ink</li>
@@ -203,7 +203,7 @@ export default function MoodboardC() {
                 </Tile>
                 <Photo id="p07" index={13} span="col-span-6 sm:col-span-4" h="h-56" />
                 <Photo id="p09" index={14} span="col-span-6 sm:col-span-3" ink="brass" h="h-56" />
-                <Tile index={15} label="Colour roles, fixed" span="col-span-12 sm:col-span-6">
+                <Tile index={15} label="Color roles, fixed" span="col-span-12 sm:col-span-6">
                   <dl className="w-full font-encre-mono text-[11px] leading-relaxed">
                     {[
                       ["ground", "ink"],
