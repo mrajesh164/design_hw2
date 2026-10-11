@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { CATEGORIES, CATEGORY_COLOR, DAYS, ITEMS } from "./data";
+import { BLOCKS, CATEGORIES, DAYS, ITEMS, TRIP, blockOf } from "./data";
+
+const BLOCK_COLOR = Object.fromEntries(BLOCKS.map((b) => [b.id, b.color]));
 
 /* ------------------------------------------------------------------ *
  * Everything here happens in React state. Nothing is fetched, nothing
@@ -37,6 +39,15 @@ function duration(a, b) {
   if (h === 0) return `${r} min`;
   return r === 0 ? `${h} h` : `${h} h ${r}`;
 }
+
+/* trip totals and the spend breakdown — computed from the data, not typed in */
+const TRIP_SPEND = ITEMS.reduce((s, i) => s + i.price, 0);
+const BY_CATEGORY = CATEGORIES.map((c) => ({
+  name: c,
+  total: ITEMS.filter((i) => i.category === c).reduce((s, i) => s + i.price, 0),
+  count: ITEMS.filter((i) => i.category === c).length,
+})).sort((a, b) => b.total - a.total);
+const MAX_CATEGORY = Math.max(...BY_CATEGORY.map((c) => c.total));
 
 export default function Itinerary() {
   const [day, setDay] = useState(1);
@@ -120,6 +131,126 @@ export default function Itinerary() {
 
   return (
     <>
+      {/* ---------------- trip overview ---------------- */}
+      <section aria-labelledby="overview" className="mt-10">
+        <h2 id="overview" className="sr-only">
+          Trip overview
+        </h2>
+
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
+          {/* the four numbers worth knowing before any detail */}
+          <div className="grid grid-cols-2 gap-px border border-cafe-border bg-cafe-border sm:grid-cols-4">
+            {[
+              ["Dates", TRIP.dates.replace(" 2026", ""), "2026"],
+              ["Nights", TRIP.nights, "in the 3rd"],
+              ["Stops", ITEMS.length, "across 7 days"],
+              ["Planned spend", money(TRIP_SPEND), "entries & food"],
+            ].map(([k, v, sub]) => (
+              <div key={k} className="bg-cafe-cream p-4">
+                <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
+                  {k}
+                </p>
+                <p className="mt-1 font-cafe-display text-2xl leading-none tracking-tight">
+                  {v}
+                </p>
+                <p className="mt-1 font-cafe-body text-[11px] text-cafe-muted">{sub}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* where you are staying and how you get about */}
+          <div className="border border-cafe-border bg-cafe-cream p-4">
+            <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
+              Base & getting around
+            </p>
+            <p className="mt-1.5 font-cafe-display text-lg leading-tight">{TRIP.base}</p>
+            <dl className="mt-2 space-y-1 font-cafe-body text-[11px]">
+              <div className="flex gap-2">
+                <dt className="w-16 shrink-0 text-cafe-muted">Check in</dt>
+                <dd>{TRIP.checkIn}</dd>
+              </div>
+              <div className="flex gap-2">
+                <dt className="w-16 shrink-0 text-cafe-muted">Check out</dt>
+                <dd>{TRIP.checkOut}</dd>
+              </div>
+              <div className="flex gap-2">
+                <dt className="w-16 shrink-0 text-cafe-muted">Transit</dt>
+                <dd>{TRIP.transit}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+        {/* the week at a glance — also the fastest way to change day */}
+        <ol className="mt-4 grid grid-cols-2 gap-px border border-cafe-border bg-cafe-border sm:grid-cols-4 lg:grid-cols-7">
+          {DAYS.map((d) => {
+            const items = ITEMS.filter((i) => i.day === d.n);
+            const current = d.n === day;
+            return (
+              <li key={d.n}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setDay(d.n);
+                    setOpenId(null);
+                  }}
+                  aria-current={current ? "true" : undefined}
+                  className={`flex h-full w-full flex-col gap-1 p-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-cafe-tomato ${
+                    current ? "bg-cafe-tint" : "bg-cafe-cream hover:bg-cafe-surface2"
+                  }`}
+                >
+                  <span className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.14em] text-cafe-muted">
+                    {d.date}
+                  </span>
+                  <span className="font-cafe-display text-base leading-tight">{d.title}</span>
+                  {/* one tick per stop, inked by time block */}
+                  <span className="mt-auto flex gap-[3px] pt-2" aria-hidden="true">
+                    {items.map((i) => (
+                      <span
+                        key={i.id}
+                        className="h-1.5 w-full"
+                        style={{ background: BLOCK_COLOR[blockOf(i.start)] }}
+                      />
+                    ))}
+                  </span>
+                  <span className="font-cafe-body text-[11px] text-cafe-muted">
+                    {items.length} stops · {money(items.reduce((s, i) => s + i.price, 0))}
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+
+        {/* planned spend by category — one hue, length does the encoding */}
+        <div className="mt-4 border border-cafe-border bg-cafe-cream p-4">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
+              Planned spend by category
+            </p>
+            <p className="font-cafe-body text-[11px] text-cafe-muted">
+              Entries, meals and local transit only — no flights or lodging
+            </p>
+          </div>
+          <ul className="mt-3 flex flex-col gap-2">
+            {BY_CATEGORY.map((c) => (
+              <li key={c.name} className="flex items-center gap-3">
+                <span className="w-20 shrink-0 font-cafe-body text-xs">{c.name}</span>
+                <span className="flex h-4 min-w-px flex-1 items-center">
+                  <span
+                    className="h-full rounded-r-[3px] bg-cafe-clay"
+                    style={{ width: `${Math.max((c.total / MAX_CATEGORY) * 100, 0.6)}%` }}
+                  />
+                </span>
+                <span className="w-14 shrink-0 text-right font-cafe-body text-xs tabular-nums">
+                  {money(c.total)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       {/* ---------------- day navigation ---------------- */}
       <nav aria-label="Days of the trip" className="mt-8 border-b-2 border-cafe-ink/80">
         <ul className="-mb-px flex overflow-x-auto">
@@ -207,22 +338,12 @@ export default function Itinerary() {
                     type="button"
                     aria-pressed={on}
                     onClick={() => toggleCat(c)}
-                    style={
-                      on
-                        ? { background: CATEGORY_COLOR[c], borderColor: CATEGORY_COLOR[c] }
-                        : { borderColor: CATEGORY_COLOR[c], color: CATEGORY_COLOR[c] }
-                    }
                     className={`${CHIP_BASE} ${
                       on
-                        ? "text-cafe-cream"
-                        : "hover:bg-cafe-surface2 active:translate-y-px active:bg-cafe-tint"
+                        ? "border-cafe-ink bg-cafe-ink text-cafe-cream"
+                        : "border-cafe-borderstrong text-cafe-ink hover:bg-cafe-surface2 active:translate-y-px active:bg-cafe-tint"
                     }`}
                   >
-                    <span
-                      aria-hidden="true"
-                      className="h-2 w-2 shrink-0"
-                      style={{ background: on ? "#F6EFE3" : CATEGORY_COLOR[c] }}
-                    />
                     {c}
                   </button>
                 );
@@ -297,12 +418,34 @@ export default function Itinerary() {
               </button>
             </div>
           ) : (
-            <ol className="border-t border-cafe-border">
-              {visible.map((i) => {
+            <div className="flex flex-col gap-7">
+              {BLOCKS.map((b) => {
+                const inBlock = visible.filter((i) => blockOf(i.start) === b.id);
+                if (inBlock.length === 0) return null;
+                return (
+                  <section key={b.id} aria-labelledby={`block-${b.id}`}>
+                    <h3
+                      id={`block-${b.id}`}
+                      className="flex items-baseline gap-2 border-b-2 pb-1"
+                      style={{ borderBottomColor: b.color }}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="h-3 w-3 shrink-0 self-center"
+                        style={{ background: b.color }}
+                      />
+                      <span className="font-cafe-display text-xl leading-none">{b.label}</span>
+                      <span className="font-cafe-body text-[11px] text-cafe-muted">
+                        {b.range} · {inBlock.length}{" "}
+                        {inBlock.length === 1 ? "stop" : "stops"}
+                      </span>
+                    </h3>
+                    <ol>
+              {inBlock.map((i) => {
                 const isOpen = i.id === openId;
                 const isDone = done.includes(i.id);
                 return (
-                  <li key={i.id} className="border-b border-cafe-border">
+                  <li key={i.id} className="border-b border-cafe-border last:border-0">
                     <button
                       type="button"
                       onClick={(e) => openItem(i.id, e.currentTarget)}
@@ -311,7 +454,7 @@ export default function Itinerary() {
                       style={{
                         borderLeftColor: isOpen
                           ? "var(--color-cafe-tomato)"
-                          : CATEGORY_COLOR[i.category],
+                          : BLOCK_COLOR[blockOf(i.start)],
                       }}
                       className={`flex w-full items-start gap-4 border-l-4 py-4 pl-[8px] pr-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-cafe-tomato ${
                         isOpen ? "bg-cafe-tint" : "hover:bg-cafe-surface2 active:bg-cafe-tint"
@@ -346,11 +489,8 @@ export default function Itinerary() {
                             </span>
                           ) : null}
                         </span>
-                        <span className="mt-0.5 block font-cafe-body text-[11px] uppercase tracking-[0.12em]">
-                          <span style={{ color: CATEGORY_COLOR[i.category] }} className="font-semibold">
-                            {i.category}
-                          </span>
-                          <span className="text-cafe-muted"> · {i.area}</span>
+                        <span className="mt-0.5 block font-cafe-body text-[11px] uppercase tracking-[0.12em] text-cafe-muted">
+                          {i.category} · {i.area}
                         </span>
                       </span>
 
@@ -369,7 +509,11 @@ export default function Itinerary() {
                   </li>
                 );
               })}
-            </ol>
+                    </ol>
+                  </section>
+                );
+              })}
+            </div>
           )}
         </section>
 
@@ -404,16 +548,18 @@ export default function Itinerary() {
               <div
                 className="flex items-start justify-between gap-3 border-b-2 p-4"
                 style={{
-                  borderBottomColor: CATEGORY_COLOR[open.category],
-                  background: `color-mix(in srgb, ${CATEGORY_COLOR[open.category]} 10%, #F6EFE3)`,
+                  borderBottomColor: BLOCK_COLOR[blockOf(open.start)],
+                  background: `color-mix(in srgb, ${BLOCK_COLOR[blockOf(open.start)]} 10%, #F6EFE3)`,
                 }}
               >
                 <div className="min-w-0">
-                  <p
-                    className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em]"
-                    style={{ color: CATEGORY_COLOR[open.category] }}
-                  >
-                    {open.category} · Day {open.day} · {open.start}–{open.end}
+                  <p className="flex items-center gap-2 font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em] text-cafe-ink">
+                    <span
+                      aria-hidden="true"
+                      className="h-2.5 w-2.5 shrink-0"
+                      style={{ background: BLOCK_COLOR[blockOf(open.start)] }}
+                    />
+                    {blockOf(open.start)} · Day {open.day} · {open.start}–{open.end}
                   </p>
                   <h3
                     id="stop-detail-title"
@@ -439,12 +585,7 @@ export default function Itinerary() {
                   {[
                     ["Price", money(open.price)],
                     ["Duration", duration(open.start, open.end)],
-                    [
-                      "Category",
-                      <span key="c" style={{ color: CATEGORY_COLOR[open.category] }}>
-                        {open.category}
-                      </span>,
-                    ],
+                    ["Category", open.category],
                     ["Nearest", open.metro],
                   ].map(([k, v]) => (
                     <div key={k}>

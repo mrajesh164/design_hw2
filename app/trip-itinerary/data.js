@@ -13,14 +13,38 @@ export const CATEGORIES = [
 ];
 
 export const DAYS = [
-  { n: 1, title: "Right Bank, slowly", area: "1st & 2nd" },
-  { n: 2, title: "Île de la Cité & the Marais", area: "1st & 4th" },
-  { n: 3, title: "Left Bank", area: "6th & 7th" },
-  { n: 4, title: "Montmartre", area: "18th" },
-  { n: 5, title: "The tower and the river", area: "7th & 8th" },
-  { n: 6, title: "Versailles", area: "day trip" },
-  { n: 7, title: "East Paris, last look", area: "10th, 11th & 20th" },
+  { n: 1, date: "Mon 11 May", title: "Right Bank, slowly", area: "1st & 2nd" },
+  { n: 2, date: "Tue 12 May", title: "Île de la Cité & the Marais", area: "1st & 4th" },
+  { n: 3, date: "Wed 13 May", title: "Left Bank", area: "6th & 7th" },
+  { n: 4, date: "Thu 14 May", title: "Montmartre", area: "18th" },
+  { n: 5, date: "Fri 15 May", title: "The tower and the river", area: "7th & 8th" },
+  { n: 6, date: "Sat 16 May", title: "Versailles", area: "day trip" },
+  { n: 7, date: "Sun 17 May", title: "East Paris, last look", area: "10th, 11th & 20th" },
 ];
+
+export const TRIP = {
+  dates: "Mon 11 – Sun 17 May 2026",
+  nights: 6,
+  base: "Rental flat, rue de Turenne, 3rd",
+  checkIn: "Mon 11 May, 15:00",
+  checkOut: "Sun 17 May, 11:00",
+  transit: "Navigo Easy, zones 1–3; a separate ticket for the RER to Versailles",
+};
+
+// Three time blocks. These colors were validated with the dataviz palette
+// checker against the cream surface: CVD separation ΔE 11.2, normal-vision
+// ΔE 19.1, all three ≥3:1 as marks. They are marks only — never text.
+export const BLOCKS = [
+  { id: "Morning", label: "Morning", range: "before 12:00", color: "#A86A00" },
+  { id: "Afternoon", label: "Afternoon", range: "12:00 – 18:00", color: "#0F7A72" },
+  { id: "Evening", label: "Evening", range: "after 18:00", color: "#4A42B8" },
+];
+
+export function blockOf(start) {
+  const h = Number(start.split(":")[0]);
+  if (h < 12) return "Morning";
+  return h < 18 ? "Afternoon" : "Evening";
+}
 
 export const ITEMS = [
   // ---- Day 1 ----
@@ -31,7 +55,7 @@ export const ITEMS = [
   { id: "d1-5", day: 1, start: "19:30", end: "21:00", category: "Evening", title: "Dinner, Bouillon Chartier", area: "9th", price: 24, metro: "Grands Boulevards, ligne 8", note: "An 1896 workers' canteen with the original mirrored room, brass racks and waiters who write the bill on the paper tablecloth. Cheap, loud, and genuinely old.", tip: "No reservations. Arrive at 19:00 or expect to queue. Shared tables are normal, not a mistake.", closed: null },
 
   // ---- Day 2 ----
-  { id: "d2-1", day: 2, start: "09:15", end: "10:00", category: "Market", title: "Marché Bastille", area: "11th", price: 0, metro: "Bastille, lignes 1/5/8", note: "The big Thursday and Sunday market along boulevard Richard-Lenoir. Oysters shucked at the stall, rotisserie potatoes under the chickens, cheese sold by people who ask what day you plan to eat it.", tip: "Thursday and Sunday only. On other days, Marché d'Aligre is the substitute.", closed: "Mon–Wed, Fri, Sat" },
+  { id: "d2-1", day: 2, start: "09:15", end: "10:00", category: "Market", title: "Marché des Enfants Rouges", area: "Marais", price: 0, metro: "Filles du Calvaire, ligne 8", note: "The oldest covered market in Paris, from 1615, now as much lunch counters as produce. Narrow, loud and roofed, which matters if the morning is wet.", tip: "Go for the produce before eleven; go for the food stalls after. Doing both in one visit means queueing twice.", closed: "Mon" },
   { id: "d2-2", day: 2, start: "10:30", end: "12:00", category: "Museum", title: "Sainte-Chapelle", area: "Île de la Cité", price: 11.5, metro: "Cité, ligne 4", note: "Fifteen stained-glass windows reaching the vault, best about an hour after opening when the south wall lights up. The lower chapel is a dim red and blue warm-up for the stairs.", tip: "The combined ticket with the Conciergerie next door saves a few euros, and the security queue on the Conciergerie side is shorter." },
   { id: "d2-3", day: 2, start: "12:30", end: "13:45", category: "Food", title: "Lunch on rue des Rosiers", area: "Marais", price: 12, metro: "Saint-Paul, ligne 1", note: "Falafel eaten standing up, or a proper sit-down at one of the older delis. The street is short and almost entirely about one thing.", tip: "Most of the street closes Saturday for Shabbat. Friday afternoon is the busiest it gets.", closed: "Sat" },
   { id: "d2-4", day: 2, start: "14:15", end: "15:15", category: "Walk", title: "Place des Vosges & the arcades", area: "Marais", price: 0, metro: "Chemin Vert, ligne 8", note: "The oldest planned square in Paris, identical on all four sides. Walk the arcade first, then cut through the Hôtel de Sully passage to rue Saint-Antoine.", tip: "The passage through Hôtel de Sully is an unmarked door in the south-west corner. It looks private. It is not." },
@@ -73,18 +97,10 @@ export const ITEMS = [
   { id: "d7-5", day: 7, start: "18:00", end: "19:00", category: "Landmark", title: "Parc de Belleville at sunset", area: "20th", price: 0, metro: "Pyrénées, ligne 11", note: "The highest park in Paris, with the whole city laid out west and the tower on the horizon. Locals, a few beers, almost no visitors.", tip: "The terrace at the top of the park, not the bottom. Come twenty minutes before sunset." },
 ];
 
-// One color per category, each measured against cream (#F6EFE3):
-// all clear 4.5:1 as text, as cream-on-fill, and on their own 10% tint.
-// Tomato is deliberately absent — it stays reserved for the primary action.
-export const CATEGORY_COLOR = {
-  Museum: "#3F5668", // slate   · 6.70:1
-  Food: "#8C4A2F", // clay      · 5.86:1
-  Market: "#55682C", // olive   · 5.40:1
-  Walk: "#6B5423", // bronze    · 6.30:1
-  Park: "#356B45", // green     · 5.50:1
-  Landmark: "#6B3A52", // plum  · 7.81:1
-  Evening: "#41477A", // indigo · 7.63:1
-};
+// Categories are labelled in text, not color-coded. Seven categorical hues
+// could not be separated safely on this surface — the closest pair measured
+// ΔE 6.4 for normal vision and ΔE 0.3 under deuteranopia. Color now encodes
+// the three time blocks instead, where separation is achievable.
 
 export const CATEGORY_LABEL = {
   Museum: "Museums & galleries",

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Itinerary from "./itinerary";
-import { CATEGORIES, CATEGORY_COLOR } from "./data";
+import { BLOCKS } from "./data";
 
 export const metadata = {
   title: "Paris in a Week · A seven-day itinerary",
@@ -40,30 +40,30 @@ export default function TripItinerary() {
               Thirty-five stops, roughly in the order you would walk them, with
               the times worth arriving at and the things worth skipping.
             </p>
-            {/* an awning stripe, one band per category — the color key for the
-                whole page, and the first thing the palette does */}
-            <ul className="mt-6 flex h-3 w-full overflow-hidden" aria-hidden="true">
-              {CATEGORIES.map((c) => (
+            {/* a printed ribbon in the three block inks — decoration that
+                doubles as the key for the colour used down the page */}
+            <ul className="mt-6 flex h-3 w-full gap-[2px] overflow-hidden" aria-hidden="true">
+              {[0, 1, 2, 0, 1, 2, 0, 1, 2].map((i, k) => (
                 <li
-                  key={c}
+                  key={k}
                   className="h-full flex-1"
-                  style={{ background: CATEGORY_COLOR[c] }}
+                  style={{ background: BLOCKS[i].color }}
                 />
               ))}
             </ul>
-            <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
-              {CATEGORIES.map((c) => (
+            <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1">
+              {BLOCKS.map((b) => (
                 <li
-                  key={c}
-                  className="flex items-center gap-1.5 font-cafe-body text-[10px] font-semibold uppercase tracking-[0.12em]"
-                  style={{ color: CATEGORY_COLOR[c] }}
+                  key={b.id}
+                  className="flex items-center gap-1.5 font-cafe-body text-[11px] text-cafe-ink"
                 >
                   <span
                     aria-hidden="true"
-                    className="h-2 w-2"
-                    style={{ background: CATEGORY_COLOR[c] }}
+                    className="h-2.5 w-2.5 shrink-0"
+                    style={{ background: b.color }}
                   />
-                  {c}
+                  <span className="font-semibold uppercase tracking-[0.12em]">{b.label}</span>
+                  <span className="text-cafe-muted">{b.range}</span>
                 </li>
               ))}
             </ul>
@@ -89,9 +89,9 @@ export default function TripItinerary() {
               </Link>{" "}
               it came from. Filtering, searching and marking stops as done all
               happen in the browser and are forgotten on reload — there is no
-              database, no account and no network request. The seven category colors extend the system for this site; each was
-              measured against the page surface and clears 4.5:1 as text, as a
-              fill and on its own tint. Prices and opening days are planning
+              database, no account and no network request. Color marks the three time blocks, not the categories: seven
+              categorical hues could not be told apart safely on this surface,
+              so categories are labelled in words instead. Prices and opening days are planning
               estimates, not live information.
             </p>
           </footer>
