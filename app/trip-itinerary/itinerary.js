@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { BLOCKS, CATEGORIES, DAYS, ITEMS, TRIP, blockOf } from "./data";
+import { STOP_PHOTOS } from "./photos";
 
 /* ------------------------------------------------------------------ *
  * Everything here happens in React state. Nothing is fetched, nothing
@@ -495,6 +497,18 @@ export default function Itinerary() {
                                   </span>
                                 </span>
 
+                                {/* decorative here — the title already names the place */}
+                                <span className="hidden shrink-0 border border-cafe-ink/15 bg-cafe-cream p-1 sm:block">
+                                  <Image
+                                    src={`/trip/stops/${i.id}.jpg`}
+                                    alt=""
+                                    width={900}
+                                    height={900}
+                                    sizes="96px"
+                                    className="block h-12 w-16 object-cover"
+                                  />
+                                </span>
+
                                 <span className="min-w-0 flex-1">
                                   <span className="flex flex-wrap items-center gap-2">
                                     <span
@@ -569,6 +583,28 @@ export default function Itinerary() {
                 aria-labelledby="stop-detail-title"
                 className="outline-none"
               >
+                <div className="border-b border-cafe-border bg-cafe-paper p-2">
+                  <Image
+                    src={`/trip/stops/${open.id}.jpg`}
+                    alt={STOP_PHOTOS[open.id].alt}
+                    width={900}
+                    height={900}
+                    sizes="(max-width: 1024px) 100vw, 380px"
+                    className="block h-40 w-full object-cover"
+                  />
+                  <p className="mt-1.5 font-cafe-body text-[10px] leading-snug text-cafe-muted">
+                    {STOP_PHOTOS[open.id].note ? `${STOP_PHOTOS[open.id].note}. ` : ""}
+                    <a
+                      href={STOP_PHOTOS[open.id].url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="underline decoration-cafe-borderstrong underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                    >
+                      {STOP_PHOTOS[open.id].by}
+                    </a>
+                    , {STOP_PHOTOS[open.id].src} · {STOP_PHOTOS[open.id].lic}
+                  </p>
+                </div>
                 <div
                   className="flex items-start justify-between gap-3 border-b-2 p-4"
                   style={{

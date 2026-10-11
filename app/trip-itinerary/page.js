@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Itinerary from "./itinerary";
 import Image from "next/image";
+import { HERO_PHOTO, STOP_PHOTOS } from "./photos";
+import { ITEMS } from "./data";
 
 export const metadata = {
   title: "Paris in a Week · A seven-day itinerary",
@@ -73,7 +75,59 @@ export default function TripItinerary() {
 
           <Itinerary />
 
-          <footer className="mt-16 border-t-2 border-cafe-ink/80 pt-5">
+          {/* several of these licences legally require a visible credit, so
+              this is a real credits list rather than a courtesy one */}
+          <section aria-labelledby="credits" className="mt-16 border-t-2 border-cafe-ink/80 pt-6">
+            <h2 id="credits" className="font-cafe-display text-2xl tracking-tight">
+              Photograph Credits
+            </h2>
+            <p className="mt-1 max-w-2xl font-cafe-body text-xs leading-relaxed text-cafe-muted">
+              Thirty-six photographs, all stored with the site. Unsplash and
+              Pexels images are free to use and credited as a courtesy; the
+              Creative Commons ones require the credit and licence named below,
+              and the ShareAlike ones carry that condition onward. A few are a
+              close stand-in rather than the exact place — each of those says so.
+            </p>
+            <ol className="mt-4 grid gap-x-8 gap-y-1.5 font-cafe-body text-[11px] leading-snug text-cafe-muted sm:grid-cols-2">
+              <li className="flex gap-2">
+                <span className="w-24 shrink-0 text-cafe-ink">Masthead</span>
+                <span>
+                  <a
+                    href={HERO_PHOTO.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-cafe-ink underline decoration-cafe-borderstrong underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                  >
+                    {HERO_PHOTO.by}
+                  </a>
+                  , {HERO_PHOTO.src} · {HERO_PHOTO.lic}
+                </span>
+              </li>
+              {ITEMS.map((i) => {
+                const p = STOP_PHOTOS[i.id];
+                if (!p) return null;
+                return (
+                  <li key={i.id} className="flex gap-2">
+                    <span className="w-24 shrink-0 text-cafe-ink">{i.title}</span>
+                    <span>
+                      <a
+                        href={p.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-cafe-ink underline decoration-cafe-borderstrong underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                      >
+                        {p.by}
+                      </a>
+                      , {p.src} · {p.lic}
+                      {p.note ? <span className="block italic">{p.note}</span> : null}
+                    </span>
+                  </li>
+                );
+              })}
+            </ol>
+          </section>
+
+          <footer className="mt-10 border-t border-cafe-border pt-5">
             <p className="max-w-2xl font-cafe-body text-xs leading-relaxed text-cafe-muted">
               Built in the Café Terrace style — see the{" "}
               <Link
