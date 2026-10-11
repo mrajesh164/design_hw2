@@ -297,7 +297,7 @@ export default function MoodboardC() {
                 <Tile index={28} label="Stop card, after dark" span="col-span-12 sm:col-span-6">
                   <article className="w-full border-l-2 border-encre-ember bg-encre-ink/60 p-3">
                     <p className="font-encre-mono text-[10px] uppercase tracking-[0.15em] text-encre-amber">
-                      Jour 5 · 20:30
+                      Day 5 · 20:30
                     </p>
                     <h3 className="mt-1 font-encre-display text-base uppercase leading-tight">
                       Pont Alexandre III
@@ -322,7 +322,7 @@ export default function MoodboardC() {
                 </Tile>
                 <Tile index={30} label="Chips · brass outline, never filled" span="col-span-12 sm:col-span-5">
                   <div className="flex flex-wrap gap-1.5 font-encre-mono text-[11px] uppercase tracking-[0.1em]">
-                    {["Dîner", "Bar", "Musée", "Tard"].map((t, i) => (
+                    {["Dinner", "Bar", "Museum", "Late"].map((t, i) => (
                       <span
                         key={t}
                         className={`rounded-[3px] px-2 py-1 ${

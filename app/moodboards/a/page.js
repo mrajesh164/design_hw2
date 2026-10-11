@@ -305,24 +305,24 @@ export default function MoodboardA() {
               <Spec index={28} caption="Buttons: tomato is the primary action, and nothing else">
                 <div className="flex flex-col gap-2">
                   <span className="block bg-cafe-tomato px-3 py-2 text-center font-cafe-body text-xs font-semibold uppercase tracking-[0.14em] text-cafe-cream">
-                    Réserver
+                    Book this
                   </span>
                   <span className="block border border-cafe-ink/70 px-3 py-2 text-center font-cafe-body text-xs font-semibold uppercase tracking-[0.14em]">
-                    Détails
+                    Details
                   </span>
                   <span className="block px-3 py-2 text-center font-cafe-body text-xs uppercase tracking-[0.14em] text-cafe-ink/35">
-                    Complet
+                    Sold out
                   </span>
                 </div>
               </Spec>
-              <Spec index={29} caption="Category chips, taken from the chalkboard">
+              <Spec index={29} caption="Category chips — English labels, chalkboard manner">
                 <div className="flex flex-wrap gap-1.5 font-cafe-body text-[10px] uppercase tracking-[0.12em]">
                   {[
-                    ["Musée", "border-cafe-ink/40"],
-                    ["Repas", "border-cafe-clay"],
-                    ["Marché", "border-cafe-olive"],
-                    ["Parc", "border-cafe-olive"],
-                    ["Soir", "border-cafe-ink/40"],
+                    ["Museum", "border-cafe-ink/40"],
+                    ["Food", "border-cafe-clay"],
+                    ["Market", "border-cafe-olive"],
+                    ["Park", "border-cafe-olive"],
+                    ["Evening", "border-cafe-ink/40"],
                   ].map(([t, c]) => (
                     <span key={t} className={`border px-2 py-0.5 ${c}`}>
                       {t}
