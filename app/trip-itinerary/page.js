@@ -40,7 +40,7 @@ export default function TripItinerary() {
               </h1>
               <p className="mt-5 max-w-xl font-cafe-body text-base leading-relaxed">
                 One neighbourhood a day, with the rest left for the next trip.
-                Thirty-five stops, roughly in the order you would walk them,
+                Thirty-seven stops, roughly in the order you would walk them,
                 with the times worth arriving at and the things worth skipping.
               </p>
             </div>
@@ -82,7 +82,7 @@ export default function TripItinerary() {
               Photograph Credits
             </h2>
             <p className="mt-1 max-w-2xl font-cafe-body text-xs leading-relaxed text-cafe-muted">
-              Thirty-six photographs, all stored with the site. Unsplash and
+              Thirty-eight photographs, all stored with the site. Unsplash and
               Pexels images are free to use and credited as a courtesy; the
               Creative Commons ones require the credit and licence named below,
               and the ShareAlike ones carry that condition onward. A few are a

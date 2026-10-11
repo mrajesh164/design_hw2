@@ -83,7 +83,13 @@ export default function Itinerary() {
   const panelRef = useRef(null);
   const lastTrigger = useRef(null);
 
-  const dayItems = useMemo(() => ITEMS.filter((i) => i.day === day), [day]);
+  const dayItems = useMemo(
+    () =>
+      ITEMS.filter((i) => i.day === day).sort((a, b) =>
+        a.start.localeCompare(b.start),
+      ),
+    [day],
+  );
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
