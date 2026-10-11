@@ -6,9 +6,9 @@ const sections = [
     title: "Mood boards",
     blurb: "Three visual directions, each with a name and a collection of artifacts.",
     links: [
-      { label: "Mood board A", href: "/moodboards/a" },
-      { label: "Mood board B", href: "/moodboards/b" },
-      { label: "Mood board C", href: "/moodboards/c" },
+      { label: "A · Café Terrace", href: "/moodboards/a" },
+      { label: "B · Métro Ligne", href: "/moodboards/b" },
+      { label: "C · Nuit Pop", href: "/moodboards/c" },
     ],
   },
   {
@@ -16,9 +16,9 @@ const sections = [
     title: "Design systems",
     blurb: "One UI library per mood board: color, type, spacing, components and states.",
     links: [
-      { label: "Design system A", href: "/design-systems/a" },
-      { label: "Design system B", href: "/design-systems/b" },
-      { label: "Design system C", href: "/design-systems/c" },
+      { label: "A · Café Terrace", href: "/design-systems/a" },
+      { label: "B · Métro Ligne", href: "/design-systems/b" },
+      { label: "C · Nuit Pop", href: "/design-systems/c" },
     ],
   },
 ];

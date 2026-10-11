@@ -3,4 +3,40 @@
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* A · Café Terrace */
+  --color-cafe-cream: #f6efe3;
+  --color-cafe-paper: #e8dcc5;
+  --color-cafe-ink: #2b1d16;
+  --color-cafe-tomato: #c8412b;
+  --color-cafe-olive: #6b6b3a;
+  --color-cafe-clay: #b9795a;
+  --color-cafe-mustard: #d9a441;
+  --font-cafe-display: var(--font-fraunces), Georgia, serif;
+  --font-cafe-body: var(--font-source-sans), system-ui, sans-serif;
+
+  /* B · Métro Ligne */
+  --color-metro-white: #ffffff;
+  --color-metro-gray: #eef0f3;
+  --color-metro-line: #c9ced6;
+  --color-metro-navy: #0b1b3a;
+  --color-metro-blue: #0b5fff;
+  --color-metro-yellow: #ffce00;
+  --color-metro-green: #007a4d;
+  --color-metro-orange: #c25a00;
+  --color-metro-purple: #8e3a8c;
+  --color-metro-red: #c8102e;
+  --font-metro-sans: var(--font-inter-tight), system-ui, sans-serif;
+  --font-metro-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  /* C · Nuit Pop */
+  --color-nuit-ink: #1b1030;
+  --color-nuit-deep: #2e1a55;
+  --color-nuit-cream: #fff6e9;
+  --color-nuit-pink: #ff5ca8;
+  --color-nuit-teal: #2ee6d0;
+  --color-nuit-yellow: #ffd23f;
+  --color-nuit-orange: #ff8a3d;
+  --font-nuit-display: var(--font-bagel), system-ui, sans-serif;
+  --font-nuit-body: var(--font-rubik), system-ui, sans-serif;
 }
