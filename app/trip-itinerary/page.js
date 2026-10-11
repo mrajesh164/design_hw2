@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Itinerary from "./itinerary";
-import { BLOCKS } from "./data";
+import Image from "next/image";
 
 export const metadata = {
   title: "Paris in a Week · A seven-day itinerary",
@@ -28,29 +28,47 @@ export default function TripItinerary() {
           </Link>
 
           {/* masthead: the one place the display face runs at full size */}
-          <header className="mt-6 border-y-2 border-cafe-ink/80 py-7">
-            <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.3em] text-cafe-tomato">
-              Seven days · Paris, on foot
-            </p>
-            <h1 className="mt-2 font-cafe-display text-6xl leading-[0.9] tracking-tight sm:text-8xl">
-              Paris in a Week
-            </h1>
-            <p className="mt-5 max-w-xl font-cafe-body text-base leading-relaxed">
-              One neighbourhood a day, with the rest left for the next trip.
-              Thirty-five stops, roughly in the order you would walk them, with
-              the times worth arriving at and the things worth skipping.
-            </p>
-            {/* a printed ribbon in the three block inks — decoration that
-                doubles as the key for the colour used down the page */}
-            <ul className="mt-6 flex h-3 w-full gap-[2px] overflow-hidden" aria-hidden="true">
-              {[0, 1, 2, 0, 1, 2, 0, 1, 2].map((i, k) => (
-                <li
-                  key={k}
-                  className="h-full flex-1"
-                  style={{ background: BLOCKS[i].color }}
+          <header className="mt-6 grid items-end gap-8 border-y-2 border-cafe-ink/80 py-7 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.3em] text-cafe-tomato">
+                Seven days · Paris, on foot
+              </p>
+              <h1 className="mt-2 font-cafe-display text-6xl leading-[0.9] tracking-tight sm:text-7xl">
+                Paris in a Week
+              </h1>
+              <p className="mt-5 max-w-xl font-cafe-body text-base leading-relaxed">
+                One neighbourhood a day, with the rest left for the next trip.
+                Thirty-five stops, roughly in the order you would walk them,
+                with the times worth arriving at and the things worth skipping.
+              </p>
+            </div>
+
+            {/* a printed photograph, pinned to the page */}
+            <figure className="lg:col-span-5">
+              <div className="border border-cafe-ink/15 bg-cafe-cream p-2 shadow-[4px_4px_0_rgba(43,29,22,0.18)]">
+                <Image
+                  src="/trip/hero.jpg"
+                  alt="A cobbled Montmartre street at golden hour, with two people walking past the pink corner facade of La Maison Rose and the city spread out beyond."
+                  width={1100}
+                  height={825}
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="block h-56 w-full object-cover sm:h-64 lg:h-full"
                 />
-              ))}
-            </ul>
+              </div>
+              <figcaption className="mt-2 font-cafe-body text-[11px] text-cafe-muted">
+                Rue de l&rsquo;Abreuvoir, Montmartre — day 4.{" "}
+                <a
+                  href="https://unsplash.com/photos/cobblestone-street-with-buildings-and-people-at-sunset-0KLCWI3QkIk"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline decoration-cafe-borderstrong underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                >
+                  Lens by Benji
+                </a>
+                , Unsplash.
+              </figcaption>
+            </figure>
           </header>
 
           <Itinerary />
