@@ -51,22 +51,6 @@ export default function TripItinerary() {
                 />
               ))}
             </ul>
-            <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1">
-              {BLOCKS.map((b) => (
-                <li
-                  key={b.id}
-                  className="flex items-center gap-1.5 font-cafe-body text-[11px] text-cafe-ink"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="h-2.5 w-2.5 shrink-0"
-                    style={{ background: b.color }}
-                  />
-                  <span className="font-semibold uppercase tracking-[0.12em]">{b.label}</span>
-                  <span className="text-cafe-muted">{b.range}</span>
-                </li>
-              ))}
-            </ul>
           </header>
 
           <Itinerary />

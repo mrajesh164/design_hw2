@@ -3,13 +3,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { BLOCKS, CATEGORIES, DAYS, ITEMS, TRIP, blockOf } from "./data";
 
-const BLOCK_COLOR = Object.fromEntries(BLOCKS.map((b) => [b.id, b.color]));
-
 /* ------------------------------------------------------------------ *
  * Everything here happens in React state. Nothing is fetched, nothing
  * is stored — reloading the page resets the plan, which is intended.
  * Built from design system A (Café Terrace).
  * ------------------------------------------------------------------ */
+
+const BLOCK_COLOR = Object.fromEntries(BLOCKS.map((b) => [b.id, b.color]));
 
 const BTN =
   "inline-flex items-center justify-center gap-2 rounded-[2px] px-4 py-2 font-cafe-body text-xs font-semibold uppercase tracking-[0.12em] transition-colors disabled:cursor-not-allowed";
@@ -40,21 +40,42 @@ function duration(a, b) {
   return r === 0 ? `${h} h` : `${h} h ${r}`;
 }
 
-/* trip totals and the spend breakdown — computed from the data, not typed in */
+/* trip totals and the spend breakdown — computed, not typed in */
 const TRIP_SPEND = ITEMS.reduce((s, i) => s + i.price, 0);
 const BY_CATEGORY = CATEGORIES.map((c) => ({
   name: c,
   total: ITEMS.filter((i) => i.category === c).reduce((s, i) => s + i.price, 0),
-  count: ITEMS.filter((i) => i.category === c).length,
 })).sort((a, b) => b.total - a.total);
 const MAX_CATEGORY = Math.max(...BY_CATEGORY.map((c) => c.total));
+
+/* one heading pattern, used three times, so the page has a visible spine */
+function SectionHead({ num, id, title, blurb, aside }) {
+  return (
+    <header className="mb-5 flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b-2 border-cafe-ink/80 pb-2">
+      <div className="flex items-baseline gap-3">
+        <span className="font-cafe-display text-2xl leading-none text-cafe-tomato">
+          {num}
+        </span>
+        <div>
+          <h2 id={id} className="font-cafe-display text-3xl leading-none tracking-tight">
+            {title}
+          </h2>
+          {blurb ? (
+            <p className="mt-1 font-cafe-body text-xs italic text-cafe-muted">{blurb}</p>
+          ) : null}
+        </div>
+      </div>
+      {aside}
+    </header>
+  );
+}
 
 export default function Itinerary() {
   const [day, setDay] = useState(1);
   const [cats, setCats] = useState([]); // empty = all categories
   const [query, setQuery] = useState("");
   const [openId, setOpenId] = useState(null);
-  const [done, setDone] = useState([]); // ids marked as done, lost on reload
+  const [done, setDone] = useState([]); // lost on reload, deliberately
   const [hideDone, setHideDone] = useState(false);
 
   const panelRef = useRef(null);
@@ -78,7 +99,6 @@ export default function Itinerary() {
 
   const open = openId ? ITEMS.find((i) => i.id === openId) : null;
 
-  /* day totals describe the whole day, not the filtered view */
   const totals = useMemo(() => {
     const cost = dayItems.reduce((s, i) => s + i.price, 0);
     const mins = dayItems.reduce((s, i) => s + minutesBetween(i.start, i.end), 0);
@@ -87,7 +107,6 @@ export default function Itinerary() {
 
   const filtered = cats.length > 0 || query.trim() !== "" || hideDone;
 
-  /* close the panel on Escape and give focus back to whatever opened it */
   useEffect(() => {
     if (!open) return;
     const onKey = (e) => {
@@ -108,12 +127,17 @@ export default function Itinerary() {
     }
   }, [open]);
 
+  function goToDay(n) {
+    setDay(n);
+    setOpenId(null);
+  }
+
   function toggleCat(c) {
-    setCats((prev) => (prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c]));
+    setCats((p) => (p.includes(c) ? p.filter((x) => x !== c) : [...p, c]));
   }
 
   function toggleDone(id) {
-    setDone((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+    setDone((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
   }
 
   function clearFilters() {
@@ -122,23 +146,20 @@ export default function Itinerary() {
     setHideDone(false);
   }
 
-  function openItem(id, el) {
-    lastTrigger.current = el;
-    setOpenId(id);
-  }
-
   const activeDay = DAYS.find((d) => d.n === day);
 
   return (
     <>
-      {/* ---------------- trip overview ---------------- */}
-      <section aria-labelledby="overview" className="mt-10">
-        <h2 id="overview" className="sr-only">
-          Trip overview
-        </h2>
+      {/* ================= 01 · THE TRIP ================= */}
+      <section aria-labelledby="trip" className="mt-12">
+        <SectionHead
+          num="01"
+          id="trip"
+          title="The trip"
+          blurb="What it costs, where you sleep, and how you get about."
+        />
 
         <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
-          {/* the four numbers worth knowing before any detail */}
           <div className="grid grid-cols-2 gap-px border border-cafe-border bg-cafe-border sm:grid-cols-4">
             {[
               ["Dates", TRIP.dates.replace(" 2026", ""), "2026"],
@@ -158,71 +179,26 @@ export default function Itinerary() {
             ))}
           </div>
 
-          {/* where you are staying and how you get about */}
           <div className="border border-cafe-border bg-cafe-cream p-4">
             <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
-              Base & getting around
+              Base &amp; getting around
             </p>
             <p className="mt-1.5 font-cafe-display text-lg leading-tight">{TRIP.base}</p>
             <dl className="mt-2 space-y-1 font-cafe-body text-[11px]">
-              <div className="flex gap-2">
-                <dt className="w-16 shrink-0 text-cafe-muted">Check in</dt>
-                <dd>{TRIP.checkIn}</dd>
-              </div>
-              <div className="flex gap-2">
-                <dt className="w-16 shrink-0 text-cafe-muted">Check out</dt>
-                <dd>{TRIP.checkOut}</dd>
-              </div>
-              <div className="flex gap-2">
-                <dt className="w-16 shrink-0 text-cafe-muted">Transit</dt>
-                <dd>{TRIP.transit}</dd>
-              </div>
+              {[
+                ["Check in", TRIP.checkIn],
+                ["Check out", TRIP.checkOut],
+                ["Transit", TRIP.transit],
+              ].map(([k, v]) => (
+                <div key={k} className="flex gap-2">
+                  <dt className="w-16 shrink-0 text-cafe-muted">{k}</dt>
+                  <dd>{v}</dd>
+                </div>
+              ))}
             </dl>
           </div>
         </div>
 
-        {/* the week at a glance — also the fastest way to change day */}
-        <ol className="mt-4 grid grid-cols-2 gap-px border border-cafe-border bg-cafe-border sm:grid-cols-4 lg:grid-cols-7">
-          {DAYS.map((d) => {
-            const items = ITEMS.filter((i) => i.day === d.n);
-            const current = d.n === day;
-            return (
-              <li key={d.n}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setDay(d.n);
-                    setOpenId(null);
-                  }}
-                  aria-current={current ? "true" : undefined}
-                  className={`flex h-full w-full flex-col gap-1 p-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-cafe-tomato ${
-                    current ? "bg-cafe-tint" : "bg-cafe-cream hover:bg-cafe-surface2"
-                  }`}
-                >
-                  <span className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.14em] text-cafe-muted">
-                    {d.date}
-                  </span>
-                  <span className="font-cafe-display text-base leading-tight">{d.title}</span>
-                  {/* one tick per stop, inked by time block */}
-                  <span className="mt-auto flex gap-[3px] pt-2" aria-hidden="true">
-                    {items.map((i) => (
-                      <span
-                        key={i.id}
-                        className="h-1.5 w-full"
-                        style={{ background: BLOCK_COLOR[blockOf(i.start)] }}
-                      />
-                    ))}
-                  </span>
-                  <span className="font-cafe-body text-[11px] text-cafe-muted">
-                    {items.length} stops · {money(items.reduce((s, i) => s + i.price, 0))}
-                  </span>
-                </button>
-              </li>
-            );
-          })}
-        </ol>
-
-        {/* planned spend by category — one hue, length does the encoding */}
         <div className="mt-4 border border-cafe-border bg-cafe-cream p-4">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
@@ -251,400 +227,448 @@ export default function Itinerary() {
         </div>
       </section>
 
-      {/* ---------------- day navigation ---------------- */}
-      <nav aria-label="Days of the trip" className="mt-8 border-b-2 border-cafe-ink/80">
-        <ul className="-mb-px flex overflow-x-auto">
+      {/* ================= 02 · THE WEEK ================= */}
+      <section aria-labelledby="week" className="mt-14">
+        <SectionHead
+          num="02"
+          id="week"
+          title="The week"
+          blurb="One neighbourhood a day. Pick one to open its schedule below."
+        />
+        <ol className="grid grid-cols-2 gap-px border border-cafe-border bg-cafe-border sm:grid-cols-4 lg:grid-cols-7">
           {DAYS.map((d) => {
+            const items = ITEMS.filter((i) => i.day === d.n);
             const current = d.n === day;
             return (
-              <li key={d.n} className="shrink-0">
+              <li key={d.n}>
                 <button
                   type="button"
-                  onClick={() => {
-                    setDay(d.n);
-                    setOpenId(null);
-                  }}
-                  aria-current={current ? "page" : undefined}
-                  className={`flex flex-col items-start gap-0.5 border-b-[3px] px-4 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-cafe-tomato ${
+                  onClick={() => goToDay(d.n)}
+                  aria-current={current ? "true" : undefined}
+                  className={`flex h-full w-full flex-col gap-1 border-l-4 p-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-cafe-tomato ${
                     current
-                      ? "border-cafe-tomato"
-                      : "border-transparent hover:bg-cafe-surface2"
+                      ? "border-l-cafe-tomato bg-cafe-tint"
+                      : "border-l-transparent bg-cafe-cream hover:bg-cafe-surface2"
                   }`}
                 >
-                  <span
-                    className={`font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em] ${
-                      current ? "text-cafe-tomato" : "text-cafe-muted"
-                    }`}
-                  >
-                    Day {d.n}
+                  <span className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.14em] text-cafe-muted">
+                    Day {d.n} · {d.date}
                   </span>
-                  <span
-                    className={`font-cafe-display text-base leading-tight ${
-                      current ? "text-cafe-ink" : "text-cafe-muted"
-                    }`}
-                  >
-                    {d.title}
+                  <span className="font-cafe-display text-base leading-tight">{d.title}</span>
+                  <span className="mt-auto flex gap-[3px] pt-2" aria-hidden="true">
+                    {items.map((i) => (
+                      <span
+                        key={i.id}
+                        className="h-1.5 w-full"
+                        style={{ background: BLOCK_COLOR[blockOf(i.start)] }}
+                      />
+                    ))}
+                  </span>
+                  <span className="font-cafe-body text-[11px] text-cafe-muted">
+                    {items.length} stops · {money(items.reduce((s, i) => s + i.price, 0))}
                   </span>
                 </button>
               </li>
             );
           })}
-        </ul>
-      </nav>
-
-      {/* ---------------- the day ---------------- */}
-      <header className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.18em] text-cafe-muted">
-            Day {activeDay.n} · {activeDay.area}
-          </p>
-          <h2 className="mt-1 font-cafe-display text-4xl leading-none tracking-tight sm:text-5xl">
-            {activeDay.title}
-          </h2>
-        </div>
-        <dl className="flex gap-6 font-cafe-body text-xs">
-          {[
-            ["Stops", totals.stops],
-            ["Planned", `${totals.hours} h`],
-            ["Approx. cost", money(totals.cost)],
-          ].map(([k, v]) => (
-            <div key={k}>
-              <dt className="uppercase tracking-[0.14em] text-cafe-muted">{k}</dt>
-              <dd className="mt-0.5 font-cafe-display text-xl leading-none tabular-nums">{v}</dd>
-            </div>
-          ))}
-        </dl>
-      </header>
-
-      {/* ---------------- filters ---------------- */}
-      <section
-        aria-label="Filter this day"
-        className="mt-6 border border-cafe-border bg-cafe-cream p-4 shadow-[2px_3px_0_rgba(43,29,22,0.08)]"
-      >
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <div className="flex flex-col gap-2">
-            <span
-              id="cat-label"
-              className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em]"
-            >
-              Category
-            </span>
-            <div className="flex flex-wrap gap-2" role="group" aria-labelledby="cat-label">
-              {CATEGORIES.map((c) => {
-                const on = cats.includes(c);
-                return (
-                  <button
-                    key={c}
-                    type="button"
-                    aria-pressed={on}
-                    onClick={() => toggleCat(c)}
-                    className={`${CHIP_BASE} ${
-                      on
-                        ? "border-cafe-ink bg-cafe-ink text-cafe-cream"
-                        : "border-cafe-borderstrong text-cafe-ink hover:bg-cafe-surface2 active:translate-y-px active:bg-cafe-tint"
-                    }`}
-                  >
-                    {c}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
-            <label className="flex flex-col gap-1.5">
-              <span className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em]">
-                Search
-              </span>
-              <input
-                type="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Sainte-Chapelle"
-                className="w-full rounded-[2px] border border-cafe-borderstrong bg-cafe-cream px-3 py-2 font-cafe-body text-sm text-cafe-ink placeholder:text-cafe-muted focus:border-cafe-tomato focus:outline-2 focus:outline-offset-2 focus:outline-cafe-tomato sm:w-56"
-              />
-            </label>
-
-            {/* toggle: a real checkbox, drawn to match the design system */}
-            <label className="group flex cursor-pointer items-center gap-2.5 py-2">
-              <input
-                type="checkbox"
-                checked={hideDone}
-                onChange={(e) => setHideDone(e.target.checked)}
-                className="peer sr-only"
-              />
-              <span
-                aria-hidden="true"
-                className="inline-flex h-[22px] w-10 items-center border-2 border-cafe-ink bg-cafe-cream p-[2px] transition-colors peer-checked:border-cafe-tomato peer-checked:bg-cafe-tomato peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-cafe-tomato"
-              >
-                <span className="h-[14px] w-[14px] border border-cafe-ink bg-cafe-cream transition-transform group-has-[:checked]:translate-x-[14px] group-has-[:checked]:border-cafe-cream" />
-              </span>
-              <span className="font-cafe-body text-xs">Hide done</span>
-            </label>
-          </div>
-        </div>
-
-        {filtered ? (
-          <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-cafe-border pt-3">
-            <p className="font-cafe-body text-xs text-cafe-muted" aria-live="polite">
-              Showing <span className="font-semibold text-cafe-ink">{visible.length}</span> of{" "}
-              {dayItems.length} stops on this day
-            </p>
-            <button type="button" onClick={clearFilters} className={SECONDARY}>
-              Clear filters
-            </button>
-          </div>
-        ) : null}
+        </ol>
       </section>
 
-      {/* ---------------- list + panel ---------------- */}
-      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start">
-        {/* the timeline */}
-        <section aria-label={`Stops on day ${day}`}>
-          {visible.length === 0 ? (
-            <div className="flex flex-col items-start gap-3 border border-dashed border-cafe-borderstrong p-8">
-              <svg viewBox="0 0 48 32" className="h-10 w-16" aria-hidden="true" fill="none">
-                <rect x="1" y="1" width="46" height="30" stroke="#C3BAB0" strokeDasharray="4 3" />
-                <path d="M8 22h32M8 16h20" stroke="#C3BAB0" strokeWidth="2" strokeLinecap="square" />
-              </svg>
-              <div>
-                <p className="font-cafe-display text-2xl leading-tight">Nothing matches</p>
-                <p className="mt-1 font-cafe-body text-sm text-cafe-muted">
-                  No stop on day {day} fits those filters. Clear them, or try another day.
-                </p>
+      {/* ================= 03 · THE DAY ================= */}
+      <section aria-labelledby="the-day" className="mt-14">
+        <SectionHead
+          num="03"
+          id="the-day"
+          title={`Day ${activeDay.n} — ${activeDay.title}`}
+          blurb={`${activeDay.date} · ${activeDay.area}`}
+          aside={
+            <div className="flex items-end gap-5">
+              <dl className="flex gap-5 font-cafe-body text-xs">
+                {[
+                  ["Stops", totals.stops],
+                  ["Planned", `${totals.hours} h`],
+                  ["Cost", money(totals.cost)],
+                ].map(([k, v]) => (
+                  <div key={k}>
+                    <dt className="uppercase tracking-[0.14em] text-cafe-muted">{k}</dt>
+                    <dd className="mt-0.5 font-cafe-display text-lg leading-none tabular-nums">
+                      {v}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="flex gap-1">
+                <button
+                  type="button"
+                  onClick={() => goToDay(day - 1)}
+                  disabled={day === 1}
+                  className="flex h-8 w-8 items-center justify-center border border-cafe-ink text-sm transition-colors hover:bg-cafe-surface2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato disabled:border-cafe-border disabled:text-cafe-ink/35"
+                >
+                  <span aria-hidden="true">‹</span>
+                  <span className="sr-only">Previous day</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => goToDay(day + 1)}
+                  disabled={day === DAYS.length}
+                  className="flex h-8 w-8 items-center justify-center border border-cafe-ink text-sm transition-colors hover:bg-cafe-surface2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato disabled:border-cafe-border disabled:text-cafe-ink/35"
+                >
+                  <span aria-hidden="true">›</span>
+                  <span className="sr-only">Next day</span>
+                </button>
               </div>
+            </div>
+          }
+        />
+
+        {/* --- filters --- */}
+        <section
+          aria-label="Filter this day"
+          className="border border-cafe-border bg-cafe-cream p-4 shadow-[2px_3px_0_rgba(43,29,22,0.08)]"
+        >
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div className="flex flex-col gap-2">
+              <span
+                id="cat-label"
+                className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em]"
+              >
+                Category
+              </span>
+              <div className="flex flex-wrap gap-2" role="group" aria-labelledby="cat-label">
+                {CATEGORIES.map((c) => {
+                  const on = cats.includes(c);
+                  return (
+                    <button
+                      key={c}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => toggleCat(c)}
+                      className={`${CHIP_BASE} ${
+                        on
+                          ? "border-cafe-ink bg-cafe-ink text-cafe-cream"
+                          : "border-cafe-borderstrong text-cafe-ink hover:bg-cafe-surface2 active:translate-y-px active:bg-cafe-tint"
+                      }`}
+                    >
+                      {c}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+              <label className="flex flex-col gap-1.5">
+                <span className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em]">
+                  Search
+                </span>
+                <input
+                  type="search"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Sainte-Chapelle"
+                  className="w-full rounded-[2px] border border-cafe-borderstrong bg-cafe-cream px-3 py-2 font-cafe-body text-sm text-cafe-ink placeholder:text-cafe-muted focus:border-cafe-tomato focus:outline-2 focus:outline-offset-2 focus:outline-cafe-tomato sm:w-56"
+                />
+              </label>
+
+              <label className="group flex cursor-pointer items-center gap-2.5 py-2">
+                <input
+                  type="checkbox"
+                  checked={hideDone}
+                  onChange={(e) => setHideDone(e.target.checked)}
+                  className="peer sr-only"
+                />
+                <span
+                  aria-hidden="true"
+                  className="inline-flex h-[22px] w-10 items-center border-2 border-cafe-ink bg-cafe-cream p-[2px] transition-colors peer-checked:border-cafe-tomato peer-checked:bg-cafe-tomato peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-cafe-tomato"
+                >
+                  <span className="h-[14px] w-[14px] border border-cafe-ink bg-cafe-cream transition-transform group-has-[:checked]:translate-x-[14px] group-has-[:checked]:border-cafe-cream" />
+                </span>
+                <span className="font-cafe-body text-xs">Hide done</span>
+              </label>
+            </div>
+          </div>
+
+          {filtered ? (
+            <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-cafe-border pt-3">
+              <p className="font-cafe-body text-xs text-cafe-muted" aria-live="polite">
+                Showing <span className="font-semibold text-cafe-ink">{visible.length}</span> of{" "}
+                {dayItems.length} stops on this day
+              </p>
               <button type="button" onClick={clearFilters} className={SECONDARY}>
                 Clear filters
               </button>
             </div>
-          ) : (
-            <div className="flex flex-col gap-7">
-              {BLOCKS.map((b) => {
-                const inBlock = visible.filter((i) => blockOf(i.start) === b.id);
-                if (inBlock.length === 0) return null;
-                return (
-                  <section key={b.id} aria-labelledby={`block-${b.id}`}>
-                    <h3
-                      id={`block-${b.id}`}
-                      className="flex items-baseline gap-2 border-b-2 pb-1"
-                      style={{ borderBottomColor: b.color }}
-                    >
-                      <span
-                        aria-hidden="true"
-                        className="h-3 w-3 shrink-0 self-center"
-                        style={{ background: b.color }}
-                      />
-                      <span className="font-cafe-display text-xl leading-none">{b.label}</span>
-                      <span className="font-cafe-body text-[11px] text-cafe-muted">
-                        {b.range} · {inBlock.length}{" "}
-                        {inBlock.length === 1 ? "stop" : "stops"}
-                      </span>
-                    </h3>
-                    <ol>
-              {inBlock.map((i) => {
-                const isOpen = i.id === openId;
-                const isDone = done.includes(i.id);
-                return (
-                  <li key={i.id} className="border-b border-cafe-border last:border-0">
-                    <button
-                      type="button"
-                      onClick={(e) => openItem(i.id, e.currentTarget)}
-                      aria-expanded={isOpen}
-                      aria-controls="stop-detail"
-                      style={{
-                        borderLeftColor: isOpen
-                          ? "var(--color-cafe-tomato)"
-                          : BLOCK_COLOR[blockOf(i.start)],
-                      }}
-                      className={`flex w-full items-start gap-4 border-l-4 py-4 pl-[8px] pr-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-cafe-tomato ${
-                        isOpen ? "bg-cafe-tint" : "hover:bg-cafe-surface2 active:bg-cafe-tint"
-                      }`}
-                    >
-                      <span className="w-14 shrink-0 pt-0.5">
-                        <span className="block font-cafe-body text-sm font-semibold tabular-nums">
-                          {i.start}
-                        </span>
-                        <span className="block font-cafe-body text-[11px] text-cafe-muted">
-                          {duration(i.start, i.end)}
-                        </span>
-                      </span>
-
-                      <span className="min-w-0 flex-1">
-                        <span className="flex flex-wrap items-center gap-2">
-                          <span
-                            className={`font-cafe-display text-xl leading-tight ${
-                              isDone ? "text-cafe-muted line-through" : ""
-                            }`}
-                          >
-                            {i.title}
-                          </span>
-                          {isDone ? (
-                            <span className="rounded-[2px] border border-cafe-success px-1.5 py-0.5 font-cafe-body text-[10px] font-semibold uppercase tracking-[0.1em] text-cafe-success">
-                              Done
-                            </span>
-                          ) : null}
-                          {i.closed ? (
-                            <span className="rounded-[2px] border border-cafe-warning px-1.5 py-0.5 font-cafe-body text-[10px] font-semibold uppercase tracking-[0.1em] text-cafe-warning">
-                              Closed {i.closed}
-                            </span>
-                          ) : null}
-                        </span>
-                        <span className="mt-0.5 block font-cafe-body text-[11px] uppercase tracking-[0.12em] text-cafe-muted">
-                          {i.category} · {i.area}
-                        </span>
-                      </span>
-
-                      <span className="shrink-0 pt-0.5 text-right">
-                        <span className="block font-cafe-body text-sm tabular-nums">
-                          {money(i.price)}
-                        </span>
-                        <span
-                          aria-hidden="true"
-                          className="mt-0.5 block font-cafe-body text-xs text-cafe-muted"
-                        >
-                          →
-                        </span>
-                      </span>
-                    </button>
-                  </li>
-                );
-              })}
-                    </ol>
-                  </section>
-                );
-              })}
-            </div>
-          )}
+          ) : null}
         </section>
 
-        {/* ---------------- detail panel ----------------
-            desktop: a sticky column beside the list
-            mobile:  a bottom sheet over a scrim                        */}
-        {open ? (
-          <div
-            className="fixed inset-0 z-20 bg-cafe-ink/45 lg:hidden"
-            onClick={() => setOpenId(null)}
-            aria-hidden="true"
-          />
-        ) : null}
-
-        <aside
-          id="stop-detail"
-          className={
-            open
-              ? "fixed inset-x-0 bottom-0 z-30 max-h-[82vh] overflow-y-auto border-t-2 border-cafe-ink bg-cafe-cream shadow-[0_-4px_0_rgba(43,29,22,0.18)] lg:sticky lg:top-6 lg:z-auto lg:max-h-none lg:overflow-visible lg:border-2 lg:border-cafe-ink lg:shadow-[4px_4px_0_rgba(43,29,22,0.18)]"
-              : "hidden lg:sticky lg:top-6 lg:block lg:border lg:border-dashed lg:border-cafe-borderstrong"
-          }
-        >
-          {open ? (
-            <div
-              ref={panelRef}
-              tabIndex={-1}
-              role="dialog"
-              aria-modal="false"
-              aria-labelledby="stop-detail-title"
-              className="outline-none"
-            >
-              <div
-                className="flex items-start justify-between gap-3 border-b-2 p-4"
-                style={{
-                  borderBottomColor: BLOCK_COLOR[blockOf(open.start)],
-                  background: `color-mix(in srgb, ${BLOCK_COLOR[blockOf(open.start)]} 10%, #F6EFE3)`,
-                }}
-              >
-                <div className="min-w-0">
-                  <p className="flex items-center gap-2 font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em] text-cafe-ink">
-                    <span
-                      aria-hidden="true"
-                      className="h-2.5 w-2.5 shrink-0"
-                      style={{ background: BLOCK_COLOR[blockOf(open.start)] }}
-                    />
-                    {blockOf(open.start)} · Day {open.day} · {open.start}–{open.end}
-                  </p>
-                  <h3
-                    id="stop-detail-title"
-                    className="mt-1 font-cafe-display text-3xl leading-tight"
-                  >
-                    {open.title}
-                  </h3>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setOpenId(null)}
-                  className="flex h-8 w-8 shrink-0 items-center justify-center border border-cafe-borderstrong font-cafe-body text-sm transition-colors hover:bg-cafe-surface2 active:bg-cafe-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+        {/* --- schedule + detail --- */}
+        <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start">
+          <div>
+            <div className="mb-4 flex flex-wrap items-center gap-x-5 gap-y-1 border-b border-cafe-border pb-2">
+              <span className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em]">
+                Schedule
+              </span>
+              {BLOCKS.map((b) => (
+                <span
+                  key={b.id}
+                  className="flex items-center gap-1.5 font-cafe-body text-[11px] text-cafe-muted"
                 >
-                  <span aria-hidden="true">✕</span>
-                  <span className="sr-only">Close details</span>
+                  <span
+                    aria-hidden="true"
+                    className="h-2.5 w-2.5 shrink-0"
+                    style={{ background: b.color }}
+                  />
+                  {b.label}
+                </span>
+              ))}
+            </div>
+
+            {visible.length === 0 ? (
+              <div className="flex flex-col items-start gap-3 border border-dashed border-cafe-borderstrong p-8">
+                <svg viewBox="0 0 48 32" className="h-10 w-16" aria-hidden="true" fill="none">
+                  <rect x="1" y="1" width="46" height="30" stroke="#C3BAB0" strokeDasharray="4 3" />
+                  <path d="M8 22h32M8 16h20" stroke="#C3BAB0" strokeWidth="2" strokeLinecap="square" />
+                </svg>
+                <div>
+                  <p className="font-cafe-display text-2xl leading-tight">Nothing matches</p>
+                  <p className="mt-1 font-cafe-body text-sm text-cafe-muted">
+                    No stop on day {day} fits those filters. Clear them, or try another day.
+                  </p>
+                </div>
+                <button type="button" onClick={clearFilters} className={SECONDARY}>
+                  Clear filters
                 </button>
               </div>
+            ) : (
+              <div className="flex flex-col gap-8">
+                {BLOCKS.map((b) => {
+                  const inBlock = visible.filter((i) => blockOf(i.start) === b.id);
+                  if (inBlock.length === 0) return null;
+                  return (
+                    <section key={b.id} aria-labelledby={`block-${b.id}`}>
+                      <h3
+                        id={`block-${b.id}`}
+                        className="flex flex-wrap items-baseline gap-x-2 gap-y-1 border-b-2 pb-1"
+                        style={{ borderBottomColor: b.color }}
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="h-3 w-3 shrink-0 self-center"
+                          style={{ background: b.color }}
+                        />
+                        <span className="font-cafe-display text-xl leading-none">{b.label}</span>
+                        <span className="font-cafe-body text-[11px] text-cafe-muted">
+                          {b.range} · {inBlock.length} {inBlock.length === 1 ? "stop" : "stops"}
+                        </span>
+                      </h3>
+                      <ol>
+                        {inBlock.map((i) => {
+                          const isOpen = i.id === openId;
+                          const isDone = done.includes(i.id);
+                          return (
+                            <li key={i.id} className="border-b border-cafe-border last:border-0">
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  lastTrigger.current = e.currentTarget;
+                                  setOpenId(i.id);
+                                }}
+                                aria-expanded={isOpen}
+                                aria-controls="stop-detail"
+                                style={{
+                                  borderLeftColor: isOpen
+                                    ? "var(--color-cafe-tomato)"
+                                    : b.color,
+                                }}
+                                className={`flex w-full items-start gap-4 border-l-4 py-4 pl-[8px] pr-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-cafe-tomato ${
+                                  isOpen
+                                    ? "bg-cafe-tint"
+                                    : "hover:bg-cafe-surface2 active:bg-cafe-tint"
+                                }`}
+                              >
+                                <span className="w-14 shrink-0 pt-0.5">
+                                  <span className="block font-cafe-body text-sm font-semibold tabular-nums">
+                                    {i.start}
+                                  </span>
+                                  <span className="block font-cafe-body text-[11px] text-cafe-muted">
+                                    {duration(i.start, i.end)}
+                                  </span>
+                                </span>
 
-              <div className="flex flex-col gap-4 p-4">
-                <p className="font-cafe-body text-sm leading-relaxed">{open.note}</p>
+                                <span className="min-w-0 flex-1">
+                                  <span className="flex flex-wrap items-center gap-2">
+                                    <span
+                                      className={`font-cafe-display text-xl leading-tight ${
+                                        isDone ? "text-cafe-muted line-through" : ""
+                                      }`}
+                                    >
+                                      {i.title}
+                                    </span>
+                                    {isDone ? (
+                                      <span className="rounded-[2px] border border-cafe-success px-1.5 py-0.5 font-cafe-body text-[10px] font-semibold uppercase tracking-[0.1em] text-cafe-success">
+                                        Done
+                                      </span>
+                                    ) : null}
+                                    {i.closed ? (
+                                      <span className="rounded-[2px] border border-cafe-warning px-1.5 py-0.5 font-cafe-body text-[10px] font-semibold uppercase tracking-[0.1em] text-cafe-warning">
+                                        Closed {i.closed}
+                                      </span>
+                                    ) : null}
+                                  </span>
+                                  <span className="mt-0.5 block font-cafe-body text-[11px] uppercase tracking-[0.12em] text-cafe-muted">
+                                    {i.category} · {i.area}
+                                  </span>
+                                </span>
 
-                <dl className="grid grid-cols-2 gap-x-6 gap-y-2 border-t border-cafe-border pt-3 font-cafe-body text-xs">
-                  {[
-                    ["Price", money(open.price)],
-                    ["Duration", duration(open.start, open.end)],
-                    ["Category", open.category],
-                    ["Nearest", open.metro],
-                  ].map(([k, v]) => (
-                    <div key={k}>
-                      <dt className="text-cafe-muted">{k}</dt>
-                      <dd className="mt-0.5 font-semibold">{v}</dd>
-                    </div>
-                  ))}
-                </dl>
+                                <span className="shrink-0 pt-0.5 text-right">
+                                  <span className="block font-cafe-body text-sm tabular-nums">
+                                    {money(i.price)}
+                                  </span>
+                                  <span
+                                    aria-hidden="true"
+                                    className="mt-0.5 block font-cafe-body text-xs text-cafe-muted"
+                                  >
+                                    →
+                                  </span>
+                                </span>
+                              </button>
+                            </li>
+                          );
+                        })}
+                      </ol>
+                    </section>
+                  );
+                })}
+              </div>
+            )}
+          </div>
 
-                {open.closed ? (
-                  <p className="flex gap-2 border-l-[3px] border-cafe-warning bg-cafe-warning/8 p-3 font-cafe-body text-xs leading-relaxed text-cafe-ink">
-                    <span className="font-semibold text-cafe-warning">Closed {open.closed}.</span>
-                    Check before you build the day around it.
-                  </p>
-                ) : null}
+          {/* detail panel: sticky column on desktop, bottom sheet on mobile */}
+          {open ? (
+            <div
+              className="fixed inset-0 z-20 bg-cafe-ink/45 lg:hidden"
+              onClick={() => setOpenId(null)}
+              aria-hidden="true"
+            />
+          ) : null}
 
-                <div className="border-t border-cafe-border pt-3">
-                  <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em] text-cafe-muted">
-                    Worth knowing
-                  </p>
-                  <p className="mt-1 font-cafe-display text-base italic leading-snug">
-                    {open.tip}
-                  </p>
-                </div>
-
-                {done.includes(open.id) ? (
-                  <p className="flex items-center gap-2 border-l-[3px] border-cafe-success bg-cafe-success/8 p-3 font-cafe-body text-xs font-semibold text-cafe-success">
-                    Marked as done
-                  </p>
-                ) : null}
-
-                <div className="flex flex-wrap gap-3 border-t border-cafe-border pt-3">
+          <aside
+            id="stop-detail"
+            className={
+              open
+                ? "fixed inset-x-0 bottom-0 z-30 max-h-[82vh] overflow-y-auto border-t-2 border-cafe-ink bg-cafe-cream shadow-[0_-4px_0_rgba(43,29,22,0.18)] lg:sticky lg:top-6 lg:z-auto lg:max-h-none lg:overflow-visible lg:border-2 lg:border-cafe-ink lg:shadow-[4px_4px_0_rgba(43,29,22,0.18)]"
+                : "hidden lg:sticky lg:top-6 lg:block lg:border lg:border-dashed lg:border-cafe-borderstrong"
+            }
+          >
+            {open ? (
+              <div
+                ref={panelRef}
+                tabIndex={-1}
+                role="dialog"
+                aria-modal="false"
+                aria-labelledby="stop-detail-title"
+                className="outline-none"
+              >
+                <div
+                  className="flex items-start justify-between gap-3 border-b-2 p-4"
+                  style={{
+                    borderBottomColor: BLOCK_COLOR[blockOf(open.start)],
+                    background: `color-mix(in srgb, ${BLOCK_COLOR[blockOf(open.start)]} 10%, #F6EFE3)`,
+                  }}
+                >
+                  <div className="min-w-0">
+                    <p className="flex items-center gap-2 font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em] text-cafe-ink">
+                      <span
+                        aria-hidden="true"
+                        className="h-2.5 w-2.5 shrink-0"
+                        style={{ background: BLOCK_COLOR[blockOf(open.start)] }}
+                      />
+                      {blockOf(open.start)} · Day {open.day} · {open.start}–{open.end}
+                    </p>
+                    <h3
+                      id="stop-detail-title"
+                      className="mt-1 font-cafe-display text-3xl leading-tight"
+                    >
+                      {open.title}
+                    </h3>
+                  </div>
                   <button
                     type="button"
-                    onClick={() => toggleDone(open.id)}
-                    className={done.includes(open.id) ? SECONDARY : PRIMARY}
+                    onClick={() => setOpenId(null)}
+                    className="flex h-8 w-8 shrink-0 items-center justify-center border border-cafe-borderstrong font-cafe-body text-sm transition-colors hover:bg-cafe-surface2 active:bg-cafe-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
                   >
-                    {done.includes(open.id) ? "Mark as not done" : "Mark as done"}
-                  </button>
-                  <button type="button" onClick={() => setOpenId(null)} className={SECONDARY}>
-                    Back to the day
+                    <span aria-hidden="true">✕</span>
+                    <span className="sr-only">Close details</span>
                   </button>
                 </div>
+
+                <div className="flex flex-col gap-4 p-4">
+                  <p className="font-cafe-body text-sm leading-relaxed">{open.note}</p>
+
+                  <dl className="grid grid-cols-2 gap-x-6 gap-y-2 border-t border-cafe-border pt-3 font-cafe-body text-xs">
+                    {[
+                      ["Price", money(open.price)],
+                      ["Duration", duration(open.start, open.end)],
+                      ["Category", open.category],
+                      ["Nearest", open.metro],
+                    ].map(([k, v]) => (
+                      <div key={k}>
+                        <dt className="text-cafe-muted">{k}</dt>
+                        <dd className="mt-0.5 font-semibold">{v}</dd>
+                      </div>
+                    ))}
+                  </dl>
+
+                  {open.closed ? (
+                    <p className="flex gap-2 border-l-[3px] border-cafe-warning bg-cafe-warning/8 p-3 font-cafe-body text-xs leading-relaxed text-cafe-ink">
+                      <span className="font-semibold text-cafe-warning">
+                        Closed {open.closed}.
+                      </span>
+                      Check before you build the day around it.
+                    </p>
+                  ) : null}
+
+                  <div className="border-t border-cafe-border pt-3">
+                    <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em] text-cafe-muted">
+                      Worth knowing
+                    </p>
+                    <p className="mt-1 font-cafe-display text-base italic leading-snug">
+                      {open.tip}
+                    </p>
+                  </div>
+
+                  {done.includes(open.id) ? (
+                    <p className="flex items-center gap-2 border-l-[3px] border-cafe-success bg-cafe-success/8 p-3 font-cafe-body text-xs font-semibold text-cafe-success">
+                      Marked as done
+                    </p>
+                  ) : null}
+
+                  <div className="flex flex-wrap gap-3 border-t border-cafe-border pt-3">
+                    <button
+                      type="button"
+                      onClick={() => toggleDone(open.id)}
+                      className={done.includes(open.id) ? SECONDARY : PRIMARY}
+                    >
+                      {done.includes(open.id) ? "Mark as not done" : "Mark as done"}
+                    </button>
+                    <button type="button" onClick={() => setOpenId(null)} className={SECONDARY}>
+                      Back to the day
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          ) : (
-            /* resting state of the desktop panel */
-            <div className="p-6">
-              <p className="font-cafe-display text-xl leading-tight text-cafe-ink">
-                Pick a stop
-              </p>
-              <p className="mt-1 font-cafe-body text-sm text-cafe-muted">
-                Choose anything on the left to read the detail, the nearest
-                métro and what is worth knowing before you go.
-              </p>
-            </div>
-          )}
-        </aside>
-      </div>
+            ) : (
+              <div className="p-6">
+                <p className="font-cafe-display text-xl leading-tight text-cafe-ink">Pick a stop</p>
+                <p className="mt-1 font-cafe-body text-sm text-cafe-muted">
+                  Choose anything on the left to read the detail, the nearest
+                  métro and what is worth knowing before you go.
+                </p>
+              </div>
+            )}
+          </aside>
+        </div>
+      </section>
     </>
   );
 }
