@@ -208,77 +208,114 @@ function SystemCard({ s }) {
   );
 }
 
+function Section({ num, id, title, blurb, children }) {
+  return (
+    <section aria-labelledby={id} className="flex flex-col gap-5">
+      <div className="flex flex-col gap-1">
+        <div className="flex items-baseline gap-3">
+          <span className="font-mono text-xs text-stone-600">{num}</span>
+          <h2 id={id} className="text-2xl font-semibold tracking-tight">
+            {title}
+          </h2>
+          <span className="ml-3 hidden h-px flex-1 bg-stone-900/15 sm:block" />
+        </div>
+        <p className="max-w-2xl text-stone-700">{blurb}</p>
+      </div>
+      {children}
+    </section>
+  );
+}
+
 export default function Home() {
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-col gap-14 px-6 py-12 sm:py-20">
-      <header className="flex flex-col gap-3">
-        <p className="text-sm font-medium uppercase tracking-widest text-stone-600">
-          Design, Build, Ship · HW2
-        </p>
-        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-          Paris in a Week
-        </h1>
-        <p className="max-w-xl text-lg text-stone-700">
-          A hub for my design process: three styles explored, one chosen, and a
-          small static trip itinerary built with it.
-        </p>
-      </header>
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundColor: "#F7F6F3",
+        backgroundImage: [
+          /* the three directions, each tinting one corner of the hub */
+          "radial-gradient(ellipse 60% 55% at 0% 0%, rgba(174,50,32,0.09), transparent 62%)",
+          "radial-gradient(ellipse 55% 50% at 100% 2%, rgba(10,82,224,0.09), transparent 62%)",
+          "radial-gradient(ellipse 75% 45% at 50% 100%, rgba(217,118,66,0.09), transparent 66%)",
+          /* an 8px-derived drafting grid, barely there */
+          "linear-gradient(to right, rgba(28,25,23,0.04) 1px, transparent 1px)",
+          "linear-gradient(to bottom, rgba(28,25,23,0.04) 1px, transparent 1px)",
+        ].join(", "),
+        backgroundSize: "auto, auto, auto, 32px 32px, 32px 32px",
+        backgroundAttachment: "fixed, fixed, fixed, scroll, scroll",
+      }}
+    >
+      <main className="mx-auto flex w-full max-w-5xl flex-col gap-14 px-6 py-12 sm:py-20">
+        <header className="flex flex-col gap-6 border-b border-stone-900/15 pb-8 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex flex-col gap-3">
+            <p className="text-sm font-medium uppercase tracking-widest text-stone-600">
+              Design, Build, Ship · HW2
+            </p>
+            <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
+              Paris in a Week
+            </h1>
+            <p className="max-w-xl text-lg text-stone-700">
+              A hub for my design process: three styles explored, one chosen,
+              and a small static trip itinerary built with it.
+            </p>
+          </div>
+          <dl className="grid shrink-0 grid-cols-3 gap-x-6 gap-y-1 font-mono text-[11px] uppercase tracking-wider text-stone-600 sm:grid-cols-1 sm:text-right">
+            <div className="flex gap-2 sm:justify-end">
+              <dt>Styles</dt>
+              <dd className="font-semibold text-stone-900">3</dd>
+            </div>
+            <div className="flex gap-2 sm:justify-end">
+              <dt>Artifacts</dt>
+              <dd className="font-semibold text-stone-900">90</dd>
+            </div>
+            <div className="flex gap-2 sm:justify-end">
+              <dt>Photographs</dt>
+              <dd className="font-semibold text-stone-900">50</dd>
+            </div>
+          </dl>
+        </header>
 
-      <section aria-labelledby="moodboards" className="flex flex-col gap-5">
-        <div className="flex flex-col gap-1">
-          <h2 id="moodboards" className="text-2xl font-semibold">
-            Mood boards
-          </h2>
-          <p className="text-stone-700">
-            Three visual directions, each named, with 30 artifacts gathered and
-            drawn.
-          </p>
-        </div>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {STYLES.map((s) => (
-            <StyleCard key={s.key} s={s} />
-          ))}
-        </div>
-      </section>
-
-      <section aria-labelledby="design-systems" className="flex flex-col gap-5">
-        <div className="flex flex-col gap-1">
-          <h2 id="design-systems" className="text-2xl font-semibold">
-            Design systems
-          </h2>
-          <p className="text-stone-700">
-            One UI library per mood board: colour roles, type roles, spacing,
-            shape, components and every state.
-          </p>
-        </div>
-        <div className="grid gap-3 sm:grid-cols-3">
-          {STYLES.map((s) => (
-            <SystemCard key={s.key} s={s} />
-          ))}
-        </div>
-      </section>
-
-      <section
-        aria-labelledby="site"
-        className="flex flex-col gap-4 border-t border-stone-300 pt-10"
-      >
-        <div className="flex flex-col gap-1">
-          <h2 id="site" className="text-2xl font-semibold">
-            The site
-          </h2>
-          <p className="text-stone-700">
-            A one-week Paris itinerary with filters and a detail panel, built in
-            the chosen style.
-          </p>
-        </div>
-        <Link
-          href="/trip-itinerary"
-          className="inline-flex w-fit items-center gap-2 rounded-lg bg-blue-700 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 active:bg-blue-900"
+        <Section
+          num="01"
+          id="moodboards"
+          title="Mood Boards"
+          blurb="Three visual directions, each named, with 30 artifacts gathered and drawn."
         >
-          Open the Paris itinerary
-          <span aria-hidden="true">→</span>
-        </Link>
-      </section>
-    </main>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {STYLES.map((s) => (
+              <StyleCard key={s.key} s={s} />
+            ))}
+          </div>
+        </Section>
+
+        <Section
+          num="02"
+          id="design-systems"
+          title="Design Systems"
+          blurb="One UI library per mood board: colour roles, type roles, spacing, shape, components and every state."
+        >
+          <div className="grid gap-3 sm:grid-cols-3">
+            {STYLES.map((s) => (
+              <SystemCard key={s.key} s={s} />
+            ))}
+          </div>
+        </Section>
+
+        <Section
+          num="03"
+          id="site"
+          title="The Site"
+          blurb="A one-week Paris itinerary with filters and a detail panel, built in the chosen style."
+        >
+          <Link
+            href="/trip-itinerary"
+            className="inline-flex w-fit items-center gap-2 rounded-lg bg-blue-700 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 active:bg-blue-900"
+          >
+            Open the Paris itinerary
+            <span aria-hidden="true">→</span>
+          </Link>
+        </Section>
+      </main>
+    </div>
   );
 }
