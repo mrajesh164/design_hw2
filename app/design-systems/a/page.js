@@ -172,6 +172,127 @@ function Toggle({ on, state }) {
   );
 }
 
+const ROLES = [
+  { hex: "#E8DCC5", role: "Background", use: "The page itself", ratio: "—", span: "sm:col-span-3" },
+  { hex: "#F6EFE3", role: "Surface", use: "Cards, inputs, panels", ratio: "1.19:1 on bg", span: "sm:col-span-3" },
+  { hex: "#EAE2D7", role: "Surface raised", use: "Hover fill on quiet controls", ratio: "1.11:1 on surface", span: "sm:col-span-3" },
+  { hex: "#EDD8CC", role: "Selected tint", use: "Chosen rows and chips", ratio: "11.86:1 with ink", span: "sm:col-span-3" },
+  { hex: "#2B1D16", role: "Text", use: "Headings and body", ratio: "14.24:1 on surface", span: "sm:col-span-3" },
+  { hex: "#685C54", role: "Muted text", use: "Captions, meta, placeholders", ratio: "5.66:1 on surface", span: "sm:col-span-3" },
+  { hex: "#C3BAB0", role: "Border", use: "Dividers and plate rules", ratio: "decorative", span: "sm:col-span-3" },
+  { hex: "#90867C", role: "Border strong", use: "Input and control edges", ratio: "3.12:1 on surface", span: "sm:col-span-3" },
+  { hex: "#AE3220", role: "Accent", use: "Primary action only", ratio: "5.61:1 on surface", span: "sm:col-span-3" },
+  { hex: "#41662F", role: "Success", use: "Confirmation", ratio: "5.80:1 on surface", span: "sm:col-span-3" },
+  { hex: "#7B1E2B", role: "Error", use: "Failure and destructive", ratio: "8.91:1 on surface", span: "sm:col-span-3" },
+  { hex: "#7A4F10", role: "Warning", use: "Caution, closures", ratio: "6.22:1 on surface", span: "sm:col-span-3" },
+];
+
+/* ---------- the control × state matrix ---------- */
+
+const STATES = ["rest", "hover", "focus", "pressed", "selected", "disabled"];
+
+const ROWCELL =
+  "flex items-center gap-3 border border-cafe-border px-3 py-1.5 font-cafe-body text-xs whitespace-nowrap";
+
+const CONTROLS = [
+  {
+    name: "Primary button",
+    note: "accent lives here and nowhere else",
+    render: (st) =>
+      st === "selected" ? null : <span className={PRIMARY[st]}>Add to day</span>,
+  },
+  {
+    name: "Secondary button",
+    render: (st) =>
+      st === "selected" ? null : <span className={SECONDARY[st]}>Details</span>,
+  },
+  {
+    name: "Link",
+    render: (st) => {
+      const base = "font-cafe-body text-sm font-semibold underline-offset-[3px]";
+      const map = {
+        rest: `${base} underline decoration-cafe-borderstrong`,
+        hover: `${base} text-cafe-tomato underline decoration-2 decoration-cafe-tomato`,
+        focus: `${base} underline decoration-cafe-borderstrong outline-2 outline-offset-2 outline-cafe-tomato`,
+        pressed: `${base} text-cafe-accentpress underline decoration-2 decoration-cafe-accentpress`,
+        disabled: `${base} text-cafe-ink/35 line-through`,
+      };
+      return st === "selected" ? null : (
+        <span className={map[st]}>combined entry</span>
+      );
+    },
+  },
+  {
+    name: "Text input",
+    note: "selected reads as filled",
+    render: (st) => {
+      const map = {
+        rest: `${INPUT} border-cafe-borderstrong text-cafe-muted`,
+        hover: `${INPUT} border-cafe-ink text-cafe-muted`,
+        focus: `${INPUT} border-cafe-tomato outline-2 outline-offset-2 outline-cafe-tomato`,
+        pressed: `${INPUT} border-cafe-tomato`,
+        selected: `${INPUT} border-cafe-borderstrong font-semibold`,
+        disabled: `${INPUT} border-cafe-border bg-cafe-surface2 text-cafe-ink/35`,
+      };
+      return (
+        <span className={`${map[st]} block min-w-[9rem]`}>Sainte-Chapelle</span>
+      );
+    },
+  },
+  {
+    name: "Checkbox",
+    render: (st) => (
+      <Box checked={st === "selected" || st === "disabled"} state={st} />
+    ),
+  },
+  {
+    name: "Radio",
+    render: (st) => (
+      <Box round checked={st === "selected" || st === "disabled"} state={st} />
+    ),
+  },
+  {
+    name: "Toggle",
+    render: (st) => (
+      <Toggle on={st === "selected" || st === "disabled"} state={st} />
+    ),
+  },
+  {
+    name: "Filter chip",
+    render: (st) => {
+      const map = {
+        rest: `${CHIP} border-cafe-borderstrong text-cafe-ink`,
+        hover: `${CHIP} border-cafe-ink bg-cafe-surface2 text-cafe-ink`,
+        focus: `${CHIP} border-cafe-borderstrong text-cafe-ink outline-2 outline-offset-2 outline-cafe-tomato`,
+        pressed: `${CHIP} translate-y-px border-cafe-ink bg-cafe-tint text-cafe-ink`,
+        selected: `${CHIP} border-cafe-ink bg-cafe-ink text-cafe-cream`,
+        disabled: `${CHIP} border-cafe-border text-cafe-ink/35`,
+      };
+      return <span className={map[st]}>Museum</span>;
+    },
+  },
+  {
+    name: "List row",
+    note: "the dense view",
+    render: (st) => {
+      const map = {
+        rest: "",
+        hover: "bg-cafe-surface2",
+        focus: "outline-2 outline-offset-[-2px] outline-cafe-tomato",
+        pressed: "bg-cafe-tint",
+        selected: "border-l-[3px] border-l-cafe-tomato bg-cafe-tint",
+        disabled: "opacity-45",
+      };
+      return (
+        <span className={`${ROWCELL} ${map[st]}`}>
+          <span className="font-semibold tabular-nums">10:30</span>
+          <span>Sainte-Chapelle</span>
+        </span>
+      );
+    },
+  },
+];
+
 /* ---------- content: real items from the itinerary ---------- */
 
 const ITEM = {
@@ -244,62 +365,73 @@ export default function DesignSystemA() {
               {...SECTIONS[0]}
               blurb="Six roles, plus three semantic colours. Ratios are against the surface the colour is used on."
             />
-            <div className="overflow-x-auto border border-cafe-border bg-cafe-cream shadow-[2px_3px_0_rgba(43,29,22,0.08)]">
-              <table className="w-full min-w-[640px] border-collapse text-left">
-                <thead>
-                  <tr className="border-b border-cafe-ink/30">
-                    {["", "Role", "Value", "Used for", "Contrast"].map((h) => (
-                      <th
-                        key={h}
-                        className="px-3 py-2 font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted"
-                      >
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="font-cafe-body text-xs">
-                  {[
-                    ["#E8DCC5", "Background", "cafe-paper", "The page itself", "—"],
-                    ["#F6EFE3", "Surface", "cafe-cream", "Cards, inputs, panels", "1.19:1 on background"],
-                    ["#EAE2D7", "Surface raised", "cafe-surface2", "Hover fill on quiet controls", "1.11:1 on surface"],
-                    ["#2B1D16", "Text", "cafe-ink", "Headings and body", "14.24:1 on surface"],
-                    ["#685C54", "Muted text", "cafe-muted", "Captions, meta, placeholders", "5.66:1 on surface"],
-                    ["#C3BAB0", "Border", "cafe-border", "Dividers and plate rules", "decorative"],
-                    ["#90867C", "Border strong", "cafe-borderstrong", "Input and control edges", "3.12:1 on surface"],
-                    ["#AE3220", "Accent", "cafe-tomato", "Primary action only", "5.61:1 on surface"],
-                    ["#41662F", "Success", "cafe-success", "Confirmation", "5.80:1 on surface"],
-                    ["#7B1E2B", "Error", "cafe-error", "Failure and destructive", "8.91:1 on surface"],
-                    ["#7A4F10", "Warning", "cafe-warning", "Caution, closures", "6.22:1 on surface"],
-                  ].map(([hex, role, token, use, ratio]) => (
-                    <tr key={role} className="border-b border-cafe-border last:border-0">
-                      <td className="px-3 py-2">
-                        <span
-                          className="block h-7 w-10 border border-cafe-ink/20"
-                          style={{ background: hex }}
-                          aria-hidden="true"
-                        />
-                      </td>
-                      <td className="px-3 py-2 font-semibold">{role}</td>
-                      <td className="px-3 py-2">
-                        <span className="tabular-nums">{hex}</span>
-                        <span className="block text-cafe-muted">{token}</span>
-                      </td>
-                      <td className="px-3 py-2 text-cafe-muted">{use}</td>
-                      <td className="px-3 py-2 tabular-nums">{ratio}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="grid grid-cols-2 gap-px bg-cafe-border sm:grid-cols-12">
+              {ROLES.map((r) => (
+                <figure
+                  key={r.role}
+                  className={`flex flex-col bg-cafe-cream ${r.span}`}
+                >
+                  <span
+                    className="h-14 border-b border-cafe-ink/15"
+                    style={{ background: r.hex }}
+                    aria-hidden="true"
+                  />
+                  <figcaption className="flex flex-1 flex-col gap-0.5 p-3">
+                    <span className="font-cafe-body text-xs font-semibold">
+                      {r.role}
+                    </span>
+                    <span className="font-cafe-body text-[11px] tabular-nums text-cafe-muted">
+                      {r.hex}
+                    </span>
+                    <span className="font-cafe-body text-[11px] leading-snug text-cafe-muted">
+                      {r.use}
+                    </span>
+                    <span className="mt-auto pt-2 font-cafe-body text-[11px] font-semibold tabular-nums">
+                      {r.ratio}
+                    </span>
+                  </figcaption>
+                </figure>
+              ))}
             </div>
-            <p className="mt-3 max-w-2xl font-cafe-body text-xs leading-relaxed text-cafe-muted">
-              <strong className="font-semibold text-cafe-ink">
-                Accent and error are both red, so they are separated by form:
-              </strong>{" "}
-              the accent only ever appears as a solid fill on a primary button,
-              and error only ever appears as a rule, an icon and a tint —
-              never as a filled button.
-            </p>
+
+            {/* the roles doing their jobs at once */}
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-12">
+              <div className="border border-cafe-border bg-cafe-cream p-4 shadow-[2px_3px_0_rgba(43,29,22,0.08)] sm:col-span-7">
+                <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
+                  The roles in place
+                </p>
+                <div className="mt-3 border border-cafe-borderstrong bg-cafe-cream p-3">
+                  <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em] text-cafe-muted">
+                    Day 2 · Île de la Cité
+                  </p>
+                  <h3 className="font-cafe-display text-xl leading-tight text-cafe-ink">
+                    Sainte-Chapelle
+                  </h3>
+                  <p className="mt-1 font-cafe-body text-xs text-cafe-muted">
+                    Muted text carries the meta line; ink carries the title.
+                  </p>
+                  <span className={`mt-3 inline-flex ${PRIMARY.rest}`}>
+                    Open details
+                  </span>
+                </div>
+              </div>
+              <div className="border border-cafe-border bg-cafe-cream p-4 shadow-[2px_3px_0_rgba(43,29,22,0.08)] sm:col-span-5">
+                <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
+                  Why error is not the accent
+                </p>
+                <p className="mt-2 font-cafe-body text-xs leading-relaxed text-cafe-ink">
+                  Both are red, so they are told apart by form, not hue. The
+                  accent is only ever a solid fill on a primary button. Error is
+                  only ever a left rule, an icon and a tint — never a button.
+                </p>
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <span className={PRIMARY.rest}>Accent</span>
+                  <span className="flex items-center gap-2 border-l-[3px] border-cafe-error bg-cafe-error/8 px-3 py-2 font-cafe-body text-xs font-semibold text-cafe-error">
+                    Error
+                  </span>
+                </div>
+              </div>
+            </div>
           </section>
 
           {/* ============ II · TYPE ============ */}
@@ -308,63 +440,57 @@ export default function DesignSystemA() {
               {...SECTIONS[1]}
               blurb="Four roles. Fraunces for display and headings, Source Sans for everything that has to be read quickly."
             />
-            <div className="flex flex-col gap-px bg-cafe-border">
-              {[
-                {
-                  role: "Display",
-                  spec: "Fraunces · 56/52 · 600 · −0.02em",
-                  node: (
-                    <p className="font-cafe-display text-[56px] font-semibold leading-[52px] tracking-tight">
-                      Paris in a Week
-                    </p>
-                  ),
-                },
-                {
-                  role: "Heading",
-                  spec: "Fraunces · 28/34 · 600",
-                  node: (
-                    <p className="font-cafe-display text-[28px] font-semibold leading-[34px]">
-                      Day 2 — Île de la Cité
-                    </p>
-                  ),
-                },
-                {
-                  role: "Body",
-                  spec: "Source Sans · 16/26 · 400",
-                  node: (
-                    <p className="max-w-prose font-cafe-body text-[16px] leading-[26px]">
-                      Fifteen stained-glass windows, best an hour after opening
-                      when the south wall lights up. The combined ticket with
-                      the Conciergerie next door saves a few euros and the
-                      queue is shorter on the Conciergerie side.
-                    </p>
-                  ),
-                },
-                {
-                  role: "Label",
-                  spec: "Source Sans · 12/16 · 600 · 0.14em · uppercase",
-                  node: (
-                    <p className="font-cafe-body text-[12px] font-semibold uppercase leading-4 tracking-[0.14em]">
-                      10:30 · 1 h 30 · €11.50
-                    </p>
-                  ),
-                },
-              ].map((t) => (
-                <div
-                  key={t.role}
-                  className="flex flex-col gap-3 bg-cafe-cream p-5 sm:flex-row sm:items-baseline sm:gap-8"
-                >
-                  <div className="w-40 shrink-0">
-                    <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em]">
-                      {t.role}
-                    </p>
-                    <p className="font-cafe-body text-[11px] leading-snug text-cafe-muted">
-                      {t.spec}
-                    </p>
-                  </div>
-                  <div className="min-w-0">{t.node}</div>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-12">
+              {/* display gets the full measure, because that is how it is used */}
+              <Plate className="sm:col-span-12" title="Display" note="Fraunces · 56/52 · 600 · −0.02em · page titles only">
+                <p className="font-cafe-display text-[40px] font-semibold leading-[0.95] tracking-tight sm:text-[56px] sm:leading-[52px]">
+                  Paris in a Week
+                </p>
+              </Plate>
+
+              <Plate className="sm:col-span-7" title="Heading" note="Fraunces · 28/34 · 600 · day and section titles">
+                <p className="font-cafe-display text-[28px] font-semibold leading-[34px]">
+                  Day 2 — Île de la Cité
+                </p>
+              </Plate>
+
+              <Plate className="sm:col-span-5" title="Label" note="Source Sans · 12/16 · 600 · 0.14em · uppercase">
+                <div className="flex flex-col gap-2">
+                  <p className="font-cafe-body text-[12px] font-semibold uppercase leading-4 tracking-[0.14em]">
+                    10:30 · 1 h 30 · €11.50
+                  </p>
+                  <p className="font-cafe-body text-[12px] font-semibold uppercase leading-4 tracking-[0.14em] text-cafe-muted">
+                    Day 2 · Île de la Cité
+                  </p>
                 </div>
-              ))}
+              </Plate>
+
+              <Plate className="sm:col-span-7" title="Body" note="Source Sans · 16/26 · 400 · max 68 characters">
+                <p className="max-w-prose font-cafe-body text-[16px] leading-[26px]">
+                  Fifteen stained-glass windows, best an hour after opening
+                  when the south wall lights up. The combined ticket with the
+                  Conciergerie next door saves a few euros, and the queue is
+                  shorter on the Conciergerie side.
+                </p>
+              </Plate>
+
+              {/* all four roles at once, so the hierarchy is visible rather than described */}
+              <Plate className="sm:col-span-5" title="All four at once" note="Hierarchy comes from size and face, not colour">
+                <article className="border border-cafe-borderstrong p-3">
+                  <p className="font-cafe-body text-[12px] font-semibold uppercase leading-4 tracking-[0.14em] text-cafe-muted">
+                    Day 2 · 10:30
+                  </p>
+                  <h3 className="mt-1 font-cafe-display text-[28px] font-semibold leading-[30px]">
+                    Sainte-Chapelle
+                  </h3>
+                  <p className="mt-1.5 font-cafe-body text-[16px] leading-[26px]">
+                    Go early. The south wall is the reason you came.
+                  </p>
+                  <p className="mt-2 font-cafe-body text-[12px] font-semibold uppercase leading-4 tracking-[0.14em]">
+                    €11.50
+                  </p>
+                </article>
+              </Plate>
             </div>
           </section>
 
@@ -374,8 +500,8 @@ export default function DesignSystemA() {
               {...SECTIONS[2]}
               blurb="A 4px base, corners that stay sharp, hairline rules, and shadows that print rather than blur."
             />
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <Plate title="Spacing" note="4px base, used for padding and gaps">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-12">
+              <Plate className="col-span-2 sm:col-span-3" title="Spacing" note="4px base, used for padding and gaps">
                 <div className="flex flex-col gap-1.5">
                   {[4, 8, 12, 16, 24, 32, 48, 64].map((n) => (
                     <div key={n} className="flex items-center gap-2">
@@ -392,7 +518,7 @@ export default function DesignSystemA() {
                 </div>
               </Plate>
 
-              <Plate title="Corners" note="0px default, 2px on controls. Nothing rounder.">
+              <Plate className="sm:col-span-3" title="Corners" note="0px default, 2px on controls. Nothing rounder.">
                 <div className="flex flex-wrap items-end gap-3">
                   {[
                     ["0", "rounded-none"],
@@ -414,7 +540,7 @@ export default function DesignSystemA() {
                 </div>
               </Plate>
 
-              <Plate title="Borders" note="Hairline divides, 2px rules separate sections">
+              <Plate className="sm:col-span-3" title="Borders" note="Hairline divides, 2px rules separate sections">
                 <div className="flex flex-col gap-3 py-1">
                   <span className="h-px bg-cafe-border" />
                   <span className="h-px bg-cafe-borderstrong" />
@@ -427,7 +553,7 @@ export default function DesignSystemA() {
                 </p>
               </Plate>
 
-              <Plate title="Shadow" note="Hard offset, no blur — ink on paper">
+              <Plate className="sm:col-span-3" title="Shadow" note="Hard offset, no blur — ink on paper">
                 <div className="flex flex-wrap items-end gap-4 py-2">
                   {[
                     ["none", ""],
@@ -454,8 +580,8 @@ export default function DesignSystemA() {
               {...SECTIONS[3]}
               blurb="The parts the itinerary needs. Buttons, links and inputs here are live — hover and tab to them."
             />
-            <div className="grid gap-4 lg:grid-cols-2">
-              <Plate title="Buttons" note="Primary carries the accent; secondary never does">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-12">
+              <Plate className="sm:col-span-5" title="Buttons" note="Primary carries the accent; secondary never does">
                 <div className="flex flex-wrap items-center gap-3">
                   <button
                     type="button"
@@ -475,7 +601,7 @@ export default function DesignSystemA() {
                 </div>
               </Plate>
 
-              <Plate title="Link" note="Underlined always, accent on hover">
+              <Plate className="sm:col-span-4" title="Link" note="Underlined always, accent on hover">
                 <p className="font-cafe-body text-sm leading-relaxed">
                   Tickets are timed; book the{" "}
                   <a
@@ -488,7 +614,7 @@ export default function DesignSystemA() {
                 </p>
               </Plate>
 
-              <Plate title="Text input" note="Label above, hint below, 2px corner">
+              <Plate className="sm:col-span-3" title="Text input" note="Label above, hint below, 2px corner">
                 <label className="flex flex-col gap-1.5">
                   <span className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em]">
                     Search the itinerary
@@ -504,7 +630,7 @@ export default function DesignSystemA() {
                 </label>
               </Plate>
 
-              <Plate title="Select" note="Native control, same frame as the input">
+              <Plate className="sm:col-span-4" title="Select" note="Native control, same frame as the input">
                 <label className="flex flex-col gap-1.5">
                   <span className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em]">
                     Sort by
@@ -528,7 +654,7 @@ export default function DesignSystemA() {
                 </label>
               </Plate>
 
-              <Plate title="Checkbox & radio" note="Square for many, round for one">
+              <Plate className="sm:col-span-4" title="Checkbox &amp; radio" note="Square for many, round for one">
                 <div className="flex flex-col gap-3">
                   <span className="flex items-center gap-2.5 font-cafe-body text-sm">
                     <Box checked />
@@ -550,7 +676,7 @@ export default function DesignSystemA() {
                 </div>
               </Plate>
 
-              <Plate title="Toggle" note="For settings that apply at once">
+              <Plate className="sm:col-span-4" title="Toggle" note="For settings that apply at once">
                 <div className="flex flex-col gap-3">
                   <span className="flex items-center gap-3 font-cafe-body text-sm">
                     <Toggle on />
@@ -563,7 +689,7 @@ export default function DesignSystemA() {
                 </div>
               </Plate>
 
-              <Plate title="Tabs" note="One day at a time; selected carries the 3px rule">
+              <Plate className="sm:col-span-7" title="Tabs" note="One day at a time; selected carries the 3px rule">
                 <div className="flex overflow-x-auto border-b border-cafe-border">
                   {["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"].map((d, i) => (
                     <span
@@ -581,7 +707,7 @@ export default function DesignSystemA() {
                 </div>
               </Plate>
 
-              <Plate title="Filter chips" note="Selected inverts; the accent is not spent here">
+              <Plate className="sm:col-span-5" title="Filter chips" note="Selected inverts; the accent is not spent here">
                 <div className="flex flex-wrap gap-2">
                   {["All", "Museum", "Food", "Market", "Walk"].map((t, i) => (
                     <span
@@ -598,7 +724,7 @@ export default function DesignSystemA() {
                 </div>
               </Plate>
 
-              <Plate title="Badges" note="Status, not action. Never clickable.">
+              <Plate className="sm:col-span-5" title="Badges" note="Status, not action. Never clickable.">
                 <div className="flex flex-wrap gap-2">
                   <span className={`${CHIP} border-cafe-success text-cafe-success`}>
                     Booked
@@ -615,7 +741,7 @@ export default function DesignSystemA() {
                 </div>
               </Plate>
 
-              <Plate title="Card" note="One activity from the itinerary">
+              <Plate className="sm:col-span-7" title="Card" note="One activity from the itinerary">
                 <article className="border border-cafe-borderstrong bg-cafe-cream p-4 shadow-[2px_3px_0_rgba(43,29,22,0.08)]">
                   <div className="flex items-baseline justify-between gap-3">
                     <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em] text-cafe-muted">
@@ -643,7 +769,7 @@ export default function DesignSystemA() {
               <Plate
                 title="List rows"
                 note="The dense view; rest, hover and selected shown in order"
-                className="lg:col-span-2"
+                className="sm:col-span-12"
               >
                 <ul className="divide-y divide-cafe-border border-y border-cafe-border">
                   {ROWS.map(([time, title, meta, price], i) => (
@@ -680,7 +806,7 @@ export default function DesignSystemA() {
               <Plate
                 title="Detail panel"
                 note="Opens over a dimmed page; the accent sits on one action only"
-                className="lg:col-span-2"
+                className="sm:col-span-12"
               >
                 <div className="relative overflow-hidden border border-cafe-border bg-cafe-paper p-4">
                   {/* the dimmed page behind */}
@@ -739,192 +865,64 @@ export default function DesignSystemA() {
           <section aria-labelledby="control-states" className="mt-12">
             <SectionHead
               {...SECTIONS[4]}
-              blurb="Rest, hover, focus, pressed, selected and disabled — drawn side by side so none has to be imagined. Focus is a 2px offset outline everywhere."
+              blurb="One matrix: nine controls down, six states across. Every cell is drawn, so no state has to be imagined, and n/a is marked where a state does not apply."
             />
-            <div className="flex flex-col gap-4">
-              <Plate title="Primary button" note="Selected does not apply to a button">
-                <StateRow>
-                  {["rest", "hover", "focus", "pressed", "disabled"].map((st) => (
-                    <State key={st} name={st}>
-                      <span className={PRIMARY[st]}>Add to day</span>
-                    </State>
-                  ))}
-                  <State name="selected">
-                    <span className="font-cafe-body text-xs italic text-cafe-muted">
-                      n/a
-                    </span>
-                  </State>
-                </StateRow>
-              </Plate>
-
-              <Plate title="Secondary button">
-                <StateRow>
-                  {["rest", "hover", "focus", "pressed", "disabled"].map((st) => (
-                    <State key={st} name={st}>
-                      <span className={SECONDARY[st]}>Details</span>
-                    </State>
-                  ))}
-                  <State name="selected">
-                    <span className="font-cafe-body text-xs italic text-cafe-muted">
-                      n/a
-                    </span>
-                  </State>
-                </StateRow>
-              </Plate>
-
-              <Plate title="Link">
-                <StateRow cols="sm:grid-cols-3 lg:grid-cols-5">
-                  <State name="rest">
-                    <span className="font-cafe-body text-sm font-semibold underline decoration-cafe-borderstrong underline-offset-[3px]">
-                      combined entry
-                    </span>
-                  </State>
-                  <State name="hover">
-                    <span className="font-cafe-body text-sm font-semibold text-cafe-tomato underline decoration-cafe-tomato decoration-2 underline-offset-[3px]">
-                      combined entry
-                    </span>
-                  </State>
-                  <State name="focus">
-                    <span className="font-cafe-body text-sm font-semibold underline decoration-cafe-borderstrong underline-offset-[3px] outline-2 outline-offset-2 outline-cafe-tomato">
-                      combined entry
-                    </span>
-                  </State>
-                  <State name="pressed">
-                    <span className="font-cafe-body text-sm font-semibold text-cafe-accentpress underline decoration-cafe-accentpress decoration-2 underline-offset-[3px]">
-                      combined entry
-                    </span>
-                  </State>
-                  <State name="disabled">
-                    <span className="font-cafe-body text-sm font-semibold text-cafe-ink/35 line-through">
-                      combined entry
-                    </span>
-                  </State>
-                </StateRow>
-              </Plate>
-
-              <Plate title="Text input">
-                <StateRow cols="sm:grid-cols-2 lg:grid-cols-5">
-                  <State name="rest">
-                    <span className={`${INPUT} border-cafe-borderstrong text-cafe-muted`}>
-                      Sainte-Chapelle
-                    </span>
-                  </State>
-                  <State name="hover">
-                    <span className={`${INPUT} border-cafe-ink text-cafe-muted`}>
-                      Sainte-Chapelle
-                    </span>
-                  </State>
-                  <State name="focus">
-                    <span
-                      className={`${INPUT} border-cafe-tomato outline-2 outline-offset-2 outline-cafe-tomato`}
-                    >
-                      Sainte-Chapelle
-                    </span>
-                  </State>
-                  <State name="filled">
-                    <span className={`${INPUT} border-cafe-borderstrong font-semibold`}>
-                      Sainte-Chapelle
-                    </span>
-                  </State>
-                  <State name="disabled">
-                    <span className={`${INPUT} border-cafe-border bg-cafe-surface2 text-cafe-ink/35`}>
-                      Sainte-Chapelle
-                    </span>
-                  </State>
-                </StateRow>
-              </Plate>
-
-              <Plate title="Checkbox, radio and toggle">
-                <div className="flex flex-col gap-5">
-                  {[
-                    ["Checkbox", (st, on) => <Box checked={on} state={st} />],
-                    ["Radio", (st, on) => <Box round checked={on} state={st} />],
-                    ["Toggle", (st, on) => <Toggle on={on} state={st} />],
-                  ].map(([name, render]) => (
-                    <div key={name} className="flex flex-col gap-2">
-                      <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em]">
-                        {name}
-                      </p>
-                      <StateRow>
-                        <State name="rest">{render("rest", false)}</State>
-                        <State name="hover">{render("hover", false)}</State>
-                        <State name="focus">{render("focus", false)}</State>
-                        <State name="pressed">{render("hover", false)}</State>
-                        <State name="selected">{render("rest", true)}</State>
-                        <State name="disabled">{render("disabled", true)}</State>
-                      </StateRow>
-                    </div>
-                  ))}
-                </div>
-              </Plate>
-
-              <Plate title="Filter chip">
-                <StateRow>
-                  <State name="rest">
-                    <span className={`${CHIP} border-cafe-borderstrong text-cafe-ink`}>
-                      Museum
-                    </span>
-                  </State>
-                  <State name="hover">
-                    <span className={`${CHIP} border-cafe-ink bg-cafe-surface2 text-cafe-ink`}>
-                      Museum
-                    </span>
-                  </State>
-                  <State name="focus">
-                    <span
-                      className={`${CHIP} border-cafe-borderstrong text-cafe-ink outline-2 outline-offset-2 outline-cafe-tomato`}
-                    >
-                      Museum
-                    </span>
-                  </State>
-                  <State name="pressed">
-                    <span className={`${CHIP} translate-y-px border-cafe-ink bg-cafe-tint text-cafe-ink`}>
-                      Museum
-                    </span>
-                  </State>
-                  <State name="selected">
-                    <span className={`${CHIP} border-cafe-ink bg-cafe-ink text-cafe-cream`}>
-                      Museum
-                    </span>
-                  </State>
-                  <State name="disabled">
-                    <span className={`${CHIP} border-cafe-border text-cafe-ink/35`}>
-                      Museum
-                    </span>
-                  </State>
-                </StateRow>
-              </Plate>
-
-              <Plate title="List row">
-                <div className="flex flex-col gap-2">
-                  {[
-                    ["rest", ""],
-                    ["hover", "bg-cafe-surface2"],
-                    ["focus", "outline-2 outline-offset-[-2px] outline-cafe-tomato"],
-                    ["pressed", "bg-cafe-tint"],
-                    ["selected", "border-l-[3px] border-l-cafe-tomato bg-cafe-tint"],
-                    ["disabled", "opacity-45"],
-                  ].map(([st, cls]) => (
-                    <div key={st} className="flex items-center gap-3">
-                      <span className="w-20 shrink-0 font-cafe-body text-[10px] uppercase tracking-[0.16em] text-cafe-muted">
-                        {st}
-                      </span>
-                      <span
-                        className={`flex flex-1 items-center gap-4 border border-cafe-border px-3 py-2 ${cls}`}
+            {/* one matrix instead of seven stacked plates: control × state */}
+            <div className="overflow-x-auto border border-cafe-border bg-cafe-cream shadow-[2px_3px_0_rgba(43,29,22,0.08)]">
+              <table className="w-full min-w-[920px] border-collapse">
+                <caption className="sr-only">
+                  Every control in every applicable state
+                </caption>
+                <thead>
+                  <tr className="border-b-2 border-cafe-ink/80">
+                    <th scope="col" className="w-36 px-3 py-2 text-left font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
+                      Control
+                    </th>
+                    {STATES.map((st) => (
+                      <th
+                        key={st}
+                        scope="col"
+                        className="px-3 py-2 text-left font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted"
                       >
-                        <span className="font-cafe-body text-sm font-semibold tabular-nums">
-                          10:30
-                        </span>
-                        <span className="font-cafe-body text-sm">Sainte-Chapelle</span>
-                        <span className="ml-auto font-cafe-body text-sm tabular-nums">
-                          €11.50
-                        </span>
-                      </span>
-                    </div>
+                        {st}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {CONTROLS.map((c) => (
+                    <tr key={c.name} className="border-b border-cafe-border last:border-0 align-middle">
+                      <th
+                        scope="row"
+                        className="px-3 py-3 text-left align-middle font-cafe-body text-xs font-semibold"
+                      >
+                        {c.name}
+                        {c.note ? (
+                          <span className="mt-0.5 block font-normal text-[10px] leading-snug text-cafe-muted">
+                            {c.note}
+                          </span>
+                        ) : null}
+                      </th>
+                      {STATES.map((st) => (
+                        <td key={st} className="px-3 py-3 align-middle">
+                          {c.render(st) ?? (
+                            <span className="font-cafe-body text-[11px] italic text-cafe-muted">
+                              n/a
+                            </span>
+                          )}
+                        </td>
+                      ))}
+                    </tr>
                   ))}
-                </div>
-              </Plate>
+                </tbody>
+              </table>
             </div>
+            <p className="mt-3 max-w-2xl font-cafe-body text-xs leading-relaxed text-cafe-muted">
+              Focus is the same everywhere: a 2px outline offset 2px, in tomato
+              on quiet controls and in espresso on the accent fill, so it stays
+              visible on both. Pressed shifts down 1px, which is the only
+              motion in the system.
+            </p>
           </section>
 
           {/* ============ VI · UI STATES ============ */}
@@ -933,8 +931,8 @@ export default function DesignSystemA() {
               {...SECTIONS[5]}
               blurb="What the list looks like when it has nothing, is waiting, has failed, or has just succeeded."
             />
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Plate title="Empty" note="No activities match the filters">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-12">
+              <Plate className="sm:col-span-5" title="Empty" note="No activities match the filters">
                 <div className="flex flex-col items-start gap-3 border border-dashed border-cafe-borderstrong p-6">
                   <svg viewBox="0 0 48 32" className="h-10 w-16" aria-hidden="true" fill="none">
                     <rect x="1" y="1" width="46" height="30" stroke="#C3BAB0" strokeDasharray="4 3" />
@@ -952,7 +950,7 @@ export default function DesignSystemA() {
                 </div>
               </Plate>
 
-              <Plate title="Loading" note="Skeleton rows, not a spinner on its own">
+              <Plate className="sm:col-span-7" title="Loading" note="Skeleton rows, not a spinner on its own">
                 <div className="flex flex-col gap-3">
                   {[0, 1, 2].map((i) => (
                     <div key={i} className="flex animate-pulse items-center gap-4">
@@ -974,7 +972,7 @@ export default function DesignSystemA() {
                 </div>
               </Plate>
 
-              <Plate title="Error" note="A rule, an icon and a tint — never the accent">
+              <Plate className="sm:col-span-7" title="Error" note="A rule, an icon and a tint — never the accent">
                 <div className="flex gap-3 border-l-[3px] border-cafe-error bg-cafe-error/8 p-4">
                   <svg viewBox="0 0 20 20" className="h-5 w-5 shrink-0" aria-hidden="true">
                     <circle cx="10" cy="10" r="9" fill="none" stroke="#7B1E2B" strokeWidth="2" />
@@ -995,7 +993,7 @@ export default function DesignSystemA() {
                 </div>
               </Plate>
 
-              <Plate title="Success" note="Quiet and brief; it does not ask for anything">
+              <Plate className="sm:col-span-5" title="Success" note="Quiet and brief; it does not ask for anything">
                 <div className="flex gap-3 border-l-[3px] border-cafe-success bg-cafe-success/8 p-4">
                   <svg viewBox="0 0 20 20" className="h-5 w-5 shrink-0" aria-hidden="true">
                     <circle cx="10" cy="10" r="9" fill="none" stroke="#41662F" strokeWidth="2" />
@@ -1015,7 +1013,7 @@ export default function DesignSystemA() {
           </section>
 
           <footer className="mt-14 border-t-2 border-cafe-ink/80 pt-5 font-cafe-body text-[11px] uppercase tracking-[0.18em] text-cafe-muted">
-            6 sections · 11 colour roles · 4 type roles · 13 components
+            6 sections · 12 colour roles · 4 type roles · 13 components · 9 controls × 6 states
           </footer>
         </div>
       </div>
