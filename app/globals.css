@@ -12,6 +12,17 @@
   --color-cafe-olive: #6b6b3a;
   --color-cafe-clay: #b9795a;
   --color-cafe-mustard: #d9a441;
+  /* A · derived roles — every value measured, see the design system page */
+  --color-cafe-surface2: #eae2d7; /* hover surface */
+  --color-cafe-muted: #685c54; /* muted text · 5.66:1 on surface */
+  --color-cafe-border: #c3bab0; /* decorative rules */
+  --color-cafe-borderstrong: #90867c; /* control boundaries · 3.12:1 */
+  --color-cafe-tint: #edd8cc; /* selected background */
+  --color-cafe-accenthover: #9c2b1b;
+  --color-cafe-accentpress: #8f2617;
+  --color-cafe-success: #41662f; /* 5.80:1 on surface */
+  --color-cafe-error: #7b1e2b; /* 8.91:1 — browner than the accent on purpose */
+  --color-cafe-warning: #7a4f10; /* 6.22:1 on surface */
   --font-cafe-display: var(--font-fraunces), Georgia, serif;
   --font-cafe-body: var(--font-source-sans), system-ui, sans-serif;
 
