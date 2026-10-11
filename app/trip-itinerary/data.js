@@ -73,6 +73,19 @@ export const ITEMS = [
   { id: "d7-5", day: 7, start: "18:00", end: "19:00", category: "Landmark", title: "Parc de Belleville at sunset", area: "20th", price: 0, metro: "Pyrénées, ligne 11", note: "The highest park in Paris, with the whole city laid out west and the tower on the horizon. Locals, a few beers, almost no visitors.", tip: "The terrace at the top of the park, not the bottom. Come twenty minutes before sunset." },
 ];
 
+// One color per category, each measured against cream (#F6EFE3):
+// all clear 4.5:1 as text, as cream-on-fill, and on their own 10% tint.
+// Tomato is deliberately absent — it stays reserved for the primary action.
+export const CATEGORY_COLOR = {
+  Museum: "#3F5668", // slate   · 6.70:1
+  Food: "#8C4A2F", // clay      · 5.86:1
+  Market: "#55682C", // olive   · 5.40:1
+  Walk: "#6B5423", // bronze    · 6.30:1
+  Park: "#356B45", // green     · 5.50:1
+  Landmark: "#6B3A52", // plum  · 7.81:1
+  Evening: "#41477A", // indigo · 7.63:1
+};
+
 export const CATEGORY_LABEL = {
   Museum: "Museums & galleries",
   Food: "Food & drink",

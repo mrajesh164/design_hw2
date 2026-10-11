@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { CATEGORIES, DAYS, ITEMS } from "./data";
+import { CATEGORIES, CATEGORY_COLOR, DAYS, ITEMS } from "./data";
 
 /* ------------------------------------------------------------------ *
  * Everything here happens in React state. Nothing is fetched, nothing
@@ -207,12 +207,22 @@ export default function Itinerary() {
                     type="button"
                     aria-pressed={on}
                     onClick={() => toggleCat(c)}
+                    style={
+                      on
+                        ? { background: CATEGORY_COLOR[c], borderColor: CATEGORY_COLOR[c] }
+                        : { borderColor: CATEGORY_COLOR[c], color: CATEGORY_COLOR[c] }
+                    }
                     className={`${CHIP_BASE} ${
                       on
-                        ? "border-cafe-ink bg-cafe-ink text-cafe-cream"
-                        : "border-cafe-borderstrong text-cafe-ink hover:bg-cafe-surface2 active:translate-y-px active:bg-cafe-tint"
+                        ? "text-cafe-cream"
+                        : "hover:bg-cafe-surface2 active:translate-y-px active:bg-cafe-tint"
                     }`}
                   >
+                    <span
+                      aria-hidden="true"
+                      className="h-2 w-2 shrink-0"
+                      style={{ background: on ? "#F6EFE3" : CATEGORY_COLOR[c] }}
+                    />
                     {c}
                   </button>
                 );
@@ -298,10 +308,13 @@ export default function Itinerary() {
                       onClick={(e) => openItem(i.id, e.currentTarget)}
                       aria-expanded={isOpen}
                       aria-controls="stop-detail"
-                      className={`flex w-full items-start gap-4 px-3 py-4 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-cafe-tomato ${
-                        isOpen
-                          ? "border-l-[3px] border-l-cafe-tomato bg-cafe-tint pl-[9px]"
-                          : "hover:bg-cafe-surface2 active:bg-cafe-tint"
+                      style={{
+                        borderLeftColor: isOpen
+                          ? "var(--color-cafe-tomato)"
+                          : CATEGORY_COLOR[i.category],
+                      }}
+                      className={`flex w-full items-start gap-4 border-l-4 py-4 pl-[8px] pr-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-cafe-tomato ${
+                        isOpen ? "bg-cafe-tint" : "hover:bg-cafe-surface2 active:bg-cafe-tint"
                       }`}
                     >
                       <span className="w-14 shrink-0 pt-0.5">
@@ -333,8 +346,11 @@ export default function Itinerary() {
                             </span>
                           ) : null}
                         </span>
-                        <span className="mt-0.5 block font-cafe-body text-[11px] uppercase tracking-[0.12em] text-cafe-muted">
-                          {i.category} · {i.area}
+                        <span className="mt-0.5 block font-cafe-body text-[11px] uppercase tracking-[0.12em]">
+                          <span style={{ color: CATEGORY_COLOR[i.category] }} className="font-semibold">
+                            {i.category}
+                          </span>
+                          <span className="text-cafe-muted"> · {i.area}</span>
                         </span>
                       </span>
 
@@ -385,10 +401,19 @@ export default function Itinerary() {
               aria-labelledby="stop-detail-title"
               className="outline-none"
             >
-              <div className="flex items-start justify-between gap-3 border-b border-cafe-border p-4">
+              <div
+                className="flex items-start justify-between gap-3 border-b-2 p-4"
+                style={{
+                  borderBottomColor: CATEGORY_COLOR[open.category],
+                  background: `color-mix(in srgb, ${CATEGORY_COLOR[open.category]} 10%, #F6EFE3)`,
+                }}
+              >
                 <div className="min-w-0">
-                  <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em] text-cafe-muted">
-                    Day {open.day} · {open.start}–{open.end}
+                  <p
+                    className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em]"
+                    style={{ color: CATEGORY_COLOR[open.category] }}
+                  >
+                    {open.category} · Day {open.day} · {open.start}–{open.end}
                   </p>
                   <h3
                     id="stop-detail-title"
@@ -414,7 +439,12 @@ export default function Itinerary() {
                   {[
                     ["Price", money(open.price)],
                     ["Duration", duration(open.start, open.end)],
-                    ["Category", open.category],
+                    [
+                      "Category",
+                      <span key="c" style={{ color: CATEGORY_COLOR[open.category] }}>
+                        {open.category}
+                      </span>,
+                    ],
                     ["Nearest", open.metro],
                   ].map(([k, v]) => (
                     <div key={k}>

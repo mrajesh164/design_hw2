@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Itinerary from "./itinerary";
+import { CATEGORIES, CATEGORY_COLOR } from "./data";
 
 export const metadata = {
   title: "Paris in a Week · A seven-day itinerary",
@@ -29,7 +30,7 @@ export default function TripItinerary() {
           {/* masthead: the one place the display face runs at full size */}
           <header className="mt-6 border-y-2 border-cafe-ink/80 py-7">
             <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.3em] text-cafe-tomato">
-              Seven days · Île-de-France
+              Seven days · Paris, on foot
             </p>
             <h1 className="mt-2 font-cafe-display text-6xl leading-[0.9] tracking-tight sm:text-8xl">
               Paris in a Week
@@ -39,6 +40,33 @@ export default function TripItinerary() {
               Thirty-five stops, roughly in the order you would walk them, with
               the times worth arriving at and the things worth skipping.
             </p>
+            {/* an awning stripe, one band per category — the color key for the
+                whole page, and the first thing the palette does */}
+            <ul className="mt-6 flex h-3 w-full overflow-hidden" aria-hidden="true">
+              {CATEGORIES.map((c) => (
+                <li
+                  key={c}
+                  className="h-full flex-1"
+                  style={{ background: CATEGORY_COLOR[c] }}
+                />
+              ))}
+            </ul>
+            <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+              {CATEGORIES.map((c) => (
+                <li
+                  key={c}
+                  className="flex items-center gap-1.5 font-cafe-body text-[10px] font-semibold uppercase tracking-[0.12em]"
+                  style={{ color: CATEGORY_COLOR[c] }}
+                >
+                  <span
+                    aria-hidden="true"
+                    className="h-2 w-2"
+                    style={{ background: CATEGORY_COLOR[c] }}
+                  />
+                  {c}
+                </li>
+              ))}
+            </ul>
           </header>
 
           <Itinerary />
@@ -61,8 +89,10 @@ export default function TripItinerary() {
               </Link>{" "}
               it came from. Filtering, searching and marking stops as done all
               happen in the browser and are forgotten on reload — there is no
-              database, no account and no network request. Prices and opening
-              days are planning estimates, not live information.
+              database, no account and no network request. The seven category colors extend the system for this site; each was
+              measured against the page surface and clears 4.5:1 as text, as a
+              fill and on its own tint. Prices and opening days are planning
+              estimates, not live information.
             </p>
           </footer>
         </div>
