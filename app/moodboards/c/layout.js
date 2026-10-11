@@ -1,19 +1,28 @@
-import { Bagel_Fat_One, Rubik } from "next/font/google";
+import { Archivo_Black, IBM_Plex_Sans, Space_Mono } from "next/font/google";
 
-const bagel = Bagel_Fat_One({
-  variable: "--font-bagel",
+const archivoBlack = Archivo_Black({
+  variable: "--font-archivo-black",
   subsets: ["latin"],
   weight: "400",
 });
 
-const rubik = Rubik({
-  variable: "--font-rubik",
+const plexSans = IBM_Plex_Sans({
+  variable: "--font-plex-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
+
+const spaceMono = Space_Mono({
+  variable: "--font-space-mono",
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 export default function Layout({ children }) {
   return (
-    <div className={`${bagel.variable} ${rubik.variable} font-nuit-body`}>
+    <div
+      className={`${archivoBlack.variable} ${plexSans.variable} ${spaceMono.variable} font-encre-body`}
+    >
       {children}
     </div>
   );

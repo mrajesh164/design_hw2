@@ -8,7 +8,7 @@ const sections = [
     links: [
       { label: "A · Café Terrace", href: "/moodboards/a" },
       { label: "B · Métro Ligne", href: "/moodboards/b" },
-      { label: "C · Nuit Pop", href: "/moodboards/c" },
+      { label: "C · Encre de Nuit", href: "/moodboards/c" },
     ],
   },
   {
@@ -18,7 +18,7 @@ const sections = [
     links: [
       { label: "A · Café Terrace", href: "/design-systems/a" },
       { label: "B · Métro Ligne", href: "/design-systems/b" },
-      { label: "C · Nuit Pop", href: "/design-systems/c" },
+      { label: "C · Encre de Nuit", href: "/design-systems/c" },
     ],
   },
 ];

@@ -1,409 +1,492 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Mood board C · Nuit Pop",
+  title: "Mood board C · Encre de Nuit",
   description:
-    "A night-poster direction: ink purple, neon pink and teal, chunky type and hard shadows.",
+    "A night-ink direction: ink-navy ground, bone and brass, ember accent, printed with risograph grain and misregistration.",
 };
 
-/* ---------- primitives ---------- */
+/* Risograph paper grain, drawn with SVG turbulence and inlined as a data URI
+   so the page still makes no external requests. */
+const GRAIN =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E\")";
 
-function Sticker({ children, label, tilt = "", className = "" }) {
+/* ---------- tiles ---------- */
+
+/* Every tile sits on the night ground with a hard offset in a second ink —
+   the misregistration you get when two passes don't line up. */
+function Tile({ children, label, index, span = "col-span-6", ink = "ember" }) {
+  const shadow =
+    ink === "brass"
+      ? "shadow-[4px_4px_0_var(--color-encre-brass)]"
+      : "shadow-[4px_4px_0_var(--color-encre-ember)]";
   return (
     <figure
-      className={`${tilt} ${className} rounded-2xl border-[3px] border-nuit-cream bg-nuit-deep p-3 shadow-[5px_5px_0_rgba(255,92,168,0.55)]`}
+      className={`${span} ${shadow} flex flex-col border border-encre-bone/30 bg-encre-deep`}
     >
-      {children}
-      <figcaption className="mt-2 font-nuit-body text-[10px] font-medium uppercase tracking-[0.12em] text-nuit-cream/55">
-        {label}
-      </figcaption>
+      <div className="flex items-baseline gap-2 border-b border-encre-bone/15 px-3 py-1.5">
+        <span className="font-encre-mono text-[10px] tabular-nums text-encre-bone/35">
+          {String(index).padStart(2, "0")}
+        </span>
+        <figcaption className="font-encre-mono text-[10px] uppercase tracking-[0.1em] text-encre-bone/55">
+          {label}
+        </figcaption>
+      </div>
+      <div className="flex flex-1 items-center p-4">{children}</div>
     </figure>
+  );
+}
+
+function Halftone({ className = "", color = "#D97642", size = 9, dot = 2.4 }) {
+  return (
+    <span
+      className={className}
+      style={{
+        backgroundImage: `radial-gradient(${color} ${dot}px, transparent ${
+          dot + 0.4
+        }px)`,
+        backgroundSize: `${size}px ${size}px`,
+      }}
+      aria-hidden="true"
+    />
   );
 }
 
 export default function MoodboardC() {
   return (
-    <main className="min-h-screen bg-nuit-ink text-nuit-cream">
+    <main className="min-h-screen bg-encre-ink text-encre-bone">
+      {/* lamplight pools + grain, layered over the ink ground */}
       <div
         className="min-h-screen"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 15% 10%, rgba(255,92,168,0.22), transparent 42%), radial-gradient(circle at 85% 25%, rgba(46,230,208,0.16), transparent 45%), radial-gradient(circle at 50% 95%, rgba(255,210,63,0.14), transparent 50%)",
+            "radial-gradient(ellipse at 12% 8%, rgba(232,176,75,0.13), transparent 45%), radial-gradient(ellipse at 88% 30%, rgba(217,118,66,0.10), transparent 42%)",
         }}
       >
-        <div className="mx-auto w-full max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
-          <Link
-            href="/"
-            className="inline-block rounded-full border-2 border-nuit-cream/50 px-3 py-1 font-nuit-body text-xs font-semibold text-nuit-cream/80 hover:border-nuit-yellow hover:text-nuit-yellow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-nuit-yellow"
-          >
-            ← Back to hub
-          </Link>
+        <div
+          className="min-h-screen"
+          style={{ backgroundImage: GRAIN, backgroundBlendMode: "overlay" }}
+        >
+          <div className="mx-auto w-full max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
+            <Link
+              href="/"
+              className="font-encre-mono text-xs uppercase tracking-[0.18em] text-encre-bone/55 underline-offset-4 hover:text-encre-ember hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre-ember"
+            >
+              ← Back to hub
+            </Link>
 
-          <header className="relative mt-8 overflow-hidden rounded-[28px] border-[3px] border-nuit-cream bg-nuit-deep px-6 py-8 shadow-[8px_8px_0_#FF5CA8]">
-            <p className="font-nuit-body text-xs font-bold uppercase tracking-[0.25em] text-nuit-teal">
-              Mood board C
-            </p>
-            <h1 className="mt-2 font-nuit-display text-5xl leading-[0.9] text-nuit-yellow sm:text-7xl">
-              Nuit Pop
-            </h1>
-            <p className="mt-4 max-w-xl font-nuit-body text-base leading-relaxed text-nuit-cream/85">
-              Paris after dark as a cabaret poster: saturated ink, hand-cut
-              shapes, type that shouts across the street. Loud on the outside,
-              strictly legible underneath.
-            </p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {["Neon", "Collage", "Chunky", "Late"].map((t) => (
+            {/* masthead — display type misregistered in two inks */}
+            <header className="mt-6 border-y-2 border-encre-bone/70 py-7">
+              <p className="font-encre-mono text-[11px] uppercase tracking-[0.3em] text-encre-ember">
+                Mood board C
+              </p>
+              <h1 className="relative mt-3 font-encre-display text-5xl uppercase leading-[0.88] tracking-tight sm:text-7xl">
                 <span
-                  key={t}
-                  className="rounded-full bg-nuit-pink px-3 py-1 font-nuit-body text-[11px] font-bold uppercase tracking-wider text-nuit-ink"
+                  aria-hidden="true"
+                  className="absolute left-[3px] top-[3px] text-encre-brass/70"
                 >
-                  {t}
+                  Encre de Nuit
                 </span>
-              ))}
-            </div>
-          </header>
+                <span className="relative">Encre de Nuit</span>
+              </h1>
+              <p className="mt-5 max-w-xl font-encre-body text-base leading-relaxed text-encre-bone/80">
+                Night ink. The city printed in two passes on dark stock —
+                lamplight amber over navy, ember where the inks overlap. Loud
+                in texture, quiet in colour: two inks and nothing else.
+              </p>
+              <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 font-encre-mono text-[11px] uppercase tracking-[0.15em] text-encre-bone/50">
+                <li>Two-ink</li>
+                <li>·</li>
+                <li>Overprint</li>
+                <li>·</li>
+                <li>Grain</li>
+                <li>·</li>
+                <li>Lamplight</li>
+              </ul>
+            </header>
 
-          {/* scattered collage — varied spans and tilts, unlike A's masonry and B's strict grid */}
-          <div className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-4 lg:grid-cols-6">
-            <Sticker label="01 · Night palette" tilt="-rotate-2" className="col-span-2">
-              <div className="grid grid-cols-3 gap-2">
-                {[
-                  ["#1B1030", "Ink"],
-                  ["#2E1A55", "Deep"],
-                  ["#FFF6E9", "Cream"],
-                  ["#FF5CA8", "Pink"],
-                  ["#2EE6D0", "Teal"],
-                  ["#FFD23F", "Yellow"],
-                ].map(([hex, n]) => (
-                  <div key={hex}>
-                    <span
-                      className="block h-12 rounded-lg border-2 border-nuit-cream/30"
-                      style={{ background: hex }}
+            {/* zine grid — 12 columns, deliberately uneven spans */}
+            <div className="mt-10 grid grid-cols-12 gap-4">
+              <Tile index={1} label="The two inks + ground" span="col-span-12 sm:col-span-5">
+                <div className="grid w-full grid-cols-2 gap-2">
+                  {[
+                    ["#0E1424", "Ink", "ground"],
+                    ["#151D32", "Deep", "surface"],
+                    ["#EDE6D8", "Bone", "text"],
+                    ["#C9A227", "Brass", "second ink"],
+                    ["#D97642", "Ember", "accent"],
+                    ["#6B4A7A", "Plum", "overprint"],
+                  ].map(([hex, name, role]) => (
+                    <div key={hex} className="flex items-center gap-2">
+                      <span
+                        className="h-9 w-9 shrink-0 border border-encre-bone/25"
+                        style={{ background: hex }}
+                        aria-hidden="true"
+                      />
+                      <span className="font-encre-mono text-[9px] leading-tight">
+                        {name}
+                        <br />
+                        <span className="text-encre-bone/40">{hex}</span>
+                        <br />
+                        <span className="text-encre-bone/40">{role}</span>
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </Tile>
+
+              <Tile index={2} label="Overprint: where two passes cross" span="col-span-12 sm:col-span-4" ink="brass">
+                <div className="relative h-24 w-full" aria-hidden="true">
+                  <span className="absolute left-2 top-3 h-16 w-24 bg-encre-brass mix-blend-screen" />
+                  <span className="absolute left-16 top-7 h-16 w-24 bg-encre-ember mix-blend-screen" />
+                </div>
+              </Tile>
+
+              <Tile index={3} label="Display · Archivo Black" span="col-span-12 sm:col-span-3">
+                <div>
+                  <p className="font-encre-display text-5xl leading-none">Aa</p>
+                  <p className="mt-1 font-encre-display text-sm uppercase tracking-tight text-encre-amber">
+                    Minuit
+                  </p>
+                </div>
+              </Tile>
+
+              <Tile index={4} label="Halftone, ember at 50%" span="col-span-6 sm:col-span-3">
+                <Halftone className="block h-24 w-full" />
+              </Tile>
+
+              <Tile index={5} label="Ink coverage ramp" span="col-span-6 sm:col-span-4" ink="brass">
+                <div className="flex w-full items-end gap-1" aria-hidden="true">
+                  {[1.2, 1.8, 2.4, 3, 3.6, 4.2].map((d, i) => (
+                    <Halftone
+                      key={i}
+                      className="block h-16 flex-1"
+                      dot={d}
+                      size={9}
+                      color="#C9A227"
                     />
-                    <span className="mt-1 block font-nuit-body text-[9px] text-nuit-cream/60">
-                      {n}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </Sticker>
+                  ))}
+                </div>
+              </Tile>
 
-            <Sticker label="02 · Display, Bagel Fat One" tilt="rotate-1" className="col-span-2">
-              <p className="font-nuit-display text-6xl leading-none text-nuit-pink">
-                Aa
-              </p>
-              <p className="font-nuit-display text-2xl leading-tight text-nuit-teal">
-                Minuit
-              </p>
-            </Sticker>
+              <Tile index={6} label="Registration marks" span="col-span-12 sm:col-span-5">
+                <div className="flex w-full items-center justify-around" aria-hidden="true">
+                  {["#D97642", "#C9A227", "#EDE6D8"].map((c) => (
+                    <svg key={c} viewBox="0 0 40 40" className="h-14 w-14">
+                      <circle cx="20" cy="20" r="11" fill="none" stroke={c} strokeWidth="1.5" />
+                      <circle cx="20" cy="20" r="4" fill="none" stroke={c} strokeWidth="1.5" />
+                      <path d="M20 0v14M20 26v14M0 20h14M26 20h14" stroke={c} strokeWidth="1.5" />
+                    </svg>
+                  ))}
+                </div>
+              </Tile>
 
-            <Sticker label="03 · Neon tube" className="col-span-2">
-              <p
-                className="py-3 text-center font-nuit-display text-3xl text-nuit-cream"
-                style={{
-                  textShadow:
-                    "0 0 6px #FF5CA8, 0 0 14px #FF5CA8, 0 0 28px rgba(255,92,168,0.65)",
-                }}
-              >
-                OUVERT
-              </p>
-            </Sticker>
-
-            <Sticker label="04 · Confetti" tilt="-rotate-1">
-              <div className="relative h-20" aria-hidden="true">
-                {[
-                  ["8%", "10%", "#FFD23F", "rotate-12"],
-                  ["38%", "28%", "#2EE6D0", "-rotate-6"],
-                  ["68%", "8%", "#FF5CA8", "rotate-45"],
-                  ["20%", "58%", "#FF8A3D", "rotate-3"],
-                  ["55%", "66%", "#FFD23F", "-rotate-12"],
-                  ["82%", "48%", "#2EE6D0", "rotate-24"],
-                ].map(([l, t, c, r], i) => (
-                  <span
-                    key={i}
-                    className={`absolute h-3 w-2 rounded-[2px] ${r}`}
-                    style={{ left: l, top: t, background: c }}
-                  />
-                ))}
-              </div>
-            </Sticker>
-
-            <Sticker label="05 · Big button" tilt="rotate-2">
-              <span className="block rounded-xl border-[3px] border-nuit-ink bg-nuit-yellow px-3 py-2.5 text-center font-nuit-body text-sm font-extrabold text-nuit-ink shadow-[4px_4px_0_#1B1030]">
-                GO →
-              </span>
-            </Sticker>
-
-            <Sticker label="06 · Ticket, cabaret" className="col-span-2" tilt="-rotate-1">
-              <div className="rounded-xl bg-nuit-cream p-3 text-nuit-ink">
-                <p className="font-nuit-body text-[9px] font-bold uppercase tracking-[0.2em] text-nuit-pink">
-                  Ce soir · 21h30
-                </p>
-                <p className="font-nuit-display text-xl leading-tight">
-                  Le Comptoir
-                </p>
-                <p className="font-nuit-body text-[10px] tabular-nums">
-                  Rang B · Place 14 · 28 €
-                </p>
-              </div>
-            </Sticker>
-
-            <Sticker label="07 · Halftone dots" tilt="rotate-1">
-              <div
-                className="h-20 rounded-lg"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(#FF5CA8 2.5px, transparent 2.6px)",
-                  backgroundSize: "10px 10px",
-                }}
-                aria-hidden="true"
-              />
-            </Sticker>
-
-            <Sticker label="08 · Body, Rubik" className="col-span-2">
-              <p className="font-nuit-body text-[13px] leading-relaxed text-nuit-cream/85">
-                Dinner at nine is early. The last métro is 00:40 on weeknights,
-                1:40 on Friday — after that it is a long, pleasant walk along
-                the river.
-              </p>
-            </Sticker>
-
-            <Sticker label="09 · Chips" tilt="-rotate-2" className="col-span-2">
-              <div className="flex flex-wrap gap-1.5">
-                {[
-                  ["Bar", "bg-nuit-pink text-nuit-ink"],
-                  ["Live", "bg-nuit-teal text-nuit-ink"],
-                  ["Late", "bg-nuit-yellow text-nuit-ink"],
-                  ["Free", "border-2 border-nuit-cream/50 text-nuit-cream"],
-                ].map(([t, c]) => (
-                  <span
-                    key={t}
-                    className={`rounded-full px-2.5 py-1 font-nuit-body text-[10px] font-bold uppercase ${c}`}
-                  >
-                    {t}
+              <Tile index={7} label="Misregistration, 3px off" span="col-span-12 sm:col-span-4">
+                <p className="relative font-encre-display text-3xl uppercase leading-none">
+                  <span aria-hidden="true" className="absolute left-[3px] top-[2px] text-encre-ember/80">
+                    Jour 5
                   </span>
-                ))}
-              </div>
-            </Sticker>
+                  <span className="relative text-encre-bone">Jour 5</span>
+                </p>
+              </Tile>
 
-            <Sticker label="10 · Hard shadow, no blur">
-              <div className="flex gap-2" aria-hidden="true">
-                <span className="h-10 w-10 rounded-lg bg-nuit-cream shadow-[3px_3px_0_#2EE6D0]" />
-                <span className="h-10 w-10 rounded-lg bg-nuit-cream shadow-[5px_5px_0_#FF5CA8]" />
-              </div>
-            </Sticker>
+              <Tile index={8} label="Body · IBM Plex Sans on dark" span="col-span-12 sm:col-span-5" ink="brass">
+                <p className="font-encre-body text-[13px] leading-[1.75] text-encre-bone/85">
+                  Body copy never goes below 400 weight on this ground. Light
+                  weights shimmer and break up against the grain, so the
+                  hierarchy is carried by size and ink, not by thinness.
+                </p>
+              </Tile>
 
-            <Sticker label="11 · Moon" tilt="rotate-2">
-              <svg viewBox="0 0 48 48" className="h-16 w-full" aria-hidden="true">
-                <circle cx="26" cy="24" r="15" fill="#FFD23F" />
-                <circle cx="19" cy="20" r="13" fill="#2E1A55" />
-              </svg>
-            </Sticker>
+              <Tile index={9} label="Data · Space Mono, tabular" span="col-span-6 sm:col-span-3">
+                <p className="font-encre-mono text-xl tabular-nums leading-relaxed">
+                  19:40
+                  <br />
+                  21:15
+                  <br />
+                  00:40
+                </p>
+              </Tile>
 
-            <Sticker label="12 · Starburst" className="col-span-2" tilt="-rotate-1">
-              <svg viewBox="0 0 100 60" className="h-20 w-full" aria-hidden="true">
-                <path
-                  d="M50 4 58 24 80 16 68 36 92 42 68 46 78 62 56 50 50 60 44 50 22 62 32 46 8 42 32 36 20 16 42 24Z"
-                  fill="#FF8A3D"
-                  stroke="#FFF6E9"
-                  strokeWidth="2"
+              <Tile index={10} label="Type scale" span="col-span-6 sm:col-span-4">
+                <div className="w-full font-encre-mono text-[10px] tabular-nums text-encre-bone/40">
+                  {[
+                    ["56", "font-encre-display text-3xl uppercase"],
+                    ["32", "font-encre-display text-xl uppercase"],
+                    ["20", "font-encre-body text-base font-semibold"],
+                    ["16", "font-encre-body text-sm"],
+                    ["13", "font-encre-mono text-xs"],
+                  ].map(([n, cls]) => (
+                    <p key={n} className="flex items-baseline gap-2">
+                      <span className="w-5">{n}</span>
+                      <span className={`${cls} text-encre-bone`}>Nuit</span>
+                    </p>
+                  ))}
+                </div>
+              </Tile>
+
+              <Tile index={11} label="Buttons · ember is the only accent" span="col-span-12 sm:col-span-5" ink="brass">
+                <div className="flex w-full flex-wrap gap-2">
+                  <span className="rounded-[4px] bg-encre-ember px-4 py-2 font-encre-body text-xs font-semibold text-encre-ink">
+                    Open details
+                  </span>
+                  <span className="rounded-[4px] border border-encre-bone/60 px-4 py-2 font-encre-body text-xs font-semibold text-encre-bone">
+                    Add to day
+                  </span>
+                  <span className="rounded-[4px] border border-encre-bone/15 px-4 py-2 font-encre-body text-xs font-semibold text-encre-bone/30">
+                    Closed
+                  </span>
+                </div>
+              </Tile>
+
+              <Tile index={12} label="Lamplight · the only glow allowed" span="col-span-6 sm:col-span-3">
+                <div
+                  className="h-24 w-full"
+                  style={{
+                    backgroundImage:
+                      "radial-gradient(circle at 50% 35%, rgba(232,176,75,0.65), rgba(232,176,75,0.12) 45%, transparent 70%)",
+                  }}
+                  aria-hidden="true"
                 />
-              </svg>
-            </Sticker>
+              </Tile>
 
-            <Sticker label="13 · Type scale">
-              <div className="flex flex-col gap-0.5">
-                <span className="font-nuit-display text-3xl leading-none text-nuit-pink">48</span>
-                <span className="font-nuit-display text-xl leading-none text-nuit-teal">32</span>
-                <span className="font-nuit-body text-base font-bold leading-none">20</span>
-                <span className="font-nuit-body text-xs leading-none">13</span>
-              </div>
-            </Sticker>
+              <Tile index={13} label="Night skyline, flat ink" span="col-span-12 sm:col-span-4">
+                <svg viewBox="0 0 200 70" className="w-full" aria-hidden="true">
+                  <path
+                    d="M0 70V52h14V40h10v12h12V30h16v22h10V44h14v8h12V22l10-14 10 14v30h12V40h14v12h12V46h14v6h12V36h14v34Z"
+                    fill="#C9A227"
+                    opacity="0.55"
+                  />
+                  <path
+                    d="M0 70V58h22V48h14v10h18V42h14v16h16V34l8-10 8 10v24h16V50h16v8h16V44h16v26Z"
+                    fill="#0E1424"
+                    stroke="#EDE6D8"
+                    strokeWidth="1"
+                    opacity="0.9"
+                  />
+                </svg>
+              </Tile>
 
-            <Sticker label="14 · Radius, big and bigger" tilt="rotate-1">
-              <div className="flex items-center gap-2" aria-hidden="true">
-                <span className="h-9 w-9 rounded-lg bg-nuit-teal" />
-                <span className="h-9 w-9 rounded-2xl bg-nuit-teal" />
-                <span className="h-9 w-9 rounded-full bg-nuit-teal" />
-              </div>
-            </Sticker>
+              <Tile index={14} label="Stop card, after dark" span="col-span-12 sm:col-span-4">
+                <article className="w-full border-l-2 border-encre-ember bg-encre-ink/60 p-3">
+                  <p className="font-encre-mono text-[9px] uppercase tracking-[0.15em] text-encre-amber">
+                    Jour 5 · 20:30
+                  </p>
+                  <h3 className="mt-1 font-encre-display text-base uppercase leading-tight">
+                    Pont Alexandre III
+                  </h3>
+                  <p className="mt-1 font-encre-body text-[11px] leading-snug text-encre-bone/65">
+                    Lamps come on at dusk. Walk it east to west.
+                  </p>
+                </article>
+              </Tile>
 
-            <Sticker label="15 · Card, event" className="col-span-2">
-              <article className="rounded-xl border-2 border-nuit-cream/35 bg-nuit-ink p-2.5">
-                <p className="font-nuit-body text-[9px] font-bold uppercase tracking-[0.15em] text-nuit-teal">
-                  Jour 5 · Pigalle
-                </p>
-                <h3 className="font-nuit-display text-lg leading-tight text-nuit-cream">
-                  Moulin Rouge
-                </h3>
-                <p className="mt-1 font-nuit-body text-[11px] text-nuit-cream/70">
-                  Outside only. Then crêpes.
-                </p>
-              </article>
-            </Sticker>
+              <Tile index={15} label="Chips · brass outline, never filled" span="col-span-12 sm:col-span-4" ink="brass">
+                <div className="flex flex-wrap gap-1.5 font-encre-mono text-[10px] uppercase tracking-[0.1em]">
+                  {["Dîner", "Bar", "Musée", "Marche", "Tard"].map((t, i) => (
+                    <span
+                      key={t}
+                      className={`rounded-[3px] px-2 py-1 ${
+                        i === 0
+                          ? "bg-encre-bone text-encre-ink"
+                          : "border border-encre-brass/70 text-encre-bone/75"
+                      }`}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </Tile>
 
-            <Sticker label="16 · Marquee bulbs" tilt="-rotate-2" className="col-span-2">
-              <div className="flex justify-between rounded-lg bg-nuit-ink px-2 py-3" aria-hidden="true">
-                {Array.from({ length: 9 }).map((_, i) => (
-                  <span
-                    key={i}
-                    className="h-2.5 w-2.5 rounded-full"
+              <Tile index={16} label="Input, resting and filled" span="col-span-12 sm:col-span-4">
+                <div className="flex w-full flex-col gap-2">
+                  <span className="block rounded-[4px] border border-encre-bone/25 bg-encre-ink px-3 py-2 font-encre-body text-xs text-encre-bone/35">
+                    Search the evening…
+                  </span>
+                  <span className="block rounded-[4px] border border-encre-ember bg-encre-ink px-3 py-2 font-encre-body text-xs text-encre-bone">
+                    Pont Alexandre III
+                  </span>
+                </div>
+              </Tile>
+
+              <Tile index={17} label="Hairlines, brass" span="col-span-6 sm:col-span-3">
+                <div className="flex w-full flex-col gap-2.5" aria-hidden="true">
+                  <span className="h-px bg-encre-bone/60" />
+                  <span className="h-px bg-encre-brass" />
+                  <span className="h-px border-t border-dashed border-encre-bone/40" />
+                  <span className="h-[2px] bg-encre-ember" />
+                </div>
+              </Tile>
+
+              <Tile index={18} label="Radius: 4px, and that is all" span="col-span-6 sm:col-span-3" ink="brass">
+                <div className="flex items-center gap-2" aria-hidden="true">
+                  <span className="h-11 w-11 rounded-[4px] bg-encre-bone/80" />
+                  <span className="h-11 w-11 rounded-[4px] border border-encre-brass" />
+                  <span className="h-11 w-11 rounded-full border border-dashed border-encre-bone/20" />
+                </div>
+              </Tile>
+
+              <Tile index={19} label="Spacing · 4 8 12 20 32" span="col-span-12 sm:col-span-3">
+                <div className="flex items-end gap-1.5" aria-hidden="true">
+                  {[4, 8, 12, 20, 32].map((s) => (
+                    <span
+                      key={s}
+                      className="w-4 bg-encre-ember"
+                      style={{ height: `${s * 1.6}px` }}
+                    />
+                  ))}
+                </div>
+              </Tile>
+
+              <Tile index={20} label="Duotone recipe for photographs" span="col-span-12 sm:col-span-3">
+                <div className="w-full">
+                  <div
+                    className="h-16 w-full"
                     style={{
-                      background: i % 2 ? "#FFD23F" : "#FFF6E9",
-                      boxShadow: `0 0 6px ${i % 2 ? "#FFD23F" : "#FFF6E9"}`,
+                      backgroundImage:
+                        "linear-gradient(90deg, #0E1424, #6B4A7A 45%, #D97642 75%, #E8B04B)",
                     }}
+                    aria-hidden="true"
                   />
-                ))}
-              </div>
-            </Sticker>
+                  <p className="mt-2 font-encre-mono text-[9px] leading-tight text-encre-bone/50">
+                    shadows → ink · mids → plum · highs → amber
+                  </p>
+                </div>
+              </Tile>
 
-            <Sticker label="17 · Icons, filled">
-              <div className="grid grid-cols-3 gap-2 text-nuit-yellow">
-                {[
-                  <path key="a" d="M12 3 14.9 9.3 21.6 10l-5 4.6 1.4 6.7L12 18l-6 3.3L7.4 14.6 2.4 10l6.7-.7Z" />,
-                  <path key="b" d="M7 3h10v6a5 5 0 0 1-10 0V3Zm1 18h8v2H8Zm3-6h2v6h-2Z" />,
-                  <path key="c" d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7Zm0 4.5A2.5 2.5 0 1 0 12 11a2.5 2.5 0 0 0 0-4.5Z" />,
-                ].map((d, i) => (
-                  <svg key={i} viewBox="0 0 24 24" fill="currentColor" className="h-8 w-8" aria-hidden="true">
-                    {d}
-                  </svg>
-                ))}
-              </div>
-            </Sticker>
+              <Tile index={21} label="Icons, 2px stroke, square cap" span="col-span-12 sm:col-span-4" ink="brass">
+                <div className="grid w-full grid-cols-4 gap-2 text-encre-amber">
+                  {[
+                    <path key="a" d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1M7.7 16.3l-2.1 2.1M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z" />,
+                    <path key="b" d="M7 3h10v5a5 5 0 0 1-10 0V3Zm1 18h8M12 13v8" />,
+                    <path key="c" d="M4 20V9l8-6 8 6v11M4 20h16M9 20v-6h6v6" />,
+                    <path key="d" d="M12 3v9l5 3M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18Z" />,
+                  ].map((d, i) => (
+                    <svg
+                      key={i}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      className="h-8 w-8"
+                      aria-hidden="true"
+                    >
+                      {d}
+                    </svg>
+                  ))}
+                </div>
+              </Tile>
 
-            <Sticker label="18 · Outline type" tilt="rotate-1" className="col-span-2">
-              <p
-                className="font-nuit-display text-4xl leading-none text-transparent"
-                style={{ WebkitTextStroke: "2px #2EE6D0" }}
-              >
-                PARIS
-              </p>
-            </Sticker>
+              <Tile index={22} label="Toggle, on and off" span="col-span-6 sm:col-span-4">
+                <div className="flex items-center gap-3" aria-hidden="true">
+                  <span className="flex h-6 w-11 items-center rounded-full bg-encre-ember p-0.5">
+                    <span className="ml-auto h-5 w-5 rounded-full bg-encre-ink" />
+                  </span>
+                  <span className="flex h-6 w-11 items-center rounded-full border border-encre-bone/30 p-0.5">
+                    <span className="h-5 w-5 rounded-full bg-encre-bone/45" />
+                  </span>
+                </div>
+              </Tile>
 
-            <Sticker label="19 · Gradient wash">
-              <div
-                className="h-20 rounded-lg"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(140deg, #FF5CA8, #FF8A3D 45%, #FFD23F)",
-                }}
-                aria-hidden="true"
-              />
-            </Sticker>
+              <Tile index={23} label="Empty state" span="col-span-6 sm:col-span-4" ink="brass">
+                <div className="w-full border border-dashed border-encre-bone/25 py-5 text-center">
+                  <p className="font-encre-body text-xs font-medium text-encre-bone/55">
+                    Nothing planned after 22:00
+                  </p>
+                  <p className="mt-1 font-encre-mono text-[10px] text-encre-bone/35">
+                    Clear filters
+                  </p>
+                </div>
+              </Tile>
 
-            <Sticker label="20 · Toggle, on and off" tilt="-rotate-1">
-              <div className="flex items-center gap-2" aria-hidden="true">
-                <span className="flex h-6 w-11 items-center rounded-full bg-nuit-teal p-0.5">
-                  <span className="ml-auto h-5 w-5 rounded-full bg-nuit-ink" />
-                </span>
-                <span className="flex h-6 w-11 items-center rounded-full bg-nuit-cream/25 p-0.5">
-                  <span className="h-5 w-5 rounded-full bg-nuit-cream/70" />
-                </span>
-              </div>
-            </Sticker>
+              <Tile index={24} label="Contrast on the ink ground" span="col-span-12 sm:col-span-5">
+                <div className="w-full font-encre-body text-[11px] font-semibold">
+                  <p className="bg-encre-ink px-2 py-1 text-encre-bone">
+                    Bone on ink · 14.8:1 ✓
+                  </p>
+                  <p className="mt-1 bg-encre-ember px-2 py-1 text-encre-ink">
+                    Ink on ember · 7.9:1 ✓
+                  </p>
+                  <p className="mt-1 bg-encre-ink px-2 py-1 text-encre-amber">
+                    Amber on ink · 9.4:1 ✓
+                  </p>
+                  <p className="mt-1 bg-encre-ink px-2 py-1 text-encre-bone/30">
+                    Disabled · not meant to be read
+                  </p>
+                </div>
+              </Tile>
 
-            <Sticker label="21 · Spacing, loose">
-              <div className="flex items-end gap-1.5" aria-hidden="true">
-                {[8, 16, 24, 40, 56].map((s) => (
-                  <span
-                    key={s}
-                    className="w-3 rounded-t bg-nuit-pink"
-                    style={{ height: `${s}px` }}
-                  />
-                ))}
-              </div>
-            </Sticker>
+              <Tile index={25} label="Column guide + crop marks" span="col-span-12 sm:col-span-4" ink="brass">
+                <div className="relative w-full py-3" aria-hidden="true">
+                  <div className="grid grid-cols-6 gap-1">
+                    {Array.from({ length: 6 }).map((_, i) => (
+                      <span key={i} className="h-16 bg-encre-brass/20" />
+                    ))}
+                  </div>
+                  <span className="absolute -left-1 -top-1 h-3 w-3 border-l border-t border-encre-ember" />
+                  <span className="absolute -right-1 -top-1 h-3 w-3 border-r border-t border-encre-ember" />
+                  <span className="absolute -bottom-1 -left-1 h-3 w-3 border-b border-l border-encre-ember" />
+                  <span className="absolute -bottom-1 -right-1 h-3 w-3 border-b border-r border-encre-ember" />
+                </div>
+              </Tile>
 
-            <Sticker label="22 · Zigzag border" className="col-span-2" tilt="rotate-1">
-              <div
-                className="h-10"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(135deg, #2EE6D0 25%, transparent 25%), linear-gradient(225deg, #2EE6D0 25%, transparent 25%)",
-                  backgroundSize: "18px 18px",
-                }}
-                aria-hidden="true"
-              />
-            </Sticker>
+              <Tile index={26} label="Paper grain, magnified" span="col-span-12 sm:col-span-3">
+                <div
+                  className="h-24 w-full bg-encre-bone/80"
+                  style={{ backgroundImage: GRAIN, backgroundBlendMode: "multiply" }}
+                  aria-hidden="true"
+                />
+              </Tile>
 
-            <Sticker label="23 · Quote">
-              <p className="font-nuit-display text-base leading-snug text-nuit-yellow">
-                “Paris is always a good idea — at 11pm.”
-              </p>
-            </Sticker>
+              <Tile index={27} label="Streetlamp" span="col-span-6 sm:col-span-3">
+                <svg viewBox="0 0 60 90" className="h-24" aria-hidden="true">
+                  <circle cx="30" cy="22" r="20" fill="#E8B04B" opacity="0.18" />
+                  <path d="M30 34v52M18 86h24" stroke="#EDE6D8" strokeWidth="2.5" />
+                  <path d="M20 26h20l-4-10H24Z" fill="#E8B04B" />
+                </svg>
+              </Tile>
 
-            <Sticker label="24 · Contrast guard" className="col-span-2">
-              <div className="flex flex-col gap-1 font-nuit-body text-[10px] font-bold">
-                <span className="rounded bg-nuit-yellow px-2 py-1 text-nuit-ink">
-                  Ink on yellow · 13.4:1 ✓
-                </span>
-                <span className="rounded bg-nuit-ink px-2 py-1 text-nuit-cream">
-                  Cream on ink · 15.2:1 ✓
-                </span>
-                <span className="rounded bg-nuit-pink px-2 py-1 text-nuit-ink">
-                  Ink on pink · 8.1:1 ✓
-                </span>
-              </div>
-            </Sticker>
+              <Tile index={28} label="Tone of voice" span="col-span-6 sm:col-span-4" ink="brass">
+                <ul className="font-encre-body text-xs leading-relaxed text-encre-bone/80">
+                  <li>Time first, then place</li>
+                  <li>Dry, never breathless</li>
+                  <li>Ember appears once per screen</li>
+                </ul>
+              </Tile>
 
-            <Sticker label="25 · Sticker badge" tilt="-rotate-3">
-              <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-[3px] border-nuit-ink bg-nuit-teal text-center font-nuit-body text-[10px] font-extrabold uppercase leading-tight text-nuit-ink">
-                Jour
-                <br />5
-              </span>
-            </Sticker>
+              <Tile index={29} label="Not this" span="col-span-12 sm:col-span-4">
+                <ul className="font-encre-body text-xs leading-relaxed text-encre-bone/40">
+                  <li className="line-through">Neon glow on text</li>
+                  <li className="line-through">A third ink</li>
+                  <li className="line-through">Blurred drop shadows</li>
+                  <li className="line-through">Thin weights on dark</li>
+                </ul>
+              </Tile>
 
-            <Sticker label="26 · Stripe, awning at night" className="col-span-2">
-              <div
-                className="h-16 rounded-lg"
-                style={{
-                  backgroundImage:
-                    "repeating-linear-gradient(45deg, #FF5CA8 0 12px, #2E1A55 12px 24px)",
-                }}
-                aria-hidden="true"
-              />
-            </Sticker>
+              <Tile index={30} label="Colour roles, fixed" span="col-span-12 sm:col-span-4">
+                <dl className="w-full font-encre-mono text-[10px] leading-relaxed">
+                  {[
+                    ["ground", "ink"],
+                    ["surface", "deep"],
+                    ["text", "bone"],
+                    ["secondary", "brass / amber"],
+                    ["primary action", "ember"],
+                    ["overprint only", "plum"],
+                  ].map(([k, v]) => (
+                    <div key={k} className="flex justify-between gap-3 border-b border-encre-bone/10 py-0.5">
+                      <dt className="text-encre-bone/45">{k}</dt>
+                      <dd className="text-encre-bone">{v}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </Tile>
+            </div>
 
-            <Sticker label="27 · Input, filled">
-              <span className="block rounded-lg border-2 border-nuit-cream/40 bg-nuit-ink px-2.5 py-2 font-nuit-body text-xs text-nuit-cream/50">
-                Search the night…
-              </span>
-            </Sticker>
-
-            <Sticker label="28 · Tone of voice" className="col-span-2" tilt="rotate-1">
-              <ul className="font-nuit-body text-xs leading-relaxed text-nuit-cream/85">
-                <li>Short, loud, a bit funny</li>
-                <li>Yellow is the only button colour</li>
-                <li>Never more than two bright blocks together</li>
-              </ul>
-            </Sticker>
-
-            <Sticker label="29 · Not this">
-              <ul className="font-nuit-body text-[11px] leading-relaxed text-nuit-cream/45">
-                <li className="line-through">Thin grey text</li>
-                <li className="line-through">Sharp corners</li>
-                <li className="line-through">Pastel anything</li>
-              </ul>
-            </Sticker>
-
-            <Sticker label="30 · Accent rule" className="col-span-2" tilt="-rotate-1">
-              <div className="flex items-center gap-2">
-                <span className="rounded-lg border-[3px] border-nuit-ink bg-nuit-yellow px-3 py-2 font-nuit-body text-xs font-extrabold text-nuit-ink">
-                  Primary
-                </span>
-                <span className="rounded-lg border-2 border-nuit-cream/50 px-3 py-2 font-nuit-body text-xs font-bold text-nuit-cream/80">
-                  Secondary
-                </span>
-              </div>
-              <p className="mt-2 font-nuit-body text-[10px] text-nuit-cream/55">
-                Yellow appears once per screen.
-              </p>
-            </Sticker>
+            <footer className="mt-10 flex flex-wrap items-center justify-between gap-2 border-t border-encre-bone/25 pt-5 font-encre-mono text-[10px] uppercase tracking-[0.15em] text-encre-bone/45">
+              <span>30 artifacts · CSS + SVG specimens</span>
+              <span>Photographs to come</span>
+            </footer>
           </div>
-
-          <footer className="mt-10 rounded-2xl border-2 border-nuit-cream/25 px-4 py-3 font-nuit-body text-[11px] uppercase tracking-[0.15em] text-nuit-cream/50">
-            30 artifacts · CSS + SVG only, no image files
-          </footer>
         </div>
       </div>
     </main>
