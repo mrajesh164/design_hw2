@@ -28,8 +28,8 @@ export default function TripItinerary() {
           </Link>
 
           {/* masthead: the one place the display face runs at full size */}
-          <header className="mt-6 grid items-end gap-8 border-y-2 border-cafe-ink/80 py-7 lg:grid-cols-12">
-            <div className="lg:col-span-7">
+          <header className="mt-6 grid items-start gap-6 border-y-2 border-cafe-ink/80 py-7 lg:grid-cols-12 lg:items-stretch lg:gap-10">
+            <div className="lg:col-span-7 lg:pt-1">
               <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.3em] text-cafe-tomato">
                 Seven days · Paris, on foot
               </p>
@@ -44,8 +44,8 @@ export default function TripItinerary() {
             </div>
 
             {/* a printed photograph, pinned to the page */}
-            <figure className="lg:col-span-5">
-              <div className="border border-cafe-ink/15 bg-cafe-cream p-2 shadow-[4px_4px_0_rgba(43,29,22,0.18)]">
+            <figure className="flex flex-col lg:col-span-5 lg:pt-1">
+              <div className="flex min-h-0 flex-1 border border-cafe-ink/15 bg-cafe-cream p-2 shadow-[4px_4px_0_rgba(43,29,22,0.18)]">
                 <Image
                   src="/trip/hero.jpg"
                   alt="A cobbled Montmartre street at golden hour, with two people walking past the pink corner facade of La Maison Rose and the city spread out beyond."
@@ -53,7 +53,7 @@ export default function TripItinerary() {
                   height={825}
                   priority
                   sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="block h-56 w-full object-cover sm:h-64 lg:h-full"
+                  className="block h-52 w-full object-cover sm:h-60 lg:h-auto lg:min-h-[13rem] lg:flex-1"
                 />
               </div>
               <figcaption className="mt-2 font-cafe-body text-[11px] text-cafe-muted">

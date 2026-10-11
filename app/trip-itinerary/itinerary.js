@@ -155,7 +155,7 @@ export default function Itinerary() {
         <SectionHead
           num="01"
           id="trip"
-          title="The trip"
+          title="The Trip"
           blurb="What it costs, where you sleep, and how you get about."
         />
 
@@ -165,7 +165,7 @@ export default function Itinerary() {
               ["Dates", TRIP.dates.replace(" 2026", ""), "2026"],
               ["Nights", TRIP.nights, "in the 3rd"],
               ["Stops", ITEMS.length, "across 7 days"],
-              ["Planned spend", money(TRIP_SPEND), "entries & food"],
+              ["Planned Spend", money(TRIP_SPEND), "entries & food"],
             ].map(([k, v, sub]) => (
               <div key={k} className="bg-cafe-cream p-4">
                 <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
@@ -181,7 +181,7 @@ export default function Itinerary() {
 
           <div className="border border-cafe-border bg-cafe-cream p-4">
             <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
-              Base &amp; getting around
+              Base &amp; Getting Around
             </p>
             <p className="mt-1.5 font-cafe-display text-lg leading-tight">{TRIP.base}</p>
             <dl className="mt-2 space-y-1 font-cafe-body text-[11px]">
@@ -202,7 +202,7 @@ export default function Itinerary() {
         <div className="mt-4 border border-cafe-border bg-cafe-cream p-4">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
-              Planned spend by category
+              Planned Spend by Category
             </p>
             <p className="font-cafe-body text-[11px] text-cafe-muted">
               Entries, meals and local transit only — no flights or lodging
@@ -232,7 +232,7 @@ export default function Itinerary() {
         <SectionHead
           num="02"
           id="week"
-          title="The week"
+          title="The Week"
           blurb="One neighbourhood a day. Pick one to open its schedule below."
         />
         <ol className="grid grid-cols-2 gap-px border border-cafe-border bg-cafe-border sm:grid-cols-4 lg:grid-cols-7">
