@@ -42,16 +42,15 @@ export default function TripItinerary() {
           <header className="mt-6 grid items-start gap-6 border-y-2 border-cafe-ink/80 py-7 lg:grid-cols-12 lg:items-stretch lg:gap-10">
             <div className="lg:col-span-7 lg:pt-1">
               <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.3em] text-cafe-tomato">
-                Seven days · Paris, on foot
+                Seven days · {ITEMS.length} stops · two travelers
               </p>
               <h1 className="mt-2 font-cafe-display text-6xl leading-[0.9] tracking-tight sm:text-7xl">
                 Paris in a Week
               </h1>
               <p className="mt-5 max-w-xl font-cafe-body text-base leading-relaxed">
-                Discover Paris and everything it has to offer, one
-                neighborhood a day, in roughly the order you would walk it,
-                with the rest saved for the next trip. Choose a section below
-                to start exploring the week.
+                Discover Paris and everything it has to offer, in roughly the
+                order you would walk it, with the rest saved for the next trip.
+                Choose a section below to start exploring the week.
               </p>
 
               {/* jump links, so the three sections are reachable without scrolling */}
