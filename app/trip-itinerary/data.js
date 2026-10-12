@@ -33,13 +33,13 @@ export const TRIP = {
 export const BLOCKS = [
   { id: "Morning", label: "Morning", range: "before 12:00", color: "#A86A00" },
   { id: "Afternoon", label: "Afternoon", range: "12:00 – 18:00", color: "#0F7A72" },
-  { id: "Evening", label: "Evening", range: "after 18:00", color: "#4A42B8" },
+  { id: "Night", label: "Night", range: "after 18:00", color: "#4A42B8" },
 ];
 
 export function blockOf(start) {
   const h = Number(start.split(":")[0]);
   if (h < 12) return "Morning";
-  return h < 18 ? "Afternoon" : "Evening";
+  return h < 18 ? "Afternoon" : "Night";
 }
 
 export const ITEMS = [

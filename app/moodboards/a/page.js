@@ -322,7 +322,7 @@ export default function MoodboardA() {
                     ["Food", "border-cafe-clay"],
                     ["Market", "border-cafe-olive"],
                     ["Park", "border-cafe-olive"],
-                    ["Evening", "border-cafe-ink/40"],
+                    ["Night", "border-cafe-ink/40"],
                   ].map(([t, c]) => (
                     <span key={t} className={`border px-2 py-0.5 ${c}`}>
                       {t}

@@ -551,7 +551,7 @@ export default function DesignSystemC() {
                       <Box checked /> Booked already
                     </span>
                     <span className="flex items-center gap-2.5 font-encre-body text-sm">
-                      <Box round checked /> Evening
+                      <Box round checked /> Night
                     </span>
                     <span className="flex items-center gap-3 font-encre-body text-sm">
                       <Toggle on /> Show walking times
