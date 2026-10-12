@@ -74,9 +74,9 @@ const SPEND_PARTS = [
   },
   { name: "Local transit", total: TRIP.fares.total, note: TRIP.fares.note },
   {
-    name: `The ${ITEMS.length} stops`,
+    name: "Entries & meals",
     total: STOPS_SPEND,
-    note: "Entries and meals, every fare already covered above",
+    note: `All ${ITEMS.length} stops; every fare is covered above`,
   },
 ];
 const BY_CATEGORY = CATEGORIES.map((c) => ({
@@ -266,7 +266,7 @@ export default function Itinerary() {
           </dl>
 
           <p className="mt-4 font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
-            The {ITEMS.length} Stops, by Category
+            Entries &amp; Meals, by Category
           </p>
           <ul className="mt-3 flex flex-col gap-2">
             {BY_CATEGORY.map((c) => (
