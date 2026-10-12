@@ -137,18 +137,55 @@ export default function Itinerary() {
 
   const filtered = cats.length > 0 || hideVisited;
 
+  const [isSheet, setIsSheet] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 1023px)");
+    const sync = () => setIsSheet(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  const FOCUSABLE =
+    'a[href], button:not([disabled]), input:not([disabled]), summary, [tabindex]:not([tabindex="-1"])';
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e) => {
       if (e.key === "Escape") {
         e.stopPropagation();
         setOpenId(null);
+        return;
+      }
+      // as a sheet it covers the page, so Tab must not walk out behind the scrim
+      if (e.key !== "Tab" || !isSheet) return;
+      const node = panelRef.current;
+      if (!node) return;
+      const stops = [...node.querySelectorAll(FOCUSABLE)].filter(
+        (el) => el.offsetParent !== null,
+      );
+      if (stops.length === 0) return;
+      const first = stops[0];
+      const last = stops[stops.length - 1];
+      const here = document.activeElement;
+      if (e.shiftKey && (here === first || here === node)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (here === last || here === node)) {
+        e.preventDefault();
+        first.focus();
       }
     };
     document.addEventListener("keydown", onKey);
     panelRef.current?.focus();
     return () => document.removeEventListener("keydown", onKey);
-  }, [open]);
+  }, [open, isSheet]);
+
+  // the list and the detail must agree: if a filter or the toggle removes the
+  // open stop from the day, the panel showing it is stale
+  useEffect(() => {
+    if (openId && !visible.some((i) => i.id === openId)) setOpenId(null);
+  }, [openId, visible]);
 
   useEffect(() => {
     if (!open && lastTrigger.current) {
@@ -639,7 +676,7 @@ export default function Itinerary() {
                 ref={panelRef}
                 tabIndex={-1}
                 role="dialog"
-                aria-modal="false"
+                aria-modal={isSheet ? "true" : "false"}
                 aria-labelledby="stop-detail-title"
                 className="outline-none"
               >
