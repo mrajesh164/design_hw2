@@ -7,7 +7,7 @@ import { ITEMS } from "./data";
 export const metadata = {
   title: "Paris in a Week · A seven-day itinerary",
   description:
-    "A one-week Paris plan, day by day: filter by category, search, and open any stop for the detail. Static, with nothing saved.",
+    "A one-week Paris plan, day by day: filter by category and open any stop for the detail. Static, with nothing saved.",
 };
 
 const JUMP =
@@ -49,9 +49,8 @@ export default function TripItinerary() {
               </h1>
               <p className="mt-5 max-w-xl font-cafe-body text-base leading-relaxed">
                 One neighborhood a day, in roughly the order you would walk it,
-                and the rest left for the next trip. Every stop carries an hour
-                to aim for and an honest note on what it is like once you are
-                standing there.
+                and the rest left for the next trip. Each stop has a time, a
+                cost, and a note on what to expect.
               </p>
 
               {/* jump links, so the three sections are reachable without scrolling */}
@@ -94,10 +93,10 @@ export default function TripItinerary() {
 
           <Itinerary />
 
-          {/* several of these licences legally require a visible credit, so
+          {/* several of these licenses legally require a visible credit, so
               this is a real credits list rather than a courtesy one */}
           <section aria-labelledby="credits" className="mt-16 border-t-2 border-cafe-ink/80 pt-6">
-            {/* folded away by default: the licences oblige a visible credit,
+            {/* folded away by default: the licenses oblige a visible credit,
                 not a credit that crowds out the itinerary */}
             <details className="group">
               <summary className="flex cursor-pointer list-none items-center gap-3 rounded-[2px] py-1 transition-colors marker:hidden hover:text-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato [&::-webkit-details-marker]:hidden">
@@ -117,7 +116,7 @@ export default function TripItinerary() {
               <p className="mt-2 max-w-2xl font-cafe-body text-xs leading-relaxed text-cafe-muted">
                 Every photograph is stored with the site. Unsplash and Pexels
                 images are free to use and credited as a courtesy; the Creative
-                Commons ones require the credit and licence named below, and the
+                Commons ones require the credit and license named below, and the
                 ShareAlike ones carry that condition onward. A few are a close
                 stand-in rather than the exact place — each of those says so.
               </p>
@@ -177,11 +176,11 @@ export default function TripItinerary() {
               >
                 mood board
               </Link>{" "}
-              it came from. Filtering, searching and marking stops as visited all
+              it came from. Filtering and marking stops as visited both
               happen in the browser and are forgotten on reload — there is no
-              database, no account and no network request. Color marks the three time blocks, not the categories: seven
-              categorical hues could not be told apart safely on this surface,
-              so categories are labelled in words instead. Prices and opening days are planning
+              database, no account and no network request. Color marks the three time blocks, not the categories: categorical
+              hues could not be told apart safely on this surface, so the four
+              categories are labeled in words instead. Prices and opening days are planning
               estimates, not live information.
             </p>
           </footer>

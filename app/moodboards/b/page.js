@@ -285,7 +285,7 @@ export default function MoodboardB() {
           </Grid>
         </section>
 
-        {/* 03 — COLOUR */}
+        {/* 03 — Color */}
         <section aria-labelledby="color" className="mt-12">
           <SectionHead {...SECTIONS[2]} />
           <Grid>
@@ -441,7 +441,7 @@ export default function MoodboardB() {
             The photographs below are stored with the site, so the page makes
             no external requests. Everything else on this board is drawn in CSS
             and SVG. Unsplash, Pexels and CC0 images need no credit; the CC
-            BY-SA files require one, which is why the licence is named on every
+            BY-SA files require one, which is why the license is named on every
             line.
           </p>
           <ol className="mt-4 grid gap-x-8 gap-y-1 font-metro-mono text-[11px] leading-relaxed text-metro-navy/70 sm:grid-cols-2">

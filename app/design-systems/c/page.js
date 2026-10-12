@@ -248,7 +248,7 @@ const ITEM = {
 };
 
 const ROWS = [
-  ["19:40", "Dinner, rue Montorgueil", "Food · 1 h 30", "€28"],
+  ["19:40", "Dinner, Rue Montorgueil", "Food · 1 h 30", "€28"],
   ["20:30", "Pont Alexandre III", "Walk · 40 min", "Free"],
   ["22:15", "Bar, Le Comptoir", "Bar · 1 h", "€14"],
 ];
@@ -528,7 +528,7 @@ export default function DesignSystemC() {
                       >
                         <option value="time">Time of day</option>
                         <option value="price">Price, low to high</option>
-                        <option value="area">Neighbourhood</option>
+                        <option value="area">Neighborhood</option>
                       </select>
                       <span aria-hidden="true" className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-encre-muted">
                         ▾
@@ -777,7 +777,7 @@ export default function DesignSystemC() {
                     <div>
                       <p className="font-encre-body text-sm font-semibold text-encre-error">That time is already taken</p>
                       <p className="mt-1 font-encre-body text-sm text-encre-muted">
-                        Dinner on rue Montorgueil runs until 21:10. Move it, or pick a later slot.
+                        Dinner on Rue Montorgueil runs until 21:10. Move it, or pick a later slot.
                       </p>
                       <span className="mt-3 inline-block">
                         <span className={SECONDARY.rest}>Pick another time</span>

@@ -259,7 +259,7 @@ const ITEM = {
 const ROWS = [
   ["09:15", "Marché Bastille", "Market · 45 min", "Free", 1],
   ["10:30", "Sainte-Chapelle", "Museum · 1 h 30", "€11.50", 4],
-  ["13:00", "Lunch, rue des Rosiers", "Food · 1 h", "€18", 9],
+  ["13:00", "Lunch, Rue des Rosiers", "Food · 1 h", "€18", 9],
 ];
 
 export default function DesignSystemB() {
@@ -520,7 +520,7 @@ export default function DesignSystemB() {
                   >
                     <option value="time">Time of day</option>
                     <option value="price">Price, low to high</option>
-                    <option value="area">Neighbourhood</option>
+                    <option value="area">Neighborhood</option>
                   </select>
                   <span aria-hidden="true" className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-metro-muted">
                     ▾
@@ -773,7 +773,7 @@ export default function DesignSystemB() {
                 <div>
                   <p className="font-metro-sans text-sm font-semibold text-metro-error">That time is already taken</p>
                   <p className="mt-1 font-metro-sans text-sm text-metro-muted">
-                    Lunch on rue des Rosiers runs until 14:00. Move it, or pick a later slot.
+                    Lunch on Rue des Rosiers runs until 14:00. Move it, or pick a later slot.
                   </p>
                   <span className="mt-3 inline-block">
                     <span className={SECONDARY.rest}>Pick another time</span>

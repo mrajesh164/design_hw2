@@ -1,7 +1,7 @@
 // Photographs collected for mood board C. Files live in /public/moodboards/encre
 // and are served locally — the page makes no external requests.
 //
-// Licences: Unsplash License and Pexels License permit free use; credit is
+// Licenses: Unsplash License and Pexels License permit free use; credit is
 // courtesy. p01 is a Wikimedia Commons file under "Copyrighted free use",
 // where the holder permits any use — credited below.
 
@@ -90,7 +90,7 @@ export const PHOTOS = {
   n09: {
     w: 1000,
     h: 1500,
-    alt: "An elevated view over Paris rooftops at blue hour, grey zinc roofs sunk in dusk shadow while a street below and scattered windows glow warm orange.",
+    alt: "An elevated view over Paris rooftops at blue hour, gray zinc roofs sunk in dusk shadow while a street below and scattered windows glow warm orange.",
     note: "Scattered lit windows = the halftone of a city",
     by: "Michael Pointner",
     src: "Pexels",
@@ -202,7 +202,7 @@ export const PHOTOS = {
   p10: {
     w: 1000,
     h: 1500,
-    alt: "A close-up of a matte black surface with a fine gritty sand-like grain, lit obliquely so a soft grey gradient picks out the texture.",
+    alt: "A close-up of a matte black surface with a fine gritty sand-like grain, lit obliquely so a soft gray gradient picks out the texture.",
     note: "The stock this board is printed on",
     by: "Eva Bronzini",
     src: "Pexels",

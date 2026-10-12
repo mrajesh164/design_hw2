@@ -1,7 +1,7 @@
 // Photographs collected for mood board A. All files live in /public/moodboards/cafe
 // and are served locally — the page makes no external requests.
 //
-// Licences: Unsplash License and Pexels License permit free use; credit is
+// Licenses: Unsplash License and Pexels License permit free use; credit is
 // courtesy. The two Wikimedia Commons images are CC BY-SA 3.0, which *requires*
 // the credit line below.
 

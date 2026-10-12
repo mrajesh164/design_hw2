@@ -47,7 +47,7 @@ function SectionHead({ num, id, name, blurb }) {
   );
 }
 
-/* a labelled specimen plate */
+/* a labeled specimen plate */
 function Plate({ title, note, children, className = "" }) {
   return (
     <figure
@@ -310,7 +310,7 @@ const ITEM = {
 const ROWS = [
   ["09:15", "Marché Bastille", "Market · 45 min", "Free"],
   ["10:30", "Sainte-Chapelle", "Museum · 1 h 30", "€11.50"],
-  ["13:00", "Lunch, rue des Rosiers", "Food · 1 h", "€18"],
+  ["13:00", "Lunch, Rue des Rosiers", "Food · 1 h", "€18"],
 ];
 
 /* ---------- page ---------- */
@@ -359,7 +359,7 @@ export default function DesignSystemA() {
             ))}
           </nav>
 
-          {/* ============ I · COLOUR ============ */}
+          {/* ============ I · Color ============ */}
           <section aria-labelledby="color" className="mt-12">
             <SectionHead
               {...SECTIONS[0]}
@@ -642,7 +642,7 @@ export default function DesignSystemA() {
                     >
                       <option value="time">Time of day</option>
                       <option value="price">Price, low to high</option>
-                      <option value="area">Neighbourhood</option>
+                      <option value="area">Neighborhood</option>
                     </select>
                     <span
                       aria-hidden="true"
@@ -983,7 +983,7 @@ export default function DesignSystemA() {
                       That time is already taken
                     </p>
                     <p className="mt-1 font-cafe-body text-sm text-cafe-muted">
-                      Lunch on rue des Rosiers runs until 14:00. Move it, or pick
+                      Lunch on Rue des Rosiers runs until 14:00. Move it, or pick
                       a later slot.
                     </p>
                     <span className="mt-3 inline-block">

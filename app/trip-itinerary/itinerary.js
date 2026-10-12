@@ -70,7 +70,6 @@ function SectionHead({ id, title, blurb, aside }) {
 export default function Itinerary() {
   const [day, setDay] = useState(1);
   const [cats, setCats] = useState([]); // empty = all categories
-  const [query, setQuery] = useState("");
   const [openId, setOpenId] = useState(null);
   const [visited, setVisited] = useState([]); // lost on reload, deliberately
   const [hideVisited, setHideVisited] = useState(false);
@@ -86,19 +85,15 @@ export default function Itinerary() {
     [day],
   );
 
-  const visible = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return dayItems.filter((i) => {
-      if (cats.length && !cats.includes(i.category)) return false;
-      if (hideVisited && visited.includes(i.id)) return false;
-      if (!q) return true;
-      return (
-        i.title.toLowerCase().includes(q) ||
-        i.area.toLowerCase().includes(q) ||
-        i.category.toLowerCase().includes(q)
-      );
-    });
-  }, [dayItems, cats, query, hideVisited, visited]);
+  const visible = useMemo(
+    () =>
+      dayItems.filter((i) => {
+        if (cats.length && !cats.includes(i.category)) return false;
+        if (hideVisited && visited.includes(i.id)) return false;
+        return true;
+      }),
+    [dayItems, cats, hideVisited, visited],
+  );
 
   const open = openId ? ITEMS.find((i) => i.id === openId) : null;
 
@@ -108,7 +103,7 @@ export default function Itinerary() {
     return { stops: dayItems.length, cost, hours: Math.round((mins / 60) * 10) / 10 };
   }, [dayItems]);
 
-  const filtered = cats.length > 0 || query.trim() !== "" || hideVisited;
+  const filtered = cats.length > 0 || hideVisited;
 
   useEffect(() => {
     if (!open) return;
@@ -145,7 +140,6 @@ export default function Itinerary() {
 
   function clearFilters() {
     setCats([]);
-    setQuery("");
     setHideVisited(false);
   }
 
@@ -357,19 +351,6 @@ export default function Itinerary() {
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
-              <label className="flex flex-col gap-1.5">
-                <span className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em]">
-                  Search
-                </span>
-                <input
-                  type="search"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Sainte-Chapelle"
-                  className="w-full rounded-[2px] border border-cafe-borderstrong bg-cafe-cream px-3 py-2 font-cafe-body text-sm text-cafe-ink placeholder:text-cafe-muted focus:border-cafe-tomato focus:outline-2 focus:outline-offset-2 focus:outline-cafe-tomato sm:w-56"
-                />
-              </label>
-
               <label className="group flex cursor-pointer items-center gap-2.5 py-2">
                 <input
                   type="checkbox"

@@ -33,7 +33,7 @@ export const PHOTOS = {
   b12: {
     w: 1000,
     h: 666,
-    alt: "A straight-down aerial view of the Arc de Triomphe at the centre of its roundabout, with twelve avenues radiating outward through grey Haussmann blocks.",
+    alt: "A straight-down aerial view of the Arc de Triomphe at the center of its roundabout, with twelve avenues radiating outward through gray Haussmann blocks.",
     note: "Twelve lines, one interchange — the city as diagram",
     by: "Mikhail Nilov",
     src: "Pexels",
@@ -53,7 +53,7 @@ export const PHOTOS = {
   b15: {
     w: 1000,
     h: 666,
-    alt: "A near-overhead view of a zebra crossing filling the frame with broad white stripes across dark grey asphalt.",
+    alt: "A near-overhead view of a zebra crossing filling the frame with broad white stripes across dark gray asphalt.",
     note: "Maximum contrast, zero decoration",
     by: "Marija Zaric",
     src: "Unsplash",
@@ -73,7 +73,7 @@ export const PHOTOS = {
   x02: {
     w: 1000,
     h: 666,
-    alt: "A pair of empty escalators rising symmetrically between smooth grey tiled walls toward a bright glazed opening, lit in cool blue-teal tones.",
+    alt: "A pair of empty escalators rising symmetrically between smooth gray tiled walls toward a bright glazed opening, lit in cool blue-teal tones.",
     note: "Symmetry as wayfinding: the exit needs no sign",
     by: "Teemu Laukkarinen",
     src: "Unsplash",
@@ -103,7 +103,7 @@ export const PHOTOS = {
   x06: {
     w: 1000,
     h: 669,
-    alt: "A single arrow engraved into a cracked white-painted concrete wall, pointing right, isolated in a large empty field of pale grey surface.",
+    alt: "A single arrow engraved into a cracked white-painted concrete wall, pointing right, isolated in a large empty field of pale gray surface.",
     note: "One arrow, enormous silence around it",
     by: "Nik",
     src: "Unsplash",
