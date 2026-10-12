@@ -503,7 +503,7 @@ export default function DesignSystemB() {
                   className={`${INPUT} border-metro-borderstrong focus:border-metro-blue focus:outline-2 focus:outline-offset-2 focus:outline-metro-blue`}
                 />
                 <span className="font-metro-sans text-[11px] text-metro-muted">
-                  Matches titles and neighbourhoods.
+                  Matches titles and neighborhoods.
                 </span>
               </label>
             </Plate>

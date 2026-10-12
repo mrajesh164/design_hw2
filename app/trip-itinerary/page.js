@@ -10,6 +10,15 @@ export const metadata = {
     "A one-week Paris plan, day by day: filter by category, search, and open any stop for the detail. Static, with nothing saved.",
 };
 
+const JUMP =
+  "inline-flex items-center gap-2 rounded-[2px] border border-cafe-ink px-3.5 py-2 font-cafe-body text-[11px] font-semibold uppercase tracking-[0.12em] text-cafe-ink transition-colors hover:bg-cafe-surface2 active:translate-y-px active:bg-cafe-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato";
+
+const SECTIONS = [
+  { href: "#section-trip", label: "The Trip" },
+  { href: "#section-week", label: "The Week" },
+  { href: "#section-the-day", label: "The Day" },
+];
+
 const PAPER_TEXTURE = {
   backgroundImage:
     "radial-gradient(rgba(43,29,22,0.045) 1px, transparent 1px), radial-gradient(rgba(43,29,22,0.03) 1px, transparent 1px)",
@@ -39,10 +48,20 @@ export default function TripItinerary() {
                 Paris in a Week
               </h1>
               <p className="mt-5 max-w-xl font-cafe-body text-base leading-relaxed">
-                One neighbourhood a day, with the rest left for the next trip.
-                Thirty-seven stops, roughly in the order you would walk them,
-                with the times worth arriving at and the things worth skipping.
+                One neighborhood a day, in roughly the order you would walk it,
+                and the rest left for the next trip. Every stop carries an hour
+                to aim for and an honest note on what it is like once you are
+                standing there.
               </p>
+
+              {/* jump links, so the three sections are reachable without scrolling */}
+              <nav aria-label="Jump to a section" className="mt-5 flex flex-wrap gap-2">
+                {SECTIONS.map((sx) => (
+                  <a key={sx.href} href={sx.href} className={JUMP}>
+                    {sx.label}
+                  </a>
+                ))}
+              </nav>
             </div>
 
             {/* a printed photograph, pinned to the page */}
@@ -64,7 +83,7 @@ export default function TripItinerary() {
                   href="https://unsplash.com/photos/cobblestone-street-with-buildings-and-people-at-sunset-0KLCWI3QkIk"
                   target="_blank"
                   rel="noreferrer"
-                  className="underline decoration-cafe-borderstrong underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                  className="underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
                 >
                   Lens by Benji
                 </a>
@@ -78,16 +97,30 @@ export default function TripItinerary() {
           {/* several of these licences legally require a visible credit, so
               this is a real credits list rather than a courtesy one */}
           <section aria-labelledby="credits" className="mt-16 border-t-2 border-cafe-ink/80 pt-6">
-            <h2 id="credits" className="font-cafe-display text-2xl tracking-tight">
-              Photograph Credits
-            </h2>
-            <p className="mt-1 max-w-2xl font-cafe-body text-xs leading-relaxed text-cafe-muted">
-              Thirty-eight photographs, all stored with the site. Unsplash and
-              Pexels images are free to use and credited as a courtesy; the
-              Creative Commons ones require the credit and licence named below,
-              and the ShareAlike ones carry that condition onward. A few are a
-              close stand-in rather than the exact place — each of those says so.
-            </p>
+            {/* folded away by default: the licences oblige a visible credit,
+                not a credit that crowds out the itinerary */}
+            <details className="group">
+              <summary className="flex cursor-pointer list-none items-center gap-3 rounded-[2px] py-1 transition-colors marker:hidden hover:text-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato [&::-webkit-details-marker]:hidden">
+                <span
+                  aria-hidden="true"
+                  className="font-cafe-body text-sm leading-none text-cafe-muted transition-transform group-open:rotate-90"
+                >
+                  ▶
+                </span>
+                <h2 id="credits" className="font-cafe-display text-2xl tracking-tight">
+                  Photograph Credits
+                </h2>
+                <span className="font-cafe-body text-[11px] uppercase tracking-[0.18em] text-cafe-muted">
+                  44 images
+                </span>
+              </summary>
+              <p className="mt-2 max-w-2xl font-cafe-body text-xs leading-relaxed text-cafe-muted">
+                Every photograph is stored with the site. Unsplash and Pexels
+                images are free to use and credited as a courtesy; the Creative
+                Commons ones require the credit and licence named below, and the
+                ShareAlike ones carry that condition onward. A few are a close
+                stand-in rather than the exact place — each of those says so.
+              </p>
             <ol className="mt-4 grid gap-x-8 gap-y-1.5 font-cafe-body text-[11px] leading-snug text-cafe-muted sm:grid-cols-2">
               <li className="flex gap-2">
                 <span className="w-24 shrink-0 text-cafe-ink">Masthead</span>
@@ -96,7 +129,7 @@ export default function TripItinerary() {
                     href={HERO_PHOTO.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-cafe-ink underline decoration-cafe-borderstrong underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                    className="text-cafe-ink underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
                   >
                     {HERO_PHOTO.by}
                   </a>
@@ -114,7 +147,7 @@ export default function TripItinerary() {
                         href={p.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-cafe-ink underline decoration-cafe-borderstrong underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                        className="text-cafe-ink underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
                       >
                         {p.by}
                       </a>
@@ -125,6 +158,7 @@ export default function TripItinerary() {
                 );
               })}
             </ol>
+            </details>
           </section>
 
           <footer className="mt-10 border-t border-cafe-border pt-5">
@@ -132,14 +166,14 @@ export default function TripItinerary() {
               Built in the Café Terrace style — see the{" "}
               <Link
                 href="/design-systems/a"
-                className="font-semibold text-cafe-ink underline decoration-cafe-borderstrong underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                className="font-semibold text-cafe-ink underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
               >
                 design system
               </Link>{" "}
               and the{" "}
               <Link
                 href="/moodboards/a"
-                className="font-semibold text-cafe-ink underline decoration-cafe-borderstrong underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                className="font-semibold text-cafe-ink underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
               >
                 mood board
               </Link>{" "}

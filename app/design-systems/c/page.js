@@ -511,7 +511,7 @@ export default function DesignSystemC() {
                       className={`${INPUT} border-encre-borderstrong focus:border-encre-ember focus:outline-2 focus:outline-offset-2 focus:outline-encre-ember`}
                     />
                     <span className="font-encre-body text-[11px] text-encre-muted">
-                      Matches titles and neighbourhoods.
+                      Matches titles and neighborhoods.
                     </span>
                   </label>
                 </Plate>

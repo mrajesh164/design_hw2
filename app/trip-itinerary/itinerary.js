@@ -51,21 +51,16 @@ const BY_CATEGORY = CATEGORIES.map((c) => ({
 const MAX_CATEGORY = Math.max(...BY_CATEGORY.map((c) => c.total));
 
 /* one heading pattern, used three times, so the page has a visible spine */
-function SectionHead({ num, id, title, blurb, aside }) {
+function SectionHead({ id, title, blurb, aside }) {
   return (
     <header className="mb-5 flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b-2 border-cafe-ink/80 pb-2">
-      <div className="flex items-baseline gap-3">
-        <span className="font-cafe-display text-2xl leading-none text-cafe-tomato">
-          {num}
-        </span>
-        <div>
-          <h2 id={id} className="font-cafe-display text-3xl leading-none tracking-tight">
-            {title}
-          </h2>
-          {blurb ? (
-            <p className="mt-1 font-cafe-body text-xs italic text-cafe-muted">{blurb}</p>
-          ) : null}
-        </div>
+      <div>
+        <h2 id={id} className="font-cafe-display text-3xl leading-none tracking-tight">
+          {title}
+        </h2>
+        {blurb ? (
+          <p className="mt-1 font-cafe-body text-xs italic text-cafe-muted">{blurb}</p>
+        ) : null}
       </div>
       {aside}
     </header>
@@ -158,10 +153,9 @@ export default function Itinerary() {
 
   return (
     <>
-      {/* ================= 01 · THE TRIP ================= */}
-      <section aria-labelledby="trip" className="mt-12">
+      {/* ================= THE TRIP ================= */}
+      <section id="section-trip" aria-labelledby="trip" className="mt-12 scroll-mt-6">
         <SectionHead
-          num="01"
           id="trip"
           title="The Trip"
           blurb="What it costs, where you sleep, and how you get about."
@@ -235,13 +229,12 @@ export default function Itinerary() {
         </div>
       </section>
 
-      {/* ================= 02 · THE WEEK ================= */}
-      <section aria-labelledby="week" className="mt-14">
+      {/* ================= THE WEEK ================= */}
+      <section id="section-week" aria-labelledby="week" className="mt-14 scroll-mt-6">
         <SectionHead
-          num="02"
           id="week"
           title="The Week"
-          blurb="One neighbourhood a day. Pick one to open its schedule below."
+          blurb="One neighborhood a day. Pick one to open its schedule below."
         />
         <ol className="grid grid-cols-2 gap-px border border-cafe-border bg-cafe-border sm:grid-cols-4 lg:grid-cols-7">
           {DAYS.map((d) => {
@@ -282,10 +275,9 @@ export default function Itinerary() {
         </ol>
       </section>
 
-      {/* ================= 03 · THE DAY ================= */}
-      <section aria-labelledby="the-day" className="mt-14">
+      {/* ================= THE DAY ================= */}
+      <section id="section-the-day" aria-labelledby="the-day" className="mt-14 scroll-mt-6">
         <SectionHead
-          num="03"
           id="the-day"
           title={`Day ${activeDay.n} — ${activeDay.title}`}
           blurb={`${activeDay.date} · ${activeDay.area}`}
@@ -604,7 +596,7 @@ export default function Itinerary() {
                       href={STOP_PHOTOS[open.id].url}
                       target="_blank"
                       rel="noreferrer"
-                      className="underline decoration-cafe-borderstrong underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                      className="underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
                     >
                       {STOP_PHOTOS[open.id].by}
                     </a>

@@ -625,7 +625,7 @@ export default function DesignSystemA() {
                     className={`${INPUT} border-cafe-borderstrong focus:border-cafe-tomato focus:outline-2 focus:outline-offset-2 focus:outline-cafe-tomato`}
                   />
                   <span className="font-cafe-body text-[11px] text-cafe-muted">
-                    Matches titles and neighbourhoods.
+                    Matches titles and neighborhoods.
                   </span>
                 </label>
               </Plate>
