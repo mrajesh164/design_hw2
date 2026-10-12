@@ -63,7 +63,7 @@ const SPEND_PARTS = [
   {
     name: `The ${ITEMS.length} stops`,
     total: STOPS_SPEND,
-    note: "Entries, meals and the RER to Versailles",
+    note: "Entries and meals, every fare already covered above",
   },
 ];
 const BY_CATEGORY = CATEGORIES.map((c) => ({

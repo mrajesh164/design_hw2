@@ -20,11 +20,11 @@ export const TRIP = {
   base: "Rental flat, Rue de Turenne, 3rd",
   checkIn: "Mon 11 May, 15:00",
   checkOut: "Sun 17 May, 11:00",
-  transit: "Navigo Easy, zones 1–3; a separate ticket for the RER to Versailles",
+  transit: "Forfait Navigo Semaine, all zones — it runs Mon–Sun, which is this exact week, and it reaches Versailles",
   // the two costs the per-stop prices do not include, named here rather than
   // left for the reader to work out from the breakdown below
   lodging: { nights: 6, nightly: 180, total: 1080 },
-  fares: { total: 52, note: "Three carnets of ten t+ tickets" },
+  fares: { total: 37.4, note: "Navigo Semaine at €32.40, plus the €5 card" },
 };
 
 // Three time blocks. These colors were validated with the dataviz palette
@@ -91,7 +91,7 @@ export const ITEMS = [
   { id: "d5-6", day: 5, start: "17:30", end: "19:00", category: "Landmarks", title: "Champs-Élysées & the Arc de Triomphe", area: "8th", price: 16, metro: "Charles de Gaulle–Étoile, lignes 1/2/6", note: "Cross back over Pont Alexandre III and walk the avenue uphill to the arch. The shops are the same chains as everywhere; the point is the axis, which from the roof of the Arc runs dead straight to the Louvre one way and La Défense the other.", tip: "Reach the arch by the underpass at the métro, never across the roundabout. Eat afterwards on Avenue de Wagram or Rue de Ponthieu rather than on the Champs itself." },
 
   // ---- Day 6 ----
-  { id: "d6-1", day: 6, start: "08:30", end: "09:30", category: "Outdoors", title: "RER C out to Versailles", area: "Transfer", price: 4.5, metro: "RER C, Versailles Château–Rive Gauche", note: "About 40 minutes from the central stations. The train runs along the river for the first half, which is more interesting than it sounds.", tip: "A standard métro ticket does not cover this. Buy the Île-de-France ticket for the right zone or you will be fined." },
+  { id: "d6-1", day: 6, start: "08:30", end: "09:30", category: "Outdoors", title: "RER C out to Versailles", area: "Transfer", price: 0, metro: "RER C, Versailles Château–Rive Gauche", note: "About 40 minutes from the central stations. The train runs along the river for the first half, which is more interesting than it sounds.", tip: "Versailles is zone 4, so a single métro ticket will not get you there — but the weekly Navigo covers all five zones, which is the main reason to buy it over a book of tickets." },
   { id: "d6-2", day: 6, start: "10:00", end: "12:30", category: "Museums", title: "Château de Versailles", area: "Versailles", price: 21, metro: "Versailles Château–Rive Gauche", note: "The State Apartments and the Hall of Mirrors. Crowded in a way that is genuinely hard to overstate, and still worth it once.", tip: "Tuesday and Sunday are the worst days. Arriving at opening beats any skip-the-line ticket.", closed: "Mon" },
   { id: "d6-3", day: 6, start: "12:45", end: "14:00", category: "Food", title: "Lunch in the gardens", area: "Versailles", price: 16, metro: "—", note: "The cafés near the Grand Canal are mediocre and fine. Bringing something from Paris is the better plan if you thought of it in time.", tip: "There is a market in Versailles town, five minutes from the station, open most mornings." },
   { id: "d6-4", day: 6, start: "14:00", end: "17:00", category: "Outdoors", title: "Gardens & the Hameau de la Reine", area: "Versailles", price: 0, metro: "—", note: "The formal gardens are free on most days. The long walk to Marie-Antoinette's fake hamlet at the far end is the best part of the estate and the emptiest.", tip: "Rent a bike at the Grand Canal, or the walk out and back eats two hours on its own." },
