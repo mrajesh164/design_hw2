@@ -5,7 +5,7 @@
 export const CATEGORIES = ["Food", "Museums", "Landmarks", "Outdoors"];
 
 export const DAYS = [
-  { n: 1, date: "Mon 11 May", title: "Right Bank, Slowly", area: "1st & 2nd" },
+  { n: 1, date: "Mon 11 May", title: "Right Bank", area: "1st & 2nd" },
   { n: 2, date: "Tue 12 May", title: "Île de la Cité & the Marais", area: "1st & 4th" },
   { n: 3, date: "Wed 13 May", title: "Left Bank", area: "6th & 7th" },
   { n: 4, date: "Thu 14 May", title: "Montmartre", area: "18th & 9th" },
@@ -21,6 +21,10 @@ export const TRIP = {
   checkIn: "Mon 11 May, 15:00",
   checkOut: "Sun 17 May, 11:00",
   transit: "Navigo Easy, zones 1–3; a separate ticket for the RER to Versailles",
+  // the two costs the per-stop prices do not include, named here rather than
+  // left for the reader to work out from the breakdown below
+  lodging: { nights: 6, nightly: 180, total: 1080 },
+  fares: { total: 52, note: "Three carnets of ten t+ tickets" },
 };
 
 // Three time blocks. These colors were validated with the dataviz palette

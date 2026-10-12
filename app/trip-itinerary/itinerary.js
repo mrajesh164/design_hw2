@@ -24,8 +24,13 @@ const SECONDARY = `${BTN} border border-cafe-ink text-cafe-ink hover:bg-cafe-sur
 const CHIP_BASE =
   "inline-flex items-center gap-1.5 rounded-[2px] border px-2.5 py-1 font-cafe-body text-[11px] font-semibold uppercase tracking-[0.1em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato";
 
+/* grouped by hand rather than with toLocaleString, which can disagree
+   between the prerender and the browser and break hydration */
 function money(n) {
-  return n === 0 ? "Free" : `€${n % 1 === 0 ? n : n.toFixed(2)}`;
+  if (n === 0) return "Free";
+  const [whole, cents] = (n % 1 === 0 ? String(n) : n.toFixed(2)).split(".");
+  const grouped = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return `€${grouped}${cents ? `.${cents}` : ""}`;
 }
 
 function minutesBetween(a, b) {
@@ -43,7 +48,24 @@ function duration(a, b) {
 }
 
 /* trip totals and the spend breakdown — computed, not typed in */
-const TRIP_SPEND = ITEMS.reduce((s, i) => s + i.price, 0);
+const STOPS_SPEND = ITEMS.reduce((s, i) => s + i.price, 0);
+const TRIP_SPEND = TRIP.lodging.total + TRIP.fares.total + STOPS_SPEND;
+
+/* the three parts of the budget, biggest first, so lodging and fares are
+   read before the category bars rather than inferred from them */
+const SPEND_PARTS = [
+  {
+    name: "Lodging",
+    total: TRIP.lodging.total,
+    note: `${TRIP.lodging.nights} nights × €${TRIP.lodging.nightly}`,
+  },
+  { name: "Local transit", total: TRIP.fares.total, note: TRIP.fares.note },
+  {
+    name: `The ${ITEMS.length} stops`,
+    total: STOPS_SPEND,
+    note: "Entries, meals and the RER to Versailles",
+  },
+];
 const BY_CATEGORY = CATEGORIES.map((c) => ({
   name: c,
   total: ITEMS.filter((i) => i.category === c).reduce((s, i) => s + i.price, 0),
@@ -161,7 +183,7 @@ export default function Itinerary() {
               ["Dates", TRIP.dates.replace(" 2026", ""), "2026"],
               ["Nights", TRIP.nights, "in the 3rd"],
               ["Stops", ITEMS.length, "across 7 days"],
-              ["Planned Spend", money(TRIP_SPEND), "entries & food"],
+              ["Planned Spend", money(TRIP_SPEND), "lodging, fares & stops"],
             ].map(([k, v, sub]) => (
               <div key={k} className="bg-cafe-cream p-4">
                 <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
@@ -198,12 +220,41 @@ export default function Itinerary() {
         <div className="mt-4 border border-cafe-border bg-cafe-cream p-4">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
-              Planned Spend by Category
+              Planned Spend
             </p>
             <p className="font-cafe-body text-[11px] text-cafe-muted">
-              Entries, meals and local transit only — no flights or lodging
+              Two people would share the lodging; flights are not counted
             </p>
           </div>
+
+          <dl className="mt-3 divide-y divide-cafe-border border-y border-cafe-border">
+            {SPEND_PARTS.map((part) => (
+              <div
+                key={part.name}
+                className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 py-2"
+              >
+                <dt className="font-cafe-body text-sm font-semibold">
+                  {part.name}
+                  <span className="ml-2 font-normal text-cafe-muted">{part.note}</span>
+                </dt>
+                <dd className="font-cafe-display text-lg leading-none tabular-nums">
+                  {money(part.total)}
+                </dd>
+              </div>
+            ))}
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 py-2">
+              <dt className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em]">
+                Week total
+              </dt>
+              <dd className="font-cafe-display text-2xl leading-none tabular-nums">
+                {money(TRIP_SPEND)}
+              </dd>
+            </div>
+          </dl>
+
+          <p className="mt-4 font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
+            The {ITEMS.length} Stops, by Category
+          </p>
           <ul className="mt-3 flex flex-col gap-2">
             {BY_CATEGORY.map((c) => (
               <li key={c.name} className="flex items-center gap-3">
@@ -228,7 +279,7 @@ export default function Itinerary() {
         <SectionHead
           id="week"
           title="The Week"
-          blurb="One neighborhood a day. Pick one to open its schedule below."
+          blurb="Each day stays in one part of the city. Pick one to open its schedule below."
         />
         <ol className="grid grid-cols-2 gap-px border border-cafe-border bg-cafe-border sm:grid-cols-4 lg:grid-cols-7">
           {DAYS.map((d) => {
