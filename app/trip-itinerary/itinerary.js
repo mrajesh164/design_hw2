@@ -501,10 +501,15 @@ export default function Itinerary() {
                   if (inBlock.length === 0) return null;
                   return (
                     <section key={b.id} aria-labelledby={`block-${b.id}`}>
+                      {/* each phase of the day wears its own color, at a tint
+                          light enough to leave ink at 12.9:1 and muted at 5.1 */}
                       <h3
                         id={`block-${b.id}`}
-                        className="flex flex-wrap items-baseline gap-x-2 gap-y-1 border-b-2 pb-1"
-                        style={{ borderBottomColor: b.color }}
+                        className="flex flex-wrap items-baseline gap-x-2 gap-y-1 border-b-2 px-2.5 py-1.5"
+                        style={{
+                          borderBottomColor: b.color,
+                          background: `color-mix(in srgb, ${b.color} 8%, #F6EFE3)`,
+                        }}
                       >
                         <span
                           aria-hidden="true"
