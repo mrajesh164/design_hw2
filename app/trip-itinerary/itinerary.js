@@ -312,7 +312,9 @@ export default function Itinerary() {
             const items = ITEMS.filter((i) => i.day === d.n);
             const current = d.n === day;
             return (
-              <li key={d.n}>
+              /* seven cards in a two- or four-column grid leave the last one
+                 orphaned beside an empty cell, so it takes the spare column */
+              <li key={d.n} className={d.n === DAYS.length ? "col-span-2 lg:col-span-1" : undefined}>
                 <button
                   type="button"
                   onClick={() => goToDay(d.n)}
