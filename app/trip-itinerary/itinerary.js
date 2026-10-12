@@ -409,7 +409,7 @@ export default function Itinerary() {
           aria-label="Filter this day"
           className="border border-cafe-border bg-cafe-cream p-4 shadow-[2px_3px_0_rgba(43,29,22,0.08)]"
         >
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:gap-12">
             <div className="flex flex-col gap-2">
               <span
                 id="cat-label"
