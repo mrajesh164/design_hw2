@@ -49,8 +49,8 @@ export default function TripItinerary() {
               </h1>
               <p className="mt-5 max-w-xl font-cafe-body text-base leading-relaxed">
                 One neighborhood a day, in roughly the order you would walk it,
-                and the rest left for the next trip. Each stop has a time, a
-                cost, and a note on what to expect.
+                and the rest left for the next trip. Every stop comes with a
+                time, a price, and an opinion.
               </p>
 
               {/* jump links, so the three sections are reachable without scrolling */}
