@@ -1,5 +1,16 @@
 import Link from "next/link";
 import { Fraunces, Inter_Tight, Archivo_Black } from "next/font/google";
+import { PHOTOS as PHOTOS_A } from "./moodboards/a/photos";
+import { PHOTOS as PHOTOS_B } from "./moodboards/b/photos";
+import { PHOTOS as PHOTOS_C } from "./moodboards/c/photos";
+import { STOP_PHOTOS } from "./trip-itinerary/photos";
+
+/* counted, not typed in: this read 50 while the itinerary alone had 44 */
+const PHOTO_COUNT =
+  [PHOTOS_A, PHOTOS_B, PHOTOS_C, STOP_PHOTOS].reduce(
+    (n, set) => n + Object.keys(set).length,
+    0,
+  ) + 1; // the itinerary masthead
 
 /* each card previews its own typeface as well as its palette */
 const fraunces = Fraunces({ variable: "--hub-fraunces", subsets: ["latin"] });
@@ -270,7 +281,7 @@ export default function Home() {
             </div>
             <div className="flex gap-2 sm:justify-end">
               <dt>Photographs</dt>
-              <dd className="font-semibold text-stone-900">50</dd>
+              <dd className="font-semibold text-stone-900">{PHOTO_COUNT}</dd>
             </div>
           </dl>
         </header>
