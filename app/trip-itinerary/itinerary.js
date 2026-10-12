@@ -388,7 +388,7 @@ export default function Itinerary() {
                 {[
                   ["Stops", totals.stops],
                   ["Planned", `${totals.hours} h`],
-                  ["Cost per Person", money(totals.cost)],
+                  ["Cost Per Person", money(totals.cost)],
                 ].map(([k, v]) => (
                   <div key={k}>
                     <dt className="uppercase tracking-[0.14em] text-cafe-muted">{k}</dt>
@@ -696,7 +696,7 @@ export default function Itinerary() {
 
                   <dl className="grid grid-cols-2 gap-x-6 gap-y-2 border-t border-cafe-border pt-3 font-cafe-body text-xs">
                     {[
-                      ["Price per Person", money(open.price)],
+                      ["Price Per Person", money(open.price)],
                       ["Duration", duration(open.start, open.end)],
                       ["Category", open.category],
                       ["Nearest Métro", open.metro],
