@@ -321,7 +321,7 @@ export default function Itinerary() {
                   aria-current={current ? "true" : undefined}
                   className={`flex h-full w-full flex-col gap-1 border-l-4 p-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-cafe-tomato ${
                     current
-                      ? "border-l-cafe-tomato bg-cafe-tint"
+                      ? "border-l-cafe-ink bg-cafe-tint"
                       : "border-l-transparent bg-cafe-cream hover:bg-cafe-surface2 active:bg-cafe-tint"
                   }`}
                 >
@@ -539,7 +539,7 @@ export default function Itinerary() {
                                 aria-controls="stop-detail"
                                 style={{
                                   borderLeftColor: isOpen
-                                    ? "var(--color-cafe-tomato)"
+                                    ? "var(--color-cafe-ink)"
                                     : b.color,
                                 }}
                                 className={`flex w-full items-start gap-4 border-l-4 py-4 pl-[8px] pr-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-cafe-tomato ${
