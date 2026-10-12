@@ -16,7 +16,7 @@ const JUMP =
 const SECTIONS = [
   { href: "#section-trip", label: "The Trip" },
   { href: "#section-week", label: "The Week" },
-  { href: "#section-the-day", label: "The Day" },
+  { href: "#section-the-day", label: "Daily Plans" },
 ];
 
 const PAPER_TEXTURE = {
@@ -49,7 +49,7 @@ export default function TripItinerary() {
               </h1>
               <p className="mt-5 max-w-xl font-cafe-body text-base leading-relaxed">
                 Discover Paris and everything it has to offer, one
-                neighborhood a day, in roughly the order you would walk it —
+                neighborhood a day, in roughly the order you would walk it,
                 with the rest saved for the next trip. Choose a section below
                 to start exploring the week.
               </p>
