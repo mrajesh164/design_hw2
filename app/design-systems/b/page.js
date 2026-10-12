@@ -273,7 +273,7 @@ export default function DesignSystemB() {
       <div className="mx-auto w-full max-w-5xl px-5 py-10 sm:px-8 sm:py-14">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 font-metro-sans text-xs font-medium uppercase tracking-[0.12em] text-metro-muted hover:text-metro-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-metro-blue"
+          className="inline-flex items-center gap-1.5 font-metro-sans text-[11px] font-medium uppercase tracking-[0.12em] text-metro-muted hover:text-metro-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-metro-blue"
         >
           ← Back to hub
         </Link>
@@ -339,7 +339,7 @@ export default function DesignSystemB() {
             </Plate>
             <Plate className="sm:col-span-5" title="The roles in place">
               <article className="border-l-4 border-metro-blue bg-metro-surface2 p-3">
-                <p className="font-metro-mono text-[10px] uppercase tracking-[0.12em] text-metro-muted">
+                <p className="font-metro-mono text-[11px] uppercase tracking-[0.12em] text-metro-muted">
                   {ITEM.day} · Stop 2
                 </p>
                 <h3 className="font-metro-sans text-lg font-bold leading-tight">{ITEM.title}</h3>
@@ -582,7 +582,7 @@ export default function DesignSystemB() {
             <Plate className="sm:col-span-7" title="Card" note="One stop from the itinerary">
               <article className="border-l-4 border-metro-blue bg-metro-white p-4 shadow-[0_1px_0_#C9CED6]">
                 <div className="flex items-baseline justify-between gap-3">
-                  <p className="font-metro-mono text-[10px] uppercase tracking-[0.12em] text-metro-muted">
+                  <p className="font-metro-mono text-[11px] uppercase tracking-[0.12em] text-metro-muted">
                     {ITEM.day} · {ITEM.area}
                   </p>
                   <span className={`${CHIP} border-metro-borderstrong text-metro-muted`}>{ITEM.category}</span>
@@ -688,11 +688,11 @@ export default function DesignSystemB() {
               <caption className="sr-only">Every control in every applicable state</caption>
               <thead>
                 <tr className="border-b-2 border-metro-navy">
-                  <th scope="col" className="w-36 px-3 py-2 text-left font-metro-mono text-[10px] font-medium uppercase tracking-[0.12em] text-metro-muted">
+                  <th scope="col" className="w-36 px-3 py-2 text-left font-metro-mono text-[11px] font-medium uppercase tracking-[0.12em] text-metro-muted">
                     Control
                   </th>
                   {STATES.map((st) => (
-                    <th key={st} scope="col" className="px-3 py-2 text-left font-metro-mono text-[10px] font-medium uppercase tracking-[0.12em] text-metro-muted">
+                    <th key={st} scope="col" className="px-3 py-2 text-left font-metro-mono text-[11px] font-medium uppercase tracking-[0.12em] text-metro-muted">
                       {st}
                     </th>
                   ))}
@@ -704,7 +704,7 @@ export default function DesignSystemB() {
                     <th scope="row" className="px-3 py-3 text-left align-middle font-metro-sans text-xs font-semibold">
                       {c.name}
                       {c.note ? (
-                        <span className="mt-0.5 block text-[10px] font-normal leading-snug text-metro-muted">
+                        <span className="mt-0.5 block text-[11px] font-normal leading-snug text-metro-muted">
                           {c.note}
                         </span>
                       ) : null}
@@ -804,7 +804,7 @@ export default function DesignSystemB() {
           </div>
         </section>
 
-        <footer className="mt-14 flex flex-wrap items-center justify-between gap-2 border-t-2 border-metro-navy pt-5 font-metro-mono text-[10px] uppercase tracking-[0.15em] text-metro-muted">
+        <footer className="mt-14 flex flex-wrap items-center justify-between gap-2 border-t-2 border-metro-navy pt-5 font-metro-mono text-[11px] uppercase tracking-[0.15em] text-metro-muted">
           <span>6 sections · 12 color roles · 5 type roles · 14 components</span>
           <span>9 controls × 6 states</span>
         </footer>

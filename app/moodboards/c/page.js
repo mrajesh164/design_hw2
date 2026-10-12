@@ -190,7 +190,7 @@ export default function MoodboardC() {
                           style={{ background: hex }}
                           aria-hidden="true"
                         />
-                        <span className="font-encre-mono text-[10px] leading-tight">
+                        <span className="font-encre-mono text-[11px] leading-tight">
                           {name}
                           <br />
                           <span className="text-encre-bone/70">{hex}</span>
@@ -296,7 +296,7 @@ export default function MoodboardC() {
                 </Tile>
                 <Tile index={28} label="Stop card, after dark" span="col-span-12 sm:col-span-6">
                   <article className="w-full border-l-2 border-encre-ember bg-encre-ink/60 p-3">
-                    <p className="font-encre-mono text-[10px] uppercase tracking-[0.15em] text-encre-amber">
+                    <p className="font-encre-mono text-[11px] uppercase tracking-[0.15em] text-encre-amber">
                       Day 5 · 20:30
                     </p>
                     <h3 className="mt-1 font-encre-display text-base uppercase leading-tight">

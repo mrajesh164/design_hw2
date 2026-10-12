@@ -105,7 +105,7 @@ const INPUT =
   "w-full rounded-[4px] border bg-encre-ink px-3 py-2 font-encre-body text-sm text-encre-bone placeholder:text-encre-muted";
 
 const CHIP =
-  "inline-flex items-center gap-1.5 rounded-[3px] px-2.5 py-1 font-encre-mono text-[10px] uppercase tracking-[0.1em]";
+  "inline-flex items-center gap-1.5 rounded-[3px] px-2.5 py-1 font-encre-mono text-[11px] uppercase tracking-[0.1em]";
 
 function Box({ checked, round, state }) {
   const ring = state === "focus" ? "outline-2 outline-offset-2 outline-encre-ember" : "";
@@ -275,7 +275,7 @@ export default function DesignSystemC() {
           <div className="mx-auto w-full max-w-5xl px-5 py-10 sm:px-8 sm:py-14">
             <Link
               href="/"
-              className="font-encre-mono text-xs uppercase tracking-[0.18em] text-encre-muted underline-offset-4 hover:text-encre-ember hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre-ember"
+              className="font-encre-mono text-[11px] uppercase tracking-[0.18em] text-encre-muted underline-offset-4 hover:text-encre-ember hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre-ember"
             >
               ← Back to hub
             </Link>
@@ -345,7 +345,7 @@ export default function DesignSystemC() {
                 </Plate>
                 <Plate className="sm:col-span-5" title="The roles in place" ink="brass">
                   <article className="border-l-2 border-encre-ember bg-encre-ink/60 p-3">
-                    <p className="font-encre-mono text-[10px] uppercase tracking-[0.12em] text-encre-warning">
+                    <p className="font-encre-mono text-[11px] uppercase tracking-[0.12em] text-encre-warning">
                       {ITEM.day} · {ITEM.time}
                     </p>
                     <h3 className="mt-1 font-encre-display text-base uppercase leading-tight">{ITEM.title}</h3>
@@ -595,7 +595,7 @@ export default function DesignSystemC() {
                 <Plate className="sm:col-span-7" title="Card" note="One stop from the itinerary">
                   <article className="rounded-[4px] border-l-2 border-encre-ember bg-encre-ink/60 p-4">
                     <div className="flex items-baseline justify-between gap-3">
-                      <p className="font-encre-mono text-[10px] uppercase tracking-[0.12em] text-encre-warning">
+                      <p className="font-encre-mono text-[11px] uppercase tracking-[0.12em] text-encre-warning">
                         {ITEM.day} · {ITEM.area}
                       </p>
                       <span className={`${CHIP} border border-encre-borderstrong text-encre-muted`}>{ITEM.category}</span>
@@ -697,11 +697,11 @@ export default function DesignSystemC() {
                   <caption className="sr-only">Every control in every applicable state</caption>
                   <thead>
                     <tr className="border-b-2 border-encre-bone/70">
-                      <th scope="col" className="w-36 px-3 py-2 text-left font-encre-mono text-[10px] uppercase tracking-[0.12em] text-encre-muted">
+                      <th scope="col" className="w-36 px-3 py-2 text-left font-encre-mono text-[11px] uppercase tracking-[0.12em] text-encre-muted">
                         Control
                       </th>
                       {STATES.map((st) => (
-                        <th key={st} scope="col" className="px-3 py-2 text-left font-encre-mono text-[10px] uppercase tracking-[0.12em] text-encre-muted">
+                        <th key={st} scope="col" className="px-3 py-2 text-left font-encre-mono text-[11px] uppercase tracking-[0.12em] text-encre-muted">
                           {st}
                         </th>
                       ))}
@@ -713,7 +713,7 @@ export default function DesignSystemC() {
                         <th scope="row" className="px-3 py-3 text-left align-middle font-encre-body text-xs font-semibold">
                           {c.name}
                           {c.note ? (
-                            <span className="mt-0.5 block text-[10px] font-normal leading-snug text-encre-muted">
+                            <span className="mt-0.5 block text-[11px] font-normal leading-snug text-encre-muted">
                               {c.note}
                             </span>
                           ) : null}
@@ -811,7 +811,7 @@ export default function DesignSystemC() {
               </div>
             </section>
 
-            <footer className="mt-14 flex flex-wrap items-center justify-between gap-2 border-t-2 border-encre-bone/70 pt-5 font-encre-mono text-[10px] uppercase tracking-[0.15em] text-encre-muted">
+            <footer className="mt-14 flex flex-wrap items-center justify-between gap-2 border-t-2 border-encre-bone/70 pt-5 font-encre-mono text-[11px] uppercase tracking-[0.15em] text-encre-muted">
               <span>6 sections · 13 color roles · 4 type roles · 14 components</span>
               <span>9 controls × 6 states</span>
             </footer>

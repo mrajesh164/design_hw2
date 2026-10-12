@@ -14,7 +14,7 @@ import { STOP_PHOTOS } from "./photos";
 const BLOCK_COLOR = Object.fromEntries(BLOCKS.map((b) => [b.id, b.color]));
 
 const BTN =
-  "inline-flex items-center justify-center gap-2 rounded-[2px] px-4 py-2 font-cafe-body text-xs font-semibold uppercase tracking-[0.12em] transition-colors disabled:cursor-not-allowed";
+  "inline-flex items-center justify-center gap-2 rounded-[2px] px-4 py-2 font-cafe-body text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors disabled:cursor-not-allowed";
 
 /* the accent fill is reserved for the single primary action on screen */
 const PRIMARY = `${BTN} bg-cafe-tomato text-cafe-cream hover:bg-cafe-accenthover active:translate-y-px active:bg-cafe-accentpress focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-ink disabled:bg-cafe-border disabled:text-cafe-ink/35`;

@@ -30,7 +30,7 @@ function SectionHead({ num, id, name, blurb, count }) {
         <h2 id={id} className="font-cafe-display text-3xl leading-none tracking-tight">
           {name}
         </h2>
-        <span className="ml-auto font-cafe-body text-[10px] uppercase tracking-[0.18em] text-cafe-ink/70">
+        <span className="ml-auto font-cafe-body text-[11px] uppercase tracking-[0.18em] text-cafe-ink/70">
           {count} artifacts
         </span>
       </div>
@@ -284,7 +284,7 @@ export default function MoodboardA() {
                     <span key={s} className="w-3 bg-cafe-ink/70" style={{ height: `${s}px` }} />
                   ))}
                 </div>
-                <p className="mt-2 font-cafe-body text-[10px] tabular-nums text-cafe-ink/70">
+                <p className="mt-2 font-cafe-body text-[11px] tabular-nums text-cafe-ink/70">
                   4 · 8 · 12 · 16 · 24 · 32 · 48
                 </p>
               </Spec>
@@ -316,7 +316,7 @@ export default function MoodboardA() {
                 </div>
               </Spec>
               <Spec index={29} caption="Category chips — English labels, chalkboard manner">
-                <div className="flex flex-wrap gap-1.5 font-cafe-body text-[10px] uppercase tracking-[0.12em]">
+                <div className="flex flex-wrap gap-1.5 font-cafe-body text-[11px] uppercase tracking-[0.12em]">
                   {[
                     ["Museum", "border-cafe-ink/40"],
                     ["Food", "border-cafe-clay"],

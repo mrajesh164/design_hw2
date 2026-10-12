@@ -119,7 +119,7 @@ function StyleCard({ s }) {
         }}
       >
         <p
-          className="font-sans text-[10px] font-medium uppercase tracking-[0.22em]"
+          className="font-sans text-[11px] font-medium uppercase tracking-[0.22em]"
           style={{ color: s.accent }}
         >
           {s.tagline}
@@ -150,7 +150,7 @@ function StyleCard({ s }) {
         </div>
 
         <dl
-          className="mt-2 flex justify-between font-mono text-[9px] uppercase tracking-wider"
+          className="mt-2 flex justify-between font-mono text-[11px] uppercase tracking-wider"
           style={{ color: s.muted }}
         >
           <dt className="sr-only">Accent</dt>

@@ -25,7 +25,7 @@ function SectionHead({ num, id, name, blurb, count }) {
         {name}
       </h2>
       <p className="font-metro-sans text-xs text-metro-navy/70">{blurb}</p>
-      <span className="ml-auto font-metro-mono text-[10px] uppercase tracking-[0.15em] text-metro-navy/70">
+      <span className="ml-auto font-metro-mono text-[11px] uppercase tracking-[0.15em] text-metro-navy/70">
         {count} artifacts
       </span>
     </header>
@@ -40,10 +40,10 @@ function SectionHead({ num, id, name, blurb, count }) {
 function Head({ index, label }) {
   return (
     <div className="flex items-center gap-2 border-b border-metro-line px-3 py-1.5">
-      <span className="font-metro-mono text-[10px] tabular-nums text-metro-navy/70">
+      <span className="font-metro-mono text-[11px] tabular-nums text-metro-navy/70">
         {String(index).padStart(2, "0")}
       </span>
-      <span className="font-metro-sans text-[10px] font-medium uppercase leading-tight tracking-[0.08em] text-metro-navy/70">
+      <span className="font-metro-sans text-[11px] font-medium uppercase leading-tight tracking-[0.08em] text-metro-navy/70">
         {label}
       </span>
     </div>
@@ -294,7 +294,7 @@ export default function MoodboardB() {
                 {[["#FFFFFF", "White"], ["#EEF0F3", "Gray"], ["#C9CED6", "Line"], ["#0B1B3A", "Navy"]].map(([hex, n]) => (
                   <div key={hex} className="flex flex-col gap-1">
                     <span className="block h-10 border border-metro-line" style={{ background: hex }} />
-                    <span className="font-metro-mono text-[8px] text-metro-navy/70">{n}</span>
+                    <span className="font-metro-mono text-[11px] text-metro-navy/70">{n}</span>
                   </div>
                 ))}
               </div>
@@ -302,7 +302,7 @@ export default function MoodboardB() {
             <Spec index={14} label="Accent · one blue, one job">
               <div className="w-full">
                 <span className="block h-14 w-full bg-metro-blue" />
-                <p className="mt-2 font-metro-mono text-[10px] tabular-nums text-metro-navy/70">
+                <p className="mt-2 font-metro-mono text-[11px] tabular-nums text-metro-navy/70">
                   #0A52E0 · primary action only
                 </p>
               </div>
@@ -315,7 +315,7 @@ export default function MoodboardB() {
               </div>
             </Spec>
             <Spec index={16} label="Contrast · checked, not assumed">
-              <div className="w-full font-metro-sans text-[10px] font-semibold">
+              <div className="w-full font-metro-sans text-[11px] font-semibold">
                 <p className="bg-metro-blue px-2 py-1 text-white">White on blue · 6.4:1 ✓</p>
                 <p className="mt-1 bg-metro-yellow px-2 py-1 text-metro-navy">Navy on yellow · 11.4:1 ✓</p>
                 <p className="mt-1 border border-metro-line px-2 py-1 text-metro-navy/35">Disabled · not meant to be read</p>
@@ -344,7 +344,7 @@ export default function MoodboardB() {
               </p>
             </Spec>
             <Spec index={19} label="Type scale" span="col-span-2 sm:col-span-1">
-              <div className="w-full font-metro-mono text-[10px] tabular-nums text-metro-navy/70">
+              <div className="w-full font-metro-mono text-[11px] tabular-nums text-metro-navy/70">
                 {[
                   ["48", "font-metro-sans text-3xl font-bold"],
                   ["32", "font-metro-sans text-2xl font-bold"],
@@ -406,7 +406,7 @@ export default function MoodboardB() {
                 {["All", "Museum", "Food", "Walk"].map((t, i) => (
                   <span
                     key={t}
-                    className={`rounded-full px-2.5 py-1 font-metro-sans text-[10px] font-semibold ${
+                    className={`rounded-full px-2.5 py-1 font-metro-sans text-[11px] font-semibold ${
                       i === 1 ? "bg-metro-navy text-white" : "border border-metro-line bg-metro-white text-metro-navy/70"
                     }`}
                   >
@@ -418,7 +418,7 @@ export default function MoodboardB() {
             <Spec index={29} label="Empty state">
               <div className="w-full border border-dashed border-metro-line py-5 text-center">
                 <p className="font-metro-sans text-xs font-medium text-metro-navy/70">No stops match</p>
-                <p className="mt-0.5 font-metro-mono text-[10px] text-metro-navy/70">Clear filters</p>
+                <p className="mt-0.5 font-metro-mono text-[11px] text-metro-navy/70">Clear filters</p>
               </div>
             </Spec>
             <Spec index={30} label="Rules of the system">
@@ -470,7 +470,7 @@ export default function MoodboardB() {
           </ol>
         </section>
 
-        <footer className="mt-8 flex items-center justify-between border-t border-metro-line pt-5 font-metro-mono text-[10px] uppercase tracking-[0.15em] text-metro-navy/70">
+        <footer className="mt-8 flex items-center justify-between border-t border-metro-line pt-5 font-metro-mono text-[11px] uppercase tracking-[0.15em] text-metro-navy/70">
           <span>6 sections · 30 artifacts</span>
           <span>drawn in CSS + SVG, except where credited</span>
         </footer>

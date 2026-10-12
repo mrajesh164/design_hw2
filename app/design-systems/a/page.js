@@ -72,7 +72,7 @@ function Plate({ title, note, children, className = "" }) {
 function State({ name, children }) {
   return (
     <div className="flex flex-col gap-2">
-      <span className="font-cafe-body text-[10px] uppercase tracking-[0.16em] text-cafe-muted">
+      <span className="font-cafe-body text-[11px] uppercase tracking-[0.16em] text-cafe-muted">
         {name}
       </span>
       <div className="flex items-start">{children}</div>
@@ -87,7 +87,7 @@ function StateRow({ children, cols = "sm:grid-cols-3 lg:grid-cols-6" }) {
 /* ---------- component recipes ---------- */
 
 const BTN =
-  "inline-flex items-center justify-center gap-2 rounded-[2px] px-4 py-2 font-cafe-body text-xs font-semibold uppercase tracking-[0.12em] transition-colors";
+  "inline-flex items-center justify-center gap-2 rounded-[2px] px-4 py-2 font-cafe-body text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors";
 
 const PRIMARY = {
   rest: `${BTN} bg-cafe-tomato text-cafe-cream`,
@@ -330,7 +330,7 @@ export default function DesignSystemA() {
         <div className="mx-auto w-full max-w-5xl px-5 py-10 sm:px-8 sm:py-14">
           <Link
             href="/"
-            className="font-cafe-body text-xs uppercase tracking-[0.2em] text-cafe-muted underline-offset-4 hover:text-cafe-tomato hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+            className="font-cafe-body text-[11px] uppercase tracking-[0.2em] text-cafe-muted underline-offset-4 hover:text-cafe-tomato hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
           >
             ← Back to hub
           </Link>
@@ -405,7 +405,7 @@ export default function DesignSystemA() {
             {/* the roles doing their jobs at once */}
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-12">
               <div className="border border-cafe-border bg-cafe-cream p-4 shadow-[2px_3px_0_rgba(43,29,22,0.08)] sm:col-span-7">
-                <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
+                <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
                   The roles in place
                 </p>
                 <div className="mt-3 border border-cafe-borderstrong bg-cafe-cream p-3">
@@ -424,7 +424,7 @@ export default function DesignSystemA() {
                 </div>
               </div>
               <div className="border border-cafe-border bg-cafe-cream p-4 shadow-[2px_3px_0_rgba(43,29,22,0.08)] sm:col-span-5">
-                <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
+                <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
                   Why error is not the accent
                 </p>
                 <p className="mt-2 font-cafe-body text-xs leading-relaxed text-cafe-ink">
@@ -462,12 +462,12 @@ export default function DesignSystemA() {
                 </p>
               </Plate>
 
-              <Plate className="sm:col-span-5" title="Label" note="Source Sans · 12/16 · 600 · 0.14em · uppercase">
+              <Plate className="sm:col-span-5" title="Label" note="Source Sans · 11/16 · 600 · 0.14em · uppercase">
                 <div className="flex flex-col gap-2">
-                  <p className="font-cafe-body text-[12px] font-semibold uppercase leading-4 tracking-[0.14em]">
+                  <p className="font-cafe-body text-[11px] font-semibold uppercase leading-4 tracking-[0.14em]">
                     10:30 · 1 h 30 · €11.50
                   </p>
-                  <p className="font-cafe-body text-[12px] font-semibold uppercase leading-4 tracking-[0.14em] text-cafe-muted">
+                  <p className="font-cafe-body text-[11px] font-semibold uppercase leading-4 tracking-[0.14em] text-cafe-muted">
                     Day 2 · Île de la Cité
                   </p>
                 </div>
@@ -485,7 +485,7 @@ export default function DesignSystemA() {
               {/* all four roles at once, so the hierarchy is visible rather than described */}
               <Plate className="sm:col-span-5" title="All four at once" note="Hierarchy comes from size and face, not color">
                 <article className="border border-cafe-borderstrong p-3">
-                  <p className="font-cafe-body text-[12px] font-semibold uppercase leading-4 tracking-[0.14em] text-cafe-muted">
+                  <p className="font-cafe-body text-[11px] font-semibold uppercase leading-4 tracking-[0.14em] text-cafe-muted">
                     Day 2 · 10:30
                   </p>
                   <h3 className="mt-1 font-cafe-display text-[28px] font-semibold leading-[30px]">
@@ -494,7 +494,7 @@ export default function DesignSystemA() {
                   <p className="mt-1.5 font-cafe-body text-[16px] leading-[26px]">
                     Go early. The south wall is the reason you came.
                   </p>
-                  <p className="mt-2 font-cafe-body text-[12px] font-semibold uppercase leading-4 tracking-[0.14em]">
+                  <p className="mt-2 font-cafe-body text-[11px] font-semibold uppercase leading-4 tracking-[0.14em]">
                     €11.50
                   </p>
                 </article>
@@ -703,7 +703,7 @@ export default function DesignSystemA() {
                     <span
                       key={d}
                       aria-current={i === 1 ? "page" : undefined}
-                      className={`shrink-0 border-b-[3px] px-3 py-2 font-cafe-body text-xs font-semibold uppercase tracking-[0.12em] ${
+                      className={`shrink-0 border-b-[3px] px-3 py-2 font-cafe-body text-[11px] font-semibold uppercase tracking-[0.12em] ${
                         i === 1
                           ? "border-cafe-tomato text-cafe-ink"
                           : "border-transparent text-cafe-muted"
@@ -766,7 +766,7 @@ export default function DesignSystemA() {
                     {ITEM.blurb}
                   </p>
                   <div className="mt-3 flex items-center justify-between gap-3 border-t border-cafe-border pt-3">
-                    <p className="font-cafe-body text-[12px] font-semibold uppercase tracking-[0.12em] tabular-nums">
+                    <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.12em] tabular-nums">
                       {ITEM.time}–{ITEM.until} · {ITEM.price}
                     </p>
                     <span className={PRIMARY.rest}>Open details</span>
@@ -802,7 +802,7 @@ export default function DesignSystemA() {
                         {price}
                       </span>
                       <span
-                        className="font-cafe-body text-[10px] uppercase tracking-[0.14em] text-cafe-muted"
+                        className="font-cafe-body text-[11px] uppercase tracking-[0.14em] text-cafe-muted"
                       >
                         {["rest", "hover", "selected"][i]}
                       </span>
@@ -883,14 +883,14 @@ export default function DesignSystemA() {
                 </caption>
                 <thead>
                   <tr className="border-b-2 border-cafe-ink/80">
-                    <th scope="col" className="w-36 px-3 py-2 text-left font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
+                    <th scope="col" className="w-36 px-3 py-2 text-left font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
                       Control
                     </th>
                     {STATES.map((st) => (
                       <th
                         key={st}
                         scope="col"
-                        className="px-3 py-2 text-left font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted"
+                        className="px-3 py-2 text-left font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em] text-cafe-muted"
                       >
                         {st}
                       </th>
@@ -906,7 +906,7 @@ export default function DesignSystemA() {
                       >
                         {c.name}
                         {c.note ? (
-                          <span className="mt-0.5 block font-normal text-[10px] leading-snug text-cafe-muted">
+                          <span className="mt-0.5 block font-normal text-[11px] leading-snug text-cafe-muted">
                             {c.note}
                           </span>
                         ) : null}
