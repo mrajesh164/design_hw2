@@ -21,6 +21,9 @@ const PRIMARY = `${BTN} bg-cafe-tomato text-cafe-cream hover:bg-cafe-accenthover
 
 const SECONDARY = `${BTN} border border-cafe-ink text-cafe-ink hover:bg-cafe-surface2 active:translate-y-px active:bg-cafe-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato disabled:border-cafe-border disabled:text-cafe-ink/35`;
 
+const STEP =
+  "flex h-8 w-8 shrink-0 items-center justify-center border border-cafe-ink font-cafe-body text-sm transition-colors hover:bg-cafe-surface2 active:translate-y-px active:bg-cafe-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato disabled:border-cafe-border disabled:text-cafe-ink/35 disabled:active:translate-y-0";
+
 const CHIP_BASE =
   "inline-flex items-center gap-1.5 rounded-[2px] border px-2.5 py-1 font-cafe-body text-[11px] font-semibold uppercase tracking-[0.1em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato";
 
@@ -83,13 +86,16 @@ const BY_CATEGORY = CATEGORIES.map((c) => ({
 const MAX_CATEGORY = Math.max(...BY_CATEGORY.map((c) => c.total));
 
 /* one heading pattern, used three times, so the page has a visible spine */
-function SectionHead({ id, title, blurb, aside }) {
+function SectionHead({ id, title, blurb, aside, control }) {
   return (
     <header className="mb-5 flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b-2 border-cafe-ink/80 pb-2">
       <div>
-        <h2 id={id} className="font-cafe-display text-3xl leading-none tracking-tight">
-          {title}
-        </h2>
+        <div className="flex items-center gap-3">
+          <h2 id={id} className="font-cafe-display text-3xl leading-none tracking-tight">
+            {title}
+          </h2>
+          {control}
+        </div>
         {blurb ? (
           <p className="mt-1 font-cafe-body text-xs italic text-cafe-muted">{blurb}</p>
         ) : null}
@@ -346,6 +352,28 @@ export default function Itinerary() {
           id="the-day"
           title={`Day ${activeDay.n} — ${activeDay.title}`}
           blurb={`${activeDay.date} · ${areaLabel(activeDay.area)}`}
+          control={
+            <div className="flex gap-1">
+              <button
+                type="button"
+                onClick={() => goToDay(day - 1)}
+                disabled={day === 1}
+                className={STEP}
+              >
+                <span aria-hidden="true">‹</span>
+                <span className="sr-only">Previous day</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => goToDay(day + 1)}
+                disabled={day === DAYS.length}
+                className={STEP}
+              >
+                <span aria-hidden="true">›</span>
+                <span className="sr-only">Next day</span>
+              </button>
+            </div>
+          }
           aside={
             <div className="flex items-end gap-5">
               <dl className="flex gap-5 font-cafe-body text-xs">
@@ -362,31 +390,6 @@ export default function Itinerary() {
                   </div>
                 ))}
               </dl>
-              <div>
-                <p className="font-cafe-body text-[11px] uppercase tracking-[0.14em] text-cafe-muted">
-                  Step days
-                </p>
-                <div className="mt-0.5 flex gap-1">
-                <button
-                  type="button"
-                  onClick={() => goToDay(day - 1)}
-                  disabled={day === 1}
-                  className="flex h-8 w-8 items-center justify-center border border-cafe-ink text-sm transition-colors hover:bg-cafe-surface2 active:translate-y-px active:bg-cafe-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato disabled:border-cafe-border disabled:text-cafe-ink/35 disabled:active:translate-y-0"
-                >
-                  <span aria-hidden="true">‹</span>
-                  <span className="sr-only">Previous day</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => goToDay(day + 1)}
-                  disabled={day === DAYS.length}
-                  className="flex h-8 w-8 items-center justify-center border border-cafe-ink text-sm transition-colors hover:bg-cafe-surface2 active:translate-y-px active:bg-cafe-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato disabled:border-cafe-border disabled:text-cafe-ink/35 disabled:active:translate-y-0"
-                >
-                  <span aria-hidden="true">›</span>
-                  <span className="sr-only">Next day</span>
-                </button>
-                </div>
-              </div>
             </div>
           }
         />
