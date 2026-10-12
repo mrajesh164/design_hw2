@@ -33,6 +33,11 @@ function money(n) {
   return `€${grouped}${cents ? `.${cents}` : ""}`;
 }
 
+function areaLabel(area) {
+  if (!/^\d/.test(area)) return area;
+  return `${area} arrondissement${/[&,]/.test(area) ? "s" : ""}`;
+}
+
 function minutesBetween(a, b) {
   const [ah, am] = a.split(":").map(Number);
   const [bh, bm] = b.split(":").map(Number);
@@ -49,15 +54,16 @@ function duration(a, b) {
 
 /* trip totals and the spend breakdown — computed, not typed in */
 const STOPS_SPEND = ITEMS.reduce((s, i) => s + i.price, 0);
-const TRIP_SPEND = TRIP.lodging.total + TRIP.fares.total + STOPS_SPEND;
+const LODGING_SHARE = TRIP.lodging.total / TRIP.lodging.people;
+const TRIP_SPEND = LODGING_SHARE + TRIP.fares.total + STOPS_SPEND;
 
 /* the three parts of the budget, biggest first, so lodging and fares are
    read before the category bars rather than inferred from them */
 const SPEND_PARTS = [
   {
     name: "Lodging",
-    total: TRIP.lodging.total,
-    note: `${TRIP.lodging.nights} nights × €${TRIP.lodging.nightly}`,
+    total: LODGING_SHARE,
+    note: `${TRIP.lodging.nights} nights × €${TRIP.lodging.nightly}, split ${TRIP.lodging.people} ways`,
   },
   { name: "Local transit", total: TRIP.fares.total, note: TRIP.fares.note },
   {
@@ -181,9 +187,9 @@ export default function Itinerary() {
           <div className="grid grid-cols-2 gap-px border border-cafe-border bg-cafe-border sm:grid-cols-4">
             {[
               ["Dates", TRIP.dates.replace(" 2026", ""), "2026"],
-              ["Nights", TRIP.nights, "in the 3rd"],
+              ["Nights", TRIP.nights, "two sharing one flat"],
               ["Stops", ITEMS.length, "across 7 days"],
-              ["Planned Spend", money(TRIP_SPEND), "lodging, fares & stops"],
+              ["Spend, Each", money(TRIP_SPEND), "lodging, fares & stops"],
             ].map(([k, v, sub]) => (
               <div key={k} className="bg-cafe-cream p-4">
                 <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
@@ -223,7 +229,7 @@ export default function Itinerary() {
               Planned Spend
             </p>
             <p className="font-cafe-body text-[11px] text-cafe-muted">
-              Two people would share the lodging; flights are not counted
+              One person’s share, with two in the flat. Flights not counted
             </p>
           </div>
 
@@ -244,7 +250,7 @@ export default function Itinerary() {
             ))}
             <div className="flex flex-wrap items-baseline justify-between gap-x-4 py-2">
               <dt className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em]">
-                Week total
+                Week total, each
               </dt>
               <dd className="font-cafe-display text-2xl leading-none tabular-nums">
                 {money(TRIP_SPEND)}
@@ -279,7 +285,7 @@ export default function Itinerary() {
         <SectionHead
           id="week"
           title="The Week"
-          blurb="Each day stays in one part of the city. Pick one to open its schedule below."
+          blurb="Pick a day to open its schedule below."
         />
         <ol className="grid grid-cols-2 gap-px border border-cafe-border bg-cafe-border sm:grid-cols-4 lg:grid-cols-7">
           {DAYS.map((d) => {
@@ -301,14 +307,25 @@ export default function Itinerary() {
                     Day {d.n} · {d.date}
                   </span>
                   <span className="font-cafe-display text-base leading-tight">{d.title}</span>
-                  <span className="mt-auto flex gap-[3px] pt-2" aria-hidden="true">
-                    {items.map((i) => (
-                      <span
-                        key={i.id}
-                        className="h-1.5 w-full"
-                        style={{ background: BLOCK_COLOR[blockOf(i.start)] }}
-                      />
-                    ))}
+                  <span className="mt-auto flex gap-[2px] pt-2" aria-hidden="true">
+                    {BLOCKS.map((b) => {
+                      const n = items.filter((i) => blockOf(i.start) === b.id).length;
+                      if (n === 0) return null;
+                      return (
+                        <span
+                          key={b.id}
+                          className="h-1.5"
+                          style={{ background: b.color, flexGrow: n }}
+                        />
+                      );
+                    })}
+                  </span>
+                  {/* the bar is decorative, so its breakdown is read out here */}
+                  <span className="sr-only">
+                    {BLOCKS.map((b) => {
+                      const n = items.filter((i) => blockOf(i.start) === b.id).length;
+                      return n === 0 ? null : `${n} ${b.label.toLowerCase()}. `;
+                    })}
                   </span>
                   <span className="font-cafe-body text-[11px] text-cafe-muted">
                     {items.length} stops · {money(items.reduce((s, i) => s + i.price, 0))}
@@ -320,9 +337,6 @@ export default function Itinerary() {
         </ol>
         {/* the only place the block colors carry meaning on their own */}
         <p className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 font-cafe-body text-[11px] text-cafe-muted">
-          <span className="font-semibold uppercase tracking-[0.14em] text-cafe-ink">
-            Each bar is one stop
-          </span>
           {BLOCKS.map((b) => (
             <span key={b.id} className="flex items-center gap-1.5">
               <span
@@ -333,6 +347,9 @@ export default function Itinerary() {
               {b.label} · {b.range}
             </span>
           ))}
+          <span className="font-semibold uppercase tracking-[0.14em] text-cafe-ink">
+            Prices are per person
+          </span>
         </p>
       </section>
 
@@ -341,14 +358,14 @@ export default function Itinerary() {
         <SectionHead
           id="the-day"
           title={`Day ${activeDay.n} — ${activeDay.title}`}
-          blurb={`${activeDay.date} · ${activeDay.area}`}
+          blurb={`${activeDay.date} · ${areaLabel(activeDay.area)}`}
           aside={
             <div className="flex items-end gap-5">
               <dl className="flex gap-5 font-cafe-body text-xs">
                 {[
                   ["Stops", totals.stops],
                   ["Planned", `${totals.hours} h`],
-                  ["Cost", money(totals.cost)],
+                  ["Cost, each", money(totals.cost)],
                 ].map(([k, v]) => (
                   <div key={k}>
                     <dt className="uppercase tracking-[0.14em] text-cafe-muted">{k}</dt>
@@ -358,7 +375,11 @@ export default function Itinerary() {
                   </div>
                 ))}
               </dl>
-              <div className="flex gap-1">
+              <div>
+                <p className="font-cafe-body text-[11px] uppercase tracking-[0.14em] text-cafe-muted">
+                  Step days
+                </p>
+                <div className="mt-0.5 flex gap-1">
                 <button
                   type="button"
                   onClick={() => goToDay(day - 1)}
@@ -377,6 +398,7 @@ export default function Itinerary() {
                   <span aria-hidden="true">›</span>
                   <span className="sr-only">Next day</span>
                 </button>
+                </div>
               </div>
             </div>
           }
@@ -676,10 +698,10 @@ export default function Itinerary() {
 
                   <dl className="grid grid-cols-2 gap-x-6 gap-y-2 border-t border-cafe-border pt-3 font-cafe-body text-xs">
                     {[
-                      ["Price", money(open.price)],
+                      ["Price, each", money(open.price)],
                       ["Duration", duration(open.start, open.end)],
                       ["Category", open.category],
-                      ["Nearest", open.metro],
+                      ["Nearest métro", open.metro],
                     ].map(([k, v]) => (
                       <div key={k}>
                         <dt className="text-cafe-muted">{k}</dt>
@@ -719,9 +741,6 @@ export default function Itinerary() {
                       className={visited.includes(open.id) ? SECONDARY : PRIMARY}
                     >
                       {visited.includes(open.id) ? "Mark as not visited" : "Mark as visited"}
-                    </button>
-                    <button type="button" onClick={() => setOpenId(null)} className={SECONDARY}>
-                      Back to the day
                     </button>
                   </div>
                 </div>

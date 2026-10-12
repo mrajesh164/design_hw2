@@ -23,7 +23,7 @@ export const TRIP = {
   transit: "Forfait Navigo Semaine, all zones — it runs Mon–Sun, which is this exact week, and it reaches Versailles",
   // the two costs the per-stop prices do not include, named here rather than
   // left for the reader to work out from the breakdown below
-  lodging: { nights: 6, nightly: 180, total: 1080 },
+  lodging: { nights: 6, nightly: 180, total: 1080, people: 2 },
   fares: { total: 37.4, note: "Navigo Semaine at €32.40, plus the €5 card" },
 };
 

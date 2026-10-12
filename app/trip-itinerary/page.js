@@ -48,9 +48,10 @@ export default function TripItinerary() {
                 Paris in a Week
               </h1>
               <p className="mt-5 max-w-xl font-cafe-body text-base leading-relaxed">
-                One neighborhood a day, in roughly the order you would walk it,
-                and the rest left for the next trip. Every stop comes with a
-                time, a price, and an opinion.
+                Discover Paris and everything it has to offer, one
+                neighborhood a day, in roughly the order you would walk it —
+                with the rest saved for the next trip. Choose a section below
+                to start exploring the week.
               </p>
 
               {/* jump links, so the three sections are reachable without scrolling */}
@@ -160,30 +161,6 @@ export default function TripItinerary() {
             </details>
           </section>
 
-          <footer className="mt-10 border-t border-cafe-border pt-5">
-            <p className="max-w-2xl font-cafe-body text-xs leading-relaxed text-cafe-muted">
-              Built in the Café Terrace style — see the{" "}
-              <Link
-                href="/design-systems/a"
-                className="font-semibold text-cafe-ink underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato active:text-cafe-accentpress active:decoration-cafe-accentpress focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
-              >
-                design system
-              </Link>{" "}
-              and the{" "}
-              <Link
-                href="/moodboards/a"
-                className="font-semibold text-cafe-ink underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato active:text-cafe-accentpress active:decoration-cafe-accentpress focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
-              >
-                mood board
-              </Link>{" "}
-              it came from. Filtering and marking stops as visited both
-              happen in the browser and are forgotten on reload — there is no
-              database, no account and no network request. Color marks the three time blocks, not the categories: categorical
-              hues could not be told apart safely on this surface, so the four
-              categories are labeled in words instead. Prices and opening days are planning
-              estimates, not live information.
-            </p>
-          </footer>
         </div>
       </div>
     </main>
