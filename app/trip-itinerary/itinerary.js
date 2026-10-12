@@ -181,6 +181,21 @@ export default function Itinerary() {
     return () => document.removeEventListener("keydown", onKey);
   }, [open, isSheet]);
 
+  useEffect(() => {
+    if (!open || !isSheet) return;
+    const sheet = document.getElementById("stop-detail");
+    if (!sheet) return;
+    const marked = [];
+    for (let node = sheet; node && node !== document.body; node = node.parentElement) {
+      for (const sib of node.parentElement?.children ?? []) {
+        if (sib === node || sib.inert || sib.dataset.scrim) continue;
+        sib.inert = true;
+        marked.push(sib);
+      }
+    }
+    return () => marked.forEach((el) => (el.inert = false));
+  }, [open, isSheet]);
+
   // the list and the detail must agree: if a filter or the toggle removes the
   // open stop from the day, the panel showing it is stale
   useEffect(() => {
@@ -657,6 +672,7 @@ export default function Itinerary() {
           {/* detail panel: sticky column on desktop, bottom sheet on mobile */}
           {open ? (
             <div
+              data-scrim="true"
               className="fixed inset-0 z-20 bg-cafe-ink/45 lg:hidden"
               onClick={() => setOpenId(null)}
               aria-hidden="true"
