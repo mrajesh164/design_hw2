@@ -38,7 +38,7 @@ function money(n) {
 
 function areaLabel(area) {
   if (!/^\d/.test(area)) return area;
-  return `${area} arrondissement${/[&,]/.test(area) ? "s" : ""}`;
+  return `${area} Arrondissement${/[&,]/.test(area) ? "s" : ""}`;
 }
 
 function minutesBetween(a, b) {
@@ -261,7 +261,7 @@ export default function Itinerary() {
 
           <div className="border border-cafe-border bg-cafe-cream p-4">
             <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
-              Base &amp; Getting Around
+              Stay &amp; Getting Around
             </p>
             <p className="mt-1.5 font-cafe-display text-lg leading-tight">{TRIP.base}</p>
             <dl className="mt-2 space-y-1 font-cafe-body text-[11px]">

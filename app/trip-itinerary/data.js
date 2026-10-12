@@ -17,7 +17,7 @@ export const DAYS = [
 export const TRIP = {
   dates: "Mon 11 – Sun 17 May 2026",
   nights: 6,
-  base: "Rental flat, Rue de Turenne, 3rd",
+  base: "Rental flat, Rue de Turenne, 3rd Arrondissement",
   checkIn: "Mon 11 May, 15:00",
   checkOut: "Sun 17 May, 11:00",
   transit: "Forfait Navigo Semaine, all zones — it runs Mon–Sun, which is this exact week, and it reaches Versailles",
