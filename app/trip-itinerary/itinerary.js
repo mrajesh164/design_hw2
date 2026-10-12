@@ -630,7 +630,7 @@ export default function Itinerary() {
             id="stop-detail"
             className={
               open
-                ? "fixed inset-x-0 bottom-0 z-30 max-h-[82vh] overflow-y-auto border-t-2 border-cafe-ink bg-cafe-cream shadow-[0_-4px_0_rgba(43,29,22,0.18)] lg:sticky lg:top-6 lg:z-auto lg:max-h-none lg:overflow-visible lg:border-2 lg:border-cafe-ink lg:shadow-[4px_4px_0_rgba(43,29,22,0.18)]"
+                ? "fixed inset-x-0 bottom-0 z-30 max-h-[82vh] overflow-y-auto overscroll-contain border-t-2 border-cafe-ink bg-cafe-cream shadow-[0_-4px_0_rgba(43,29,22,0.18)] lg:sticky lg:top-6 lg:z-auto lg:max-h-none lg:overflow-visible lg:border-2 lg:border-cafe-ink lg:shadow-[4px_4px_0_rgba(43,29,22,0.18)]"
                 : "hidden lg:sticky lg:top-6 lg:block lg:border lg:border-dashed lg:border-cafe-borderstrong"
             }
           >
@@ -739,7 +739,7 @@ export default function Itinerary() {
                     </p>
                   ) : null}
 
-                  <div className="flex flex-wrap gap-3 border-t border-cafe-border pt-3">
+                  <div className="sticky bottom-0 -mx-4 -mb-4 flex flex-wrap gap-3 border-t border-cafe-border bg-cafe-cream px-4 pb-4 pt-3 lg:static lg:mx-0 lg:mb-0 lg:px-0 lg:pb-0">
                     <button
                       type="button"
                       onClick={() => toggleVisited(open.id)}
