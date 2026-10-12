@@ -42,7 +42,7 @@ export function blockOf(start) {
   return h < 18 ? "Afternoon" : "Night";
 }
 
-export const ITEMS = [
+const RAW_ITEMS = [
   // ---- Day 1 ----
   { id: "d1-1", day: 1, start: "10:00", end: "10:45", category: "Food", title: "Coffee at Café Verlet", area: "Rue Saint-Honoré", price: 8, metro: "Palais Royal, ligne 1", note: "A roastery since 1880 with a narrow wooden room upstairs. Order at the counter, then take the stairs — the ground floor is all takeaway queue.", tip: "The single-origin filter is the point; skip the pastries, they are better two stops away." },
   { id: "d1-2", day: 1, start: "11:00", end: "12:30", category: "Outdoors", title: "Palais-Royal gardens & colonnades", area: "1st", price: 0, metro: "Palais Royal, ligne 1", note: "The Buren columns in the first courtyard, then the arcade shops and the long avenue of clipped limes behind them. Quiet in a way nowhere else in the 1st is.", tip: "Enter from Rue de Montpensier to get the columns before the crowd from the Louvre side." },
@@ -104,6 +104,13 @@ export const ITEMS = [
   { id: "d7-4", day: 7, start: "14:30", end: "16:30", category: "Outdoors", title: "Père Lachaise", area: "20th", price: 0, metro: "Père Lachaise, lignes 2/3", note: "A walled city of tombs on a hillside, cobbled and steep and far larger than it looks on the map. Chopin, Wilde, Piaf, and thousands of people nobody visits.", tip: "Take a photo of the map at the gate. The numbered divisions are the only way to find anything, and phone signal is poor." },
   { id: "d7-5", day: 7, start: "18:00", end: "19:00", category: "Outdoors", title: "Parc de Belleville at sunset", area: "20th", price: 0, metro: "Pyrénées, ligne 11", note: "The highest park in Paris, with the whole city laid out west and the tower on the horizon. Locals, a few beers, almost no visitors.", tip: "The terrace at the top of the park, not the bottom. Come twenty minutes before sunset." },
 ];
+
+// Sorted here rather than at each call site, so stops can be added anywhere
+// in the list above without the schedule, the day totals or the week bars
+// falling out of order.
+export const ITEMS = [...RAW_ITEMS].sort(
+  (a, b) => a.day - b.day || a.start.localeCompare(b.start),
+);
 
 // Categories are labeled in text, not color-coded. Even seven categorical
 // hues could not be separated safely on this surface — the closest pair
