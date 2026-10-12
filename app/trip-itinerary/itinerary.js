@@ -232,58 +232,71 @@ export default function Itinerary() {
             Planned Spend
           </p>
 
-          <dl className="mt-3 divide-y divide-cafe-border border-y border-cafe-border">
-            {SPEND_PARTS.map((part) => (
-              <div
-                key={part.name}
-                className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 py-2"
-              >
-                <dt className="font-cafe-body text-sm font-semibold">
-                  {part.name}
-                  <span className="ml-2 font-normal text-cafe-muted">{part.note}</span>
+          {/* two columns: the breakdown pays for the width the single-column
+              version was leaving empty between each label and its figure */}
+          <div className="mt-3 grid gap-x-10 gap-y-6 lg:grid-cols-2">
+            <dl className="divide-y divide-cafe-border border-y border-cafe-border">
+              {SPEND_PARTS.map((part) => (
+                <div key={part.name} className="py-2.5">
+                  <div className="flex items-baseline justify-between gap-x-4">
+                    <dt className="font-cafe-body text-sm font-semibold">{part.name}</dt>
+                    <dd className="font-cafe-display text-lg leading-none tabular-nums">
+                      {money(part.total)}
+                    </dd>
+                  </div>
+                  <p className="mt-0.5 font-cafe-body text-[11px] text-cafe-muted">
+                    {part.note}
+                  </p>
+                </div>
+              ))}
+              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 bg-cafe-tint px-2 py-3">
+                <dt className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em]">
+                  Week total
                 </dt>
-                <dd className="font-cafe-display text-lg leading-none tabular-nums">
-                  {money(part.total)}
+                <dd className="flex items-baseline gap-4">
+                  <span className="font-cafe-display text-2xl leading-none tabular-nums">
+                    {money(TRIP_SPEND)}
+                    <span className="ml-1.5 font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em] text-cafe-muted">
+                      each
+                    </span>
+                  </span>
+                  <span className="font-cafe-display text-lg leading-none tabular-nums text-cafe-muted">
+                    {money(TRIP_SPEND_PARTY)}
+                    <span className="ml-1.5 font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em]">
+                      for two
+                    </span>
+                  </span>
                 </dd>
               </div>
-            ))}
-            <div className="flex flex-wrap items-baseline justify-between gap-x-4 py-2">
-              <dt className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em]">
-                Week total, per person
-              </dt>
-              <dd className="font-cafe-display text-2xl leading-none tabular-nums">
-                {money(TRIP_SPEND)}
-              </dd>
-            </div>
-            <div className="flex flex-wrap items-baseline justify-between gap-x-4 py-2">
-              <dt className="font-cafe-body text-[11px] uppercase tracking-[0.16em] text-cafe-muted">
-                Week total, both travelers
-              </dt>
-              <dd className="font-cafe-display text-lg leading-none tabular-nums text-cafe-muted">
-                {money(TRIP_SPEND_PARTY)}
-              </dd>
-            </div>
-          </dl>
+            </dl>
 
-          <p className="mt-4 font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
-            Entries &amp; Meals, by Category
-          </p>
-          <ul className="mt-3 flex flex-col gap-2">
-            {BY_CATEGORY.map((c) => (
-              <li key={c.name} className="flex items-center gap-3">
-                <span className="w-20 shrink-0 font-cafe-body text-xs">{c.name}</span>
-                <span className="flex h-4 min-w-px flex-1 items-center">
-                  <span
-                    className="h-full rounded-r-[3px] bg-cafe-clay"
-                    style={{ width: `${Math.max((c.total / MAX_CATEGORY) * 100, 0.6)}%` }}
-                  />
-                </span>
-                <span className="w-14 shrink-0 text-right font-cafe-body text-xs tabular-nums">
-                  {money(c.total)}
-                </span>
-              </li>
-            ))}
-          </ul>
+            <div>
+              <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
+                Entries &amp; Meals, by Category
+              </p>
+              <ul className="mt-3 flex flex-col gap-2.5">
+                {BY_CATEGORY.map((c) => (
+                  <li key={c.name} className="flex items-center gap-3">
+                    <span className="w-20 shrink-0 font-cafe-body text-xs">{c.name}</span>
+                    <span className="flex h-4 min-w-px flex-1 items-center">
+                      {c.total === 0 ? (
+                        /* a stub bar read as a rendering fault, so nothing is drawn */
+                        <span className="h-px w-full bg-cafe-border" />
+                      ) : (
+                        <span
+                          className="h-full rounded-r-[3px] bg-cafe-clay"
+                          style={{ width: `${(c.total / MAX_CATEGORY) * 100}%` }}
+                        />
+                      )}
+                    </span>
+                    <span className="w-14 shrink-0 text-right font-cafe-body text-xs tabular-nums">
+                      {money(c.total)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
