@@ -82,7 +82,7 @@ export default function TripItinerary() {
                   href="https://unsplash.com/photos/cobblestone-street-with-buildings-and-people-at-sunset-0KLCWI3QkIk"
                   target="_blank"
                   rel="noreferrer"
-                  className="underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                  className="underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato active:text-cafe-accentpress active:decoration-cafe-accentpress focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
                 >
                   Lens by Benji
                 </a>
@@ -128,7 +128,7 @@ export default function TripItinerary() {
                     href={HERO_PHOTO.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-cafe-ink underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                    className="text-cafe-ink underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato active:text-cafe-accentpress active:decoration-cafe-accentpress focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
                   >
                     {HERO_PHOTO.by}
                   </a>
@@ -146,7 +146,7 @@ export default function TripItinerary() {
                         href={p.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-cafe-ink underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                        className="text-cafe-ink underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato active:text-cafe-accentpress active:decoration-cafe-accentpress focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
                       >
                         {p.by}
                       </a>
@@ -165,14 +165,14 @@ export default function TripItinerary() {
               Built in the Café Terrace style — see the{" "}
               <Link
                 href="/design-systems/a"
-                className="font-semibold text-cafe-ink underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                className="font-semibold text-cafe-ink underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato active:text-cafe-accentpress active:decoration-cafe-accentpress focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
               >
                 design system
               </Link>{" "}
               and the{" "}
               <Link
                 href="/moodboards/a"
-                className="font-semibold text-cafe-ink underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                className="font-semibold text-cafe-ink underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato active:text-cafe-accentpress active:decoration-cafe-accentpress focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
               >
                 mood board
               </Link>{" "}

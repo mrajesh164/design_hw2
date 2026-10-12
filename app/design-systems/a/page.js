@@ -152,12 +152,20 @@ function Box({ checked, round, state }) {
 function Toggle({ on, state }) {
   const ring =
     state === "focus" ? "outline-2 outline-offset-2 outline-cafe-tomato" : "";
+  const ON_TRACK = {
+    hover: "bg-cafe-accenthover border-cafe-accenthover",
+    pressed: "bg-cafe-accentpress border-cafe-accentpress",
+  };
+  const OFF_TRACK = {
+    hover: "bg-cafe-surface2 border-cafe-ink",
+    pressed: "bg-cafe-tint border-cafe-ink",
+  };
   const track =
     state === "disabled"
       ? "bg-cafe-border border-cafe-border"
       : on
-        ? "bg-cafe-tomato border-cafe-tomato"
-        : "bg-cafe-cream border-cafe-ink";
+        ? ON_TRACK[state] || "bg-cafe-tomato border-cafe-tomato"
+        : OFF_TRACK[state] || "bg-cafe-cream border-cafe-ink";
   return (
     <span
       className={`inline-flex h-[22px] w-10 items-center border-2 p-[2px] ${track} ${ring}`}

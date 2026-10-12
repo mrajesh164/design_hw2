@@ -139,12 +139,20 @@ function Box({ checked, round, state }) {
 
 function Toggle({ on, state }) {
   const ring = state === "focus" ? "outline-2 outline-offset-2 outline-encre-ember" : "";
+  const ON_TRACK = {
+    hover: "bg-encre-emberhover border-encre-emberhover",
+    pressed: "bg-encre-emberpress border-encre-emberpress",
+  };
+  const OFF_TRACK = {
+    hover: "bg-encre-deep border-encre-bone",
+    pressed: "bg-encre-tint border-encre-bone",
+  };
   const track =
     state === "disabled"
       ? "bg-encre-surface2 border-encre-bone/20"
       : on
-        ? "bg-encre-ember border-encre-ember"
-        : "bg-encre-ink border-encre-bone/60";
+        ? ON_TRACK[state] || "bg-encre-ember border-encre-ember"
+        : OFF_TRACK[state] || "bg-encre-ink border-encre-bone/60";
   return (
     <span className={`inline-flex h-[22px] w-10 items-center rounded-full border-2 p-[2px] ${track} ${ring}`} aria-hidden="true">
       <span className={`h-[14px] w-[14px] rounded-full ${on ? "ml-auto bg-encre-ink" : "bg-encre-bone/70"}`} />

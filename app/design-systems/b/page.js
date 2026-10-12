@@ -141,12 +141,17 @@ function Box({ checked, round, state }) {
 
 function Toggle({ on, state }) {
   const ring = state === "focus" ? "outline-2 outline-offset-2 outline-metro-blue" : "";
+  const ON_TRACK = { hover: "bg-metro-bluehover", pressed: "bg-metro-bluepress" };
+  const OFF_TRACK = {
+    hover: "bg-metro-gray border-2 border-metro-navy",
+    pressed: "bg-metro-tint border-2 border-metro-navy",
+  };
   const track =
     state === "disabled"
       ? "bg-metro-line"
       : on
-        ? "bg-metro-blue"
-        : "bg-metro-white border-2 border-metro-navy";
+        ? ON_TRACK[state] || "bg-metro-blue"
+        : OFF_TRACK[state] || "bg-metro-white border-2 border-metro-navy";
   return (
     <span
       className={`inline-flex h-[22px] w-10 items-center rounded-full p-[3px] ${track} ${ring}`}

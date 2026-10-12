@@ -186,7 +186,7 @@ export default function Itinerary() {
               ["Planned Spend", money(TRIP_SPEND), "lodging, fares & stops"],
             ].map(([k, v, sub]) => (
               <div key={k} className="bg-cafe-cream p-4">
-                <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
+                <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
                   {k}
                 </p>
                 <p className="mt-1 font-cafe-display text-2xl leading-none tracking-tight">
@@ -198,7 +198,7 @@ export default function Itinerary() {
           </div>
 
           <div className="border border-cafe-border bg-cafe-cream p-4">
-            <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
+            <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
               Base &amp; Getting Around
             </p>
             <p className="mt-1.5 font-cafe-display text-lg leading-tight">{TRIP.base}</p>
@@ -219,7 +219,7 @@ export default function Itinerary() {
 
         <div className="mt-4 border border-cafe-border bg-cafe-cream p-4">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <p className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
+            <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
               Planned Spend
             </p>
             <p className="font-cafe-body text-[11px] text-cafe-muted">
@@ -252,7 +252,7 @@ export default function Itinerary() {
             </div>
           </dl>
 
-          <p className="mt-4 font-cafe-body text-[10px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
+          <p className="mt-4 font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
             The {ITEMS.length} Stops, by Category
           </p>
           <ul className="mt-3 flex flex-col gap-2">
@@ -294,10 +294,10 @@ export default function Itinerary() {
                   className={`flex h-full w-full flex-col gap-1 border-l-4 p-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-cafe-tomato ${
                     current
                       ? "border-l-cafe-tomato bg-cafe-tint"
-                      : "border-l-transparent bg-cafe-cream hover:bg-cafe-surface2"
+                      : "border-l-transparent bg-cafe-cream hover:bg-cafe-surface2 active:bg-cafe-tint"
                   }`}
                 >
-                  <span className="font-cafe-body text-[10px] font-semibold uppercase tracking-[0.14em] text-cafe-muted">
+                  <span className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em] text-cafe-muted">
                     Day {d.n} · {d.date}
                   </span>
                   <span className="font-cafe-display text-base leading-tight">{d.title}</span>
@@ -318,6 +318,22 @@ export default function Itinerary() {
             );
           })}
         </ol>
+        {/* the only place the block colors carry meaning on their own */}
+        <p className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 font-cafe-body text-[11px] text-cafe-muted">
+          <span className="font-semibold uppercase tracking-[0.14em] text-cafe-ink">
+            Each bar is one stop
+          </span>
+          {BLOCKS.map((b) => (
+            <span key={b.id} className="flex items-center gap-1.5">
+              <span
+                aria-hidden="true"
+                className="h-2.5 w-2.5 shrink-0"
+                style={{ background: b.color }}
+              />
+              {b.label} · {b.range}
+            </span>
+          ))}
+        </p>
       </section>
 
       {/* ================= THE DAY ================= */}
@@ -347,7 +363,7 @@ export default function Itinerary() {
                   type="button"
                   onClick={() => goToDay(day - 1)}
                   disabled={day === 1}
-                  className="flex h-8 w-8 items-center justify-center border border-cafe-ink text-sm transition-colors hover:bg-cafe-surface2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato disabled:border-cafe-border disabled:text-cafe-ink/35"
+                  className="flex h-8 w-8 items-center justify-center border border-cafe-ink text-sm transition-colors hover:bg-cafe-surface2 active:translate-y-px active:bg-cafe-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato disabled:border-cafe-border disabled:text-cafe-ink/35 disabled:active:translate-y-0"
                 >
                   <span aria-hidden="true">‹</span>
                   <span className="sr-only">Previous day</span>
@@ -356,7 +372,7 @@ export default function Itinerary() {
                   type="button"
                   onClick={() => goToDay(day + 1)}
                   disabled={day === DAYS.length}
-                  className="flex h-8 w-8 items-center justify-center border border-cafe-ink text-sm transition-colors hover:bg-cafe-surface2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato disabled:border-cafe-border disabled:text-cafe-ink/35"
+                  className="flex h-8 w-8 items-center justify-center border border-cafe-ink text-sm transition-colors hover:bg-cafe-surface2 active:translate-y-px active:bg-cafe-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato disabled:border-cafe-border disabled:text-cafe-ink/35 disabled:active:translate-y-0"
                 >
                   <span aria-hidden="true">›</span>
                   <span className="sr-only">Next day</span>
@@ -411,7 +427,7 @@ export default function Itinerary() {
                 />
                 <span
                   aria-hidden="true"
-                  className="inline-flex h-[22px] w-10 items-center border-2 border-cafe-ink bg-cafe-cream p-[2px] transition-colors peer-checked:border-cafe-tomato peer-checked:bg-cafe-tomato peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-cafe-tomato"
+                  className="inline-flex h-[22px] w-10 items-center border-2 border-cafe-ink bg-cafe-cream p-[2px] transition-colors group-hover:bg-cafe-surface2 group-active:bg-cafe-tint peer-checked:border-cafe-tomato peer-checked:bg-cafe-tomato peer-checked:group-hover:bg-cafe-accenthover peer-checked:group-active:bg-cafe-accentpress peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-cafe-tomato"
                 >
                   <span className="h-[14px] w-[14px] border border-cafe-ink bg-cafe-cream transition-transform group-has-[:checked]:translate-x-[14px] group-has-[:checked]:border-cafe-cream" />
                 </span>
@@ -436,23 +452,10 @@ export default function Itinerary() {
         {/* --- schedule + detail --- */}
         <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start">
           <div>
-            <div className="mb-4 flex flex-wrap items-center gap-x-5 gap-y-1 border-b border-cafe-border pb-2">
+            <div className="mb-4 border-b border-cafe-border pb-2">
               <span className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.14em]">
                 Schedule
               </span>
-              {BLOCKS.map((b) => (
-                <span
-                  key={b.id}
-                  className="flex items-center gap-1.5 font-cafe-body text-[11px] text-cafe-muted"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="h-2.5 w-2.5 shrink-0"
-                    style={{ background: b.color }}
-                  />
-                  {b.label}
-                </span>
-              ))}
             </div>
 
             {visible.length === 0 ? (
@@ -549,12 +552,12 @@ export default function Itinerary() {
                                       {i.title}
                                     </span>
                                     {isVisited ? (
-                                      <span className="rounded-[2px] border border-cafe-success px-1.5 py-0.5 font-cafe-body text-[10px] font-semibold uppercase tracking-[0.1em] text-cafe-success">
+                                      <span className="rounded-[2px] border border-cafe-success px-1.5 py-0.5 font-cafe-body text-[11px] font-semibold uppercase tracking-[0.1em] text-cafe-success">
                                         Visited
                                       </span>
                                     ) : null}
                                     {i.closed ? (
-                                      <span className="rounded-[2px] border border-cafe-warning px-1.5 py-0.5 font-cafe-body text-[10px] font-semibold uppercase tracking-[0.1em] text-cafe-warning">
+                                      <span className="rounded-[2px] border border-cafe-warning px-1.5 py-0.5 font-cafe-body text-[11px] font-semibold uppercase tracking-[0.1em] text-cafe-warning">
                                         Closed {i.closed}
                                       </span>
                                     ) : null}
@@ -622,13 +625,13 @@ export default function Itinerary() {
                     sizes="(max-width: 1024px) 100vw, 380px"
                     className="block h-40 w-full object-cover"
                   />
-                  <p className="mt-1.5 font-cafe-body text-[10px] leading-snug text-cafe-muted">
+                  <p className="mt-1.5 font-cafe-body text-[11px] leading-snug text-cafe-muted">
                     {STOP_PHOTOS[open.id].note ? `${STOP_PHOTOS[open.id].note}. ` : ""}
                     <a
                       href={STOP_PHOTOS[open.id].url}
                       target="_blank"
                       rel="noreferrer"
-                      className="underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
+                      className="underline decoration-cafe-muted underline-offset-2 hover:text-cafe-tomato hover:decoration-cafe-tomato active:text-cafe-accentpress active:decoration-cafe-accentpress focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato"
                     >
                       {STOP_PHOTOS[open.id].by}
                     </a>
