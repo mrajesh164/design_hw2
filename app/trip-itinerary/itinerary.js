@@ -72,8 +72,8 @@ export default function Itinerary() {
   const [cats, setCats] = useState([]); // empty = all categories
   const [query, setQuery] = useState("");
   const [openId, setOpenId] = useState(null);
-  const [done, setDone] = useState([]); // lost on reload, deliberately
-  const [hideDone, setHideDone] = useState(false);
+  const [visited, setVisited] = useState([]); // lost on reload, deliberately
+  const [hideVisited, setHideVisited] = useState(false);
 
   const panelRef = useRef(null);
   const lastTrigger = useRef(null);
@@ -90,7 +90,7 @@ export default function Itinerary() {
     const q = query.trim().toLowerCase();
     return dayItems.filter((i) => {
       if (cats.length && !cats.includes(i.category)) return false;
-      if (hideDone && done.includes(i.id)) return false;
+      if (hideVisited && visited.includes(i.id)) return false;
       if (!q) return true;
       return (
         i.title.toLowerCase().includes(q) ||
@@ -98,7 +98,7 @@ export default function Itinerary() {
         i.category.toLowerCase().includes(q)
       );
     });
-  }, [dayItems, cats, query, hideDone, done]);
+  }, [dayItems, cats, query, hideVisited, visited]);
 
   const open = openId ? ITEMS.find((i) => i.id === openId) : null;
 
@@ -108,7 +108,7 @@ export default function Itinerary() {
     return { stops: dayItems.length, cost, hours: Math.round((mins / 60) * 10) / 10 };
   }, [dayItems]);
 
-  const filtered = cats.length > 0 || query.trim() !== "" || hideDone;
+  const filtered = cats.length > 0 || query.trim() !== "" || hideVisited;
 
   useEffect(() => {
     if (!open) return;
@@ -139,14 +139,14 @@ export default function Itinerary() {
     setCats((p) => (p.includes(c) ? p.filter((x) => x !== c) : [...p, c]));
   }
 
-  function toggleDone(id) {
-    setDone((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
+  function toggleVisited(id) {
+    setVisited((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
   }
 
   function clearFilters() {
     setCats([]);
     setQuery("");
-    setHideDone(false);
+    setHideVisited(false);
   }
 
   const activeDay = DAYS.find((d) => d.n === day);
@@ -373,8 +373,8 @@ export default function Itinerary() {
               <label className="group flex cursor-pointer items-center gap-2.5 py-2">
                 <input
                   type="checkbox"
-                  checked={hideDone}
-                  onChange={(e) => setHideDone(e.target.checked)}
+                  checked={hideVisited}
+                  onChange={(e) => setHideVisited(e.target.checked)}
                   className="peer sr-only"
                 />
                 <span
@@ -383,7 +383,7 @@ export default function Itinerary() {
                 >
                   <span className="h-[14px] w-[14px] border border-cafe-ink bg-cafe-cream transition-transform group-has-[:checked]:translate-x-[14px] group-has-[:checked]:border-cafe-cream" />
                 </span>
-                <span className="font-cafe-body text-xs">Hide done</span>
+                <span className="font-cafe-body text-xs">Hide visited</span>
               </label>
             </div>
           </div>
@@ -464,7 +464,7 @@ export default function Itinerary() {
                       <ol>
                         {inBlock.map((i) => {
                           const isOpen = i.id === openId;
-                          const isDone = done.includes(i.id);
+                          const isVisited = visited.includes(i.id);
                           return (
                             <li key={i.id} className="border-b border-cafe-border last:border-0">
                               <button
@@ -511,14 +511,14 @@ export default function Itinerary() {
                                   <span className="flex flex-wrap items-center gap-2">
                                     <span
                                       className={`font-cafe-display text-xl leading-tight ${
-                                        isDone ? "text-cafe-muted line-through" : ""
+                                        isVisited ? "text-cafe-muted line-through" : ""
                                       }`}
                                     >
                                       {i.title}
                                     </span>
-                                    {isDone ? (
+                                    {isVisited ? (
                                       <span className="rounded-[2px] border border-cafe-success px-1.5 py-0.5 font-cafe-body text-[10px] font-semibold uppercase tracking-[0.1em] text-cafe-success">
-                                        Done
+                                        Visited
                                       </span>
                                     ) : null}
                                     {i.closed ? (
@@ -671,19 +671,19 @@ export default function Itinerary() {
                     </p>
                   </div>
 
-                  {done.includes(open.id) ? (
+                  {visited.includes(open.id) ? (
                     <p className="flex items-center gap-2 border-l-[3px] border-cafe-success bg-cafe-success/8 p-3 font-cafe-body text-xs font-semibold text-cafe-success">
-                      Marked as done
+                      Marked as visited
                     </p>
                   ) : null}
 
                   <div className="flex flex-wrap gap-3 border-t border-cafe-border pt-3">
                     <button
                       type="button"
-                      onClick={() => toggleDone(open.id)}
-                      className={done.includes(open.id) ? SECONDARY : PRIMARY}
+                      onClick={() => toggleVisited(open.id)}
+                      className={visited.includes(open.id) ? SECONDARY : PRIMARY}
                     >
-                      {done.includes(open.id) ? "Mark as not done" : "Mark as done"}
+                      {visited.includes(open.id) ? "Mark as not visited" : "Mark as visited"}
                     </button>
                     <button type="button" onClick={() => setOpenId(null)} className={SECONDARY}>
                       Back to the day

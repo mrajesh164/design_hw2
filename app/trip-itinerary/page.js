@@ -177,7 +177,7 @@ export default function TripItinerary() {
               >
                 mood board
               </Link>{" "}
-              it came from. Filtering, searching and marking stops as done all
+              it came from. Filtering, searching and marking stops as visited all
               happen in the browser and are forgotten on reload — there is no
               database, no account and no network request. Color marks the three time blocks, not the categories: seven
               categorical hues could not be told apart safely on this surface,
