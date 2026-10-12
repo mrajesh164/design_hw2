@@ -228,14 +228,9 @@ export default function Itinerary() {
         </div>
 
         <div className="mt-4 border border-cafe-border bg-cafe-cream p-4">
-          <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
-              Planned Spend
-            </p>
-            <p className="font-cafe-body text-[11px] text-cafe-muted">
-              Two travelers sharing one flat. Flights not counted
-            </p>
-          </div>
+          <p className="font-cafe-body text-[11px] font-semibold uppercase tracking-[0.16em] text-cafe-muted">
+            Planned Spend
+          </p>
 
           <dl className="mt-3 divide-y divide-cafe-border border-y border-cafe-border">
             {SPEND_PARTS.map((part) => (
