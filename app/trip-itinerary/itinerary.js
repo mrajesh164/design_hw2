@@ -184,7 +184,7 @@ export default function Itinerary() {
         <SectionHead
           id="trip"
           title="The Trip"
-          blurb="Two travelers, one flat, and what the week costs each of them."
+          blurb="What the week costs, where you sleep, and how you get around."
         />
 
         <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
