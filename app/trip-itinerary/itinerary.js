@@ -242,7 +242,7 @@ export default function Itinerary() {
         <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div className="grid grid-cols-2 gap-px border border-cafe-border bg-cafe-border sm:grid-cols-4">
             {[
-              ["Dates", TRIP.dates.replace(" 2026", ""), `2026 · ${TRIP.nights} nights`],
+              ["Dates", TRIP.dates.replace(", 2026", ""), `2026 · ${TRIP.nights} nights`],
               ["Travelers", TRIP.lodging.people, "sharing one flat"],
               ["Stops", ITEMS.length, "across 7 days"],
               ["Spend per Person", money(TRIP_SPEND), "lodging, fares & stops"],

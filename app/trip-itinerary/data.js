@@ -5,21 +5,21 @@
 export const CATEGORIES = ["Food", "Museums", "Landmarks", "Outdoors"];
 
 export const DAYS = [
-  { n: 1, date: "Mon 11 May", title: "Right Bank", area: "1st & 2nd" },
-  { n: 2, date: "Tue 12 May", title: "Île de la Cité & the Marais", area: "1st & 4th" },
-  { n: 3, date: "Wed 13 May", title: "Left Bank", area: "6th & 7th" },
-  { n: 4, date: "Thu 14 May", title: "Montmartre", area: "18th & 9th" },
-  { n: 5, date: "Fri 15 May", title: "The Eiffel Tower & the Seine", area: "7th & 8th" },
-  { n: 6, date: "Sat 16 May", title: "Versailles", area: "Day trip" },
-  { n: 7, date: "Sun 17 May", title: "East Paris, Last Look", area: "10th, 11th & 20th" },
+  { n: 1, date: "Mon, May 11", title: "Right Bank", area: "1st & 2nd" },
+  { n: 2, date: "Tue, May 12", title: "Île de la Cité & the Marais", area: "1st & 4th" },
+  { n: 3, date: "Wed, May 13", title: "Left Bank", area: "6th & 7th" },
+  { n: 4, date: "Thu, May 14", title: "Montmartre", area: "18th & 9th" },
+  { n: 5, date: "Fri, May 15", title: "The Eiffel Tower & the Seine", area: "7th & 8th" },
+  { n: 6, date: "Sat, May 16", title: "Versailles", area: "Day trip" },
+  { n: 7, date: "Sun, May 17", title: "East Paris, Last Look", area: "10th, 11th & 20th" },
 ];
 
 export const TRIP = {
-  dates: "Mon 11 – Sun 17 May 2026",
+  dates: "May 11 – 17, 2026",
   nights: 6,
   base: "Rental flat, Rue de Turenne, 3rd Arrondissement",
-  checkIn: "Mon 11 May, 15:00",
-  checkOut: "Sun 17 May, 11:00",
+  checkIn: "Mon, May 11 at 15:00",
+  checkOut: "Sun, May 17 at 11:00",
   transit: "Forfait Navigo Semaine, all zones — it runs Mon–Sun, which is this exact week, and it reaches Versailles",
   // the two costs the per-stop prices do not include, named here rather than
   // left for the reader to work out from the breakdown below
