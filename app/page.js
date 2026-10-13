@@ -186,21 +186,45 @@ function StyleCard({ s }) {
   );
 }
 
+/* a thumbnail of the library rather than of the palette: the mood board card
+   directly above already shows every swatch, so this shows what was built from
+   them — a filled button, two chips and a toggle, in the system's own colors */
+function SystemThumb({ s }) {
+  return (
+    <span
+      className="flex h-12 w-12 shrink-0 flex-col justify-between overflow-hidden border p-1.5"
+      style={{ background: s.surface, borderColor: s.rule }}
+      aria-hidden="true"
+    >
+      <span className="h-2.5 w-full" style={{ background: s.accent }} />
+      <span className="flex gap-1">
+        <span className="h-2.5 flex-1 border" style={{ borderColor: s.rule }} />
+        <span className="h-2.5 flex-1" style={{ background: s.rule }} />
+      </span>
+      <span className="flex items-center gap-1">
+        <span
+          className="relative h-2.5 w-5 rounded-full"
+          style={{ background: s.accent }}
+        >
+          {/* the knob shows the surface through it, as the real toggles do */}
+          <span
+            className="absolute right-px top-px h-2 w-2 rounded-full"
+            style={{ background: s.surface }}
+          />
+        </span>
+        <span className="h-px flex-1" style={{ background: s.rule }} />
+      </span>
+    </span>
+  );
+}
+
 function SystemCard({ s }) {
   return (
     <Link
       href={`/design-systems/${s.key}`}
       className="group flex items-center gap-4 border border-stone-300 bg-white p-4 transition-colors hover:border-stone-900 hover:bg-stone-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-900"
     >
-      {/* the palette, stacked into a small square icon */}
-      <span
-        className="grid h-12 w-12 shrink-0 grid-cols-2 grid-rows-3 overflow-hidden border border-stone-300"
-        aria-hidden="true"
-      >
-        {s.swatches.map(([hex]) => (
-          <span key={hex} style={{ background: hex }} />
-        ))}
-      </span>
+      <SystemThumb s={s} />
       <span className="min-w-0">
         <span className="block text-sm font-semibold text-stone-900">
           {s.name}
