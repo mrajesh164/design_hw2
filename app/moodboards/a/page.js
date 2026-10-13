@@ -73,10 +73,16 @@ function Box({ id, index, span = "", h = "h-44", tilt = "" }) {
   );
 }
 
-function Spec({ children, caption, index, span = "", tilt = "" }) {
+function Spec({ children, caption, index, span = "", tilt = "", center = false }) {
   return (
     <figure className={`${span} ${PAPER} ${tilt}`}>
-      <div className="h-full bg-cafe-paper/40 p-3">{children}</div>
+      <div
+        className={`flex h-full flex-col bg-cafe-paper/40 p-3 ${
+          center ? "justify-center" : ""
+        }`}
+      >
+        {children}
+      </div>
       <Caption index={index} text={caption} />
     </figure>
   );
@@ -214,20 +220,37 @@ export default function MoodboardA() {
                 h="h-64 sm:h-[37rem] object-top"
                 tilt="sm:-rotate-1"
               />
-              <Spec index={17} caption="Display face, Fraunces" span="col-span-2">
-                <p className="font-cafe-display text-6xl leading-none">Aa</p>
-                <p className="mt-1 font-cafe-display text-xl italic">Déjeuner</p>
+              <Spec index={17} caption="Display face, Fraunces" span="col-span-2" center>
+                <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
+                  <p className="font-cafe-display text-7xl leading-none">Aa</p>
+                  <p className="font-cafe-display text-2xl italic">Déjeuner</p>
+                </div>
               </Spec>
               <Box id="s10" index={18} span="col-span-2" h="h-44" />
               <Box id="s04" index={20} span="col-span-2" h="h-44" tilt="sm:rotate-1" />
-              <Spec index={19} caption="Type scale, 1.25 ratio" span="col-span-2">
-                <div className="flex flex-col gap-1">
-                  <span className="font-cafe-display text-3xl leading-none">39</span>
-                  <span className="font-cafe-display text-2xl leading-none">31</span>
-                  <span className="font-cafe-display text-xl leading-none">25</span>
-                  <span className="font-cafe-body text-base leading-none">20</span>
-                  <span className="font-cafe-body text-sm leading-none">16</span>
-                  <span className="font-cafe-body text-xs leading-none">13</span>
+              <Spec index={19} caption="Type scale, 1.25 ratio" span="col-span-2" center>
+                {/* one baseline, descending: the 1.25 ratio is easier to see
+                    across a row than down a column. Sized down a step in the
+                    middle band, where this card is only 180px wide and the
+                    ramp would otherwise wrap and lose its baseline. */}
+                <div className="flex items-baseline gap-x-1 md:gap-x-2 lg:gap-x-3">
+                  {[
+                    ["39", "text-2xl lg:text-4xl"],
+                    ["31", "text-xl lg:text-3xl"],
+                    ["25", "text-lg lg:text-2xl"],
+                    ["20", "text-base lg:text-xl"],
+                    ["16", "text-sm lg:text-base"],
+                    ["13", "text-xs lg:text-sm"],
+                  ].map(([step, size], i) => (
+                    <span
+                      key={step}
+                      className={`${
+                        i < 3 ? "font-cafe-display" : "font-cafe-body"
+                      } ${size} leading-none`}
+                    >
+                      {step}
+                    </span>
+                  ))}
                 </div>
               </Spec>
               <Spec
