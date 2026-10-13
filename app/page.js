@@ -4,6 +4,7 @@ import { PHOTOS as PHOTOS_A } from "./moodboards/a/photos";
 import { PHOTOS as PHOTOS_B } from "./moodboards/b/photos";
 import { PHOTOS as PHOTOS_C } from "./moodboards/c/photos";
 import { STOP_PHOTOS } from "./trip-itinerary/photos";
+import { BLOCKS, ITEMS } from "./trip-itinerary/data";
 
 /* counted, not typed in: this read 50 while the itinerary alone had 44 */
 const PHOTO_COUNT =
@@ -198,15 +199,20 @@ function SystemThumb({ s }) {
     >
       <span className="h-2.5 w-full" style={{ background: s.accent }} />
       <span className="flex gap-1">
-        <span className="h-2.5 flex-1 border" style={{ borderColor: s.rule }} />
-        <span className="h-2.5 flex-1" style={{ background: s.rule }} />
+        <span
+          className="h-2.5 flex-1 border"
+          style={{ borderColor: s.rule }}
+        />
+        <span
+          className="h-2.5 flex-1"
+          style={{ background: s.rule }}
+        />
       </span>
       <span className="flex items-center gap-1">
         <span
           className="relative h-2.5 w-5 rounded-full"
           style={{ background: s.accent }}
         >
-          {/* the knob shows the surface through it, as the real toggles do */}
           <span
             className="absolute right-px top-px h-2 w-2 rounded-full"
             style={{ background: s.surface }}
@@ -214,6 +220,28 @@ function SystemThumb({ s }) {
         </span>
         <span className="h-px flex-1" style={{ background: s.rule }} />
       </span>
+    </span>
+  );
+}
+
+/* the same square, holding the itinerary's own language: one day's title line
+   and its three time blocks, drawn from the data so the hues cannot drift */
+function SiteThumb() {
+  const widths = ["100%", "78%", "56%"];
+  return (
+    <span
+      className="flex h-12 w-12 shrink-0 flex-col justify-between overflow-hidden border p-1.5"
+      style={{ background: "#F6EFE3", borderColor: "#C3BAB0" }}
+      aria-hidden="true"
+    >
+      <span className="h-1 w-7" style={{ background: "#2B1D16" }} />
+      {BLOCKS.map((b, i) => (
+        <span
+          key={b.id}
+          className="h-1.5"
+          style={{ background: b.color, width: widths[i] }}
+        />
+      ))}
     </span>
   );
 }
@@ -340,18 +368,29 @@ export default function Home() {
           num="03"
           id="site"
           title="The Site"
-          blurb="A one-week Paris itinerary with filters and a detail panel, built in the chosen style."
+          blurb="A one-week Paris itinerary with filters and a detail panel, built in the Café Terrace style."
         >
-          {/* Café Terrace's own accent and its own square corners: blue is
-              Métro Ligne's signal color, so the button pointed at the wrong
-              style */}
-          <Link
-            href="/trip-itinerary"
-            className="inline-flex w-fit items-center gap-2 border border-transparent bg-[#AE3220] px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-[#9C2B1B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#AE3220] active:bg-[#8F2617]"
-          >
-            Open the Paris itinerary
-            <span aria-hidden="true">→</span>
-          </Link>
+          <article className="flex flex-col gap-4 border border-stone-300 bg-white p-4 sm:flex-row sm:items-center sm:gap-5">
+            <SiteThumb />
+            <div className="min-w-0">
+              <h3 className="text-base font-semibold text-stone-900">
+                Paris in a Week
+              </h3>
+              <p className="text-xs text-stone-600">
+                Seven days · {ITEMS.length} stops · one rental flat
+              </p>
+            </div>
+            {/* Café Terrace's own accent and its own square corners: blue is
+                Métro Ligne's signal color, so the button pointed at the wrong
+                style */}
+            <Link
+              href="/trip-itinerary"
+              className="inline-flex w-fit items-center gap-2 border border-transparent bg-[#AE3220] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#9C2B1B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#AE3220] active:bg-[#8F2617] sm:ml-auto sm:shrink-0"
+            >
+              Open the Itinerary
+              <span aria-hidden="true">→</span>
+            </Link>
+          </article>
         </Section>
       </main>
     </div>
