@@ -342,9 +342,12 @@ export default function Home() {
           title="The Site"
           blurb="A one-week Paris itinerary with filters and a detail panel, built in the chosen style."
         >
+          {/* Café Terrace's own accent and its own square corners: blue is
+              Métro Ligne's signal color, so the button pointed at the wrong
+              style */}
           <Link
             href="/trip-itinerary"
-            className="inline-flex w-fit items-center gap-2 rounded-lg bg-blue-700 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 active:bg-blue-900"
+            className="inline-flex w-fit items-center gap-2 border border-transparent bg-[#AE3220] px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-[#9C2B1B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#AE3220] active:bg-[#8F2617]"
           >
             Open the Paris itinerary
             <span aria-hidden="true">→</span>
