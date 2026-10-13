@@ -343,9 +343,21 @@ export default function MoodboardA() {
 
           {/* credits */}
           <section aria-labelledby="credits" className="mt-14 border-t-2 border-cafe-ink/80 pt-6">
-            <h2 id="credits" className="font-cafe-display text-xl tracking-tight">
-              Image credits
-            </h2>
+            <details className="group">
+              <summary className="flex cursor-pointer list-none flex-wrap items-center gap-3 py-1 transition-colors marker:hidden hover:text-cafe-tomato focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cafe-tomato [&::-webkit-details-marker]:hidden">
+                <span
+                  aria-hidden="true"
+                  className="font-cafe-body text-sm leading-none text-cafe-ink/70 transition-transform group-open:rotate-90"
+                >
+                  ▶
+                </span>
+                <h2 id="credits" className="font-cafe-display text-xl tracking-tight">
+                  Image Credits
+                </h2>
+                <span className="font-cafe-body text-[11px] uppercase tracking-[0.18em] text-cafe-ink/70">
+                  {PHOTO_ORDER.length} photographs
+                </span>
+              </summary>
             <p className="mt-1 max-w-2xl font-cafe-body text-xs leading-relaxed text-cafe-ink/70">
               Twenty collected photographs, stored with the site so the page
               makes no external requests. Ten remaining artifacts are
@@ -377,6 +389,7 @@ export default function MoodboardA() {
                 );
               })}
             </ol>
+            </details>
           </section>
 
           <footer className="mt-8 border-t border-cafe-ink/30 pt-5 font-cafe-body text-[11px] uppercase tracking-[0.18em] text-cafe-ink/70">

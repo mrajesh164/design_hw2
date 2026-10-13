@@ -341,9 +341,21 @@ export default function MoodboardC() {
 
             {/* credits */}
             <section aria-labelledby="credits" className="mt-14 border-t-2 border-encre-bone/70 pt-6">
-              <h2 id="credits" className="font-encre-display text-xl uppercase tracking-tight">
-                Image credits
-              </h2>
+              <details className="group">
+                <summary className="flex cursor-pointer list-none flex-wrap items-center gap-3 py-1 transition-colors marker:hidden hover:text-encre-ember focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre-ember [&::-webkit-details-marker]:hidden">
+                  <span
+                    aria-hidden="true"
+                    className="font-encre-body text-sm leading-none text-encre-bone/70 transition-transform group-open:rotate-90"
+                  >
+                    ▶
+                  </span>
+                  <h2 id="credits" className="font-encre-display text-xl uppercase tracking-tight">
+                    Image Credits
+                  </h2>
+                  <span className="font-encre-mono text-[11px] uppercase tracking-[0.18em] text-encre-bone/70">
+                    {PHOTO_ORDER.length} photographs
+                  </span>
+                </summary>
               <p className="mt-2 max-w-2xl font-encre-body text-xs leading-relaxed text-encre-bone/80">
                 Twenty collected photographs, stored with the site so the page
                 makes no external requests. Ten further artifacts are
@@ -375,6 +387,7 @@ export default function MoodboardC() {
                   );
                 })}
               </ol>
+              </details>
             </section>
 
             <footer className="mt-8 flex flex-wrap items-center justify-between gap-2 border-t border-encre-bone/25 pt-5 font-encre-mono text-[11px] uppercase tracking-[0.15em] text-encre-bone/70">

@@ -434,9 +434,21 @@ export default function MoodboardB() {
 
         {/* credits */}
         <section aria-labelledby="credits" className="mt-14 border-t-2 border-metro-navy pt-6">
-          <h2 id="credits" className="font-metro-sans text-xl font-bold tracking-tight">
-            Image credits
-          </h2>
+          <details className="group">
+            <summary className="flex cursor-pointer list-none flex-wrap items-center gap-3 py-1 transition-colors marker:hidden hover:text-metro-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-metro-blue [&::-webkit-details-marker]:hidden">
+              <span
+                aria-hidden="true"
+                className="font-metro-sans text-sm leading-none text-metro-navy/70 transition-transform group-open:rotate-90"
+              >
+                ▶
+              </span>
+              <h2 id="credits" className="font-metro-sans text-xl font-bold tracking-tight">
+                Image Credits
+              </h2>
+              <span className="font-metro-mono text-[11px] uppercase tracking-[0.18em] text-metro-navy/70">
+                {PHOTO_ORDER.length} photographs
+              </span>
+            </summary>
           <p className="mt-1 max-w-2xl font-metro-sans text-xs leading-relaxed text-metro-navy/70">
             The photographs below are stored with the site, so the page makes
             no external requests. Everything else on this board is drawn in CSS
@@ -468,6 +480,7 @@ export default function MoodboardB() {
               );
             })}
           </ol>
+          </details>
         </section>
 
         <footer className="mt-8 flex items-center justify-between border-t border-metro-line pt-5 font-metro-mono text-[11px] uppercase tracking-[0.15em] text-metro-navy/70">
