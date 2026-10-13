@@ -73,29 +73,9 @@ function Box({ id, index, span = "", h = "h-44", tilt = "" }) {
   );
 }
 
-/* masonry photo: natural height, flows down a column */
-function Photo({ id, index, tilt = "" }) {
-  const p = PHOTOS[id];
+function Spec({ children, caption, index, span = "", tilt = "" }) {
   return (
-    <figure className={`mb-4 break-inside-avoid ${PAPER} ${tilt}`}>
-      <Image
-        src={`/moodboards/cafe/${id}.jpg`}
-        alt={p.alt}
-        width={p.w}
-        height={p.h}
-        sizes="(max-width: 640px) 50vw, 33vw"
-        className="block h-auto w-full"
-      />
-      <Caption index={index} text={p.note} />
-    </figure>
-  );
-}
-
-function Spec({ children, caption, index, span = "", masonry = false, tilt = "" }) {
-  return (
-    <figure
-      className={`${masonry ? "mb-4 break-inside-avoid" : span} ${PAPER} ${tilt}`}
-    >
+    <figure className={`${span} ${PAPER} ${tilt}`}>
       <div className="h-full bg-cafe-paper/40 p-3">{children}</div>
       <Caption index={index} text={caption} />
     </figure>
@@ -219,17 +199,28 @@ export default function MoodboardA() {
             </div>
           </section>
 
-          {/* III — Type: scrapbook column flow, uneven and tilted */}
+          {/* III — Type: the hand-painted sign holds the left column full
+              height, specimens and photographs alternate beside it. A column
+              flow put the 517x1600 sign in column one and left column four
+              empty, because no amount of balancing fits a 1:3 image into a
+              quarter of the row. */}
           <section aria-labelledby="type" className="mt-12">
             <SectionHead {...SECTIONS[2]} count={6} />
-            <div className="columns-2 gap-4 sm:columns-3 lg:columns-4">
-              <Photo id="c05" index={16} tilt="-rotate-1" />
-              <Spec index={17} caption="Display face, Fraunces" masonry>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-6">
+              <Box
+                id="c05"
+                index={16}
+                span="col-span-2 sm:row-span-3"
+                h="h-64 sm:h-[37rem] object-top"
+                tilt="sm:-rotate-1"
+              />
+              <Spec index={17} caption="Display face, Fraunces" span="col-span-2">
                 <p className="font-cafe-display text-6xl leading-none">Aa</p>
                 <p className="mt-1 font-cafe-display text-xl italic">Déjeuner</p>
               </Spec>
-              <Photo id="s10" index={18} />
-              <Spec index={19} caption="Type scale, 1.25 ratio" masonry>
+              <Box id="s10" index={18} span="col-span-2" h="h-44" />
+              <Box id="s04" index={20} span="col-span-2" h="h-44" tilt="sm:rotate-1" />
+              <Spec index={19} caption="Type scale, 1.25 ratio" span="col-span-2">
                 <div className="flex flex-col gap-1">
                   <span className="font-cafe-display text-3xl leading-none">39</span>
                   <span className="font-cafe-display text-2xl leading-none">31</span>
@@ -239,8 +230,11 @@ export default function MoodboardA() {
                   <span className="font-cafe-body text-xs leading-none">13</span>
                 </div>
               </Spec>
-              <Photo id="s04" index={20} tilt="rotate-1" />
-              <Spec index={21} caption="Menu setting, leader dots" masonry>
+              <Spec
+                index={21}
+                caption="Menu setting, leader dots"
+                span="col-span-2 sm:col-span-4"
+              >
                 <p className="border-b border-cafe-ink/30 pb-1 font-cafe-display text-sm uppercase tracking-[0.2em]">
                   Entrées
                 </p>
